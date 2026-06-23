@@ -124,7 +124,7 @@ document.querySelectorAll('.course-item').forEach(item => {
   const pdfUrl = item.getAttribute('data-pdf');
   if (pdfUrl) {
     item.classList.add('has-cert');
-    const iframe = item.querySelector('.course-cert-iframe');
+    const certImg = item.querySelector('.course-cert-img');
     const counter = item.querySelector('.course-cert-counter');
     const prevBtn = item.querySelector('.cert-prev-btn');
     const nextBtn = item.querySelector('.cert-next-btn');
@@ -153,14 +153,14 @@ document.querySelectorAll('.course-item').forEach(item => {
       }
 
       const switchCertificate = (direction) => {
-        if (isAnimating || !iframe) return;
+        if (isAnimating || !certImg) return;
         isAnimating = true;
 
         const outClass = direction === 'next' ? 'slide-out-left' : 'slide-out-right';
         const inClass = direction === 'next' ? 'slide-in-right' : 'slide-in-left';
 
         // 1. Slide out current frame and title
-        iframe.classList.add(outClass);
+        certImg.classList.add(outClass);
         if (titleEl) titleEl.classList.add(outClass);
 
         setTimeout(() => {
@@ -170,24 +170,24 @@ document.querySelectorAll('.course-item').forEach(item => {
           } else {
             currentIndex = (currentIndex - 1 + pdfs.length) % pdfs.length;
           }
-          iframe.setAttribute('src', pdfs[currentIndex] + '#toolbar=0&navpanes=0&view=Fit');
+          certImg.setAttribute('src', pdfs[currentIndex]);
           if (counter) counter.textContent = `${currentIndex + 1} of ${pdfs.length}`;
           if (titleEl) titleEl.textContent = getCertTitle(currentIndex);
 
           // 3. Teleport elements to the opposite side silently
-          iframe.classList.remove(outClass);
-          iframe.classList.add(inClass);
+          certImg.classList.remove(outClass);
+          certImg.classList.add(inClass);
           if (titleEl) {
             titleEl.classList.remove(outClass);
             titleEl.classList.add(inClass);
           }
 
           // Force repaint
-          iframe.offsetWidth;
+          certImg.offsetWidth;
           if (titleEl) titleEl.offsetWidth;
 
           // 4. Slide back in to center position
-          iframe.classList.remove(inClass);
+          certImg.classList.remove(inClass);
           if (titleEl) titleEl.classList.remove(inClass);
 
           // Unlock after slide-in animation finishes
@@ -213,8 +213,8 @@ document.querySelectorAll('.course-item').forEach(item => {
     }
 
     const loadPdf = () => {
-      if (iframe && !iframe.getAttribute('src')) {
-        iframe.setAttribute('src', pdfs[currentIndex] + '#toolbar=0&navpanes=0&view=Fit');
+      if (certImg && !certImg.getAttribute('src')) {
+        certImg.setAttribute('src', pdfs[currentIndex]);
         if (titleEl) titleEl.textContent = getCertTitle(currentIndex);
       }
     };

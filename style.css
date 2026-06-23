@@ -684,9 +684,10 @@ section {
   opacity: 0;
   transform: translateY(5px);
 }
-.course-cert-iframe {
+.course-cert-img {
   width: 100%;
   aspect-ratio: 1.414 / 1;
+  object-fit: contain;
   border: 1px solid var(--border);
   border-radius: 4px;
   background: var(--bg2);
@@ -696,20 +697,20 @@ section {
   will-change: transform, opacity;
 }
 /* Slide-out/Slide-in states for smooth animation */
-.course-cert-iframe.slide-out-left {
+.course-cert-img.slide-out-left {
   opacity: 0;
   transform: translateX(-30px);
 }
-.course-cert-iframe.slide-in-right {
+.course-cert-img.slide-in-right {
   transition: none !important;
   opacity: 0;
   transform: translateX(30px);
 }
-.course-cert-iframe.slide-out-right {
+.course-cert-img.slide-out-right {
   opacity: 0;
   transform: translateX(30px);
 }
-.course-cert-iframe.slide-in-left {
+.course-cert-img.slide-in-left {
   transition: none !important;
   opacity: 0;
   transform: translateX(-30px);
