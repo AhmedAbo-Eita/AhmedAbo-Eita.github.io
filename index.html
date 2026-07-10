@@ -4,482 +4,406 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ahmed Aboeita — Hardware Design Engineer</title>
+  <meta name="description" content="Ahmed Aboeita - Hardware Design Engineer portfolio">
+  <title>Ahmed Aboeita | Hardware Design Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+  <canvas class="circuit-canvas" id="circuitCanvas" aria-hidden="true"></canvas>
 
-  <canvas class="circuit-canvas" id="circuitCanvas"></canvas>
+  <header class="site-header">
+    <a class="brand" href="#hero" aria-label="Ahmed Aboeita home">
+      <span class="brand-mark">AA</span>
+      <span>Ahmed Aboeita</span>
+    </a>
 
-  <!-- Theme Toggle -->
-  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-    <div class="toggle-dot" id="toggleDot"></div>
-    <span id="themeLabel">DARK</span>
-  </button>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Stack</a>
+      <a href="#education">Education</a>
+      <a href="#courses">Courses</a>
+    </nav>
 
-  <!-- Navigation -->
-  <nav>
-    <a href="#hero" class="nav-logo">ABO-EITA</a>
-    <div class="nav-links">
-      <a href="#experience">EXPERIENCE</a>
-      <a href="#projects">PROJECTS</a>
-      <a href="#skills">SKILLS</a>
-      <a href="#education">EDUCATION</a>
-      <a href="#courses">COURSES</a>
-    </div>
-  </nav>
+    <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle color theme">
+      <span class="toggle-track"><span class="toggle-dot" id="toggleDot"></span></span>
+      <span id="themeLabel">Dark</span>
+    </button>
+  </header>
 
-  <!-- ===== HERO ===== -->
-  <section id="hero">
-    <div class="hero-inner">
-      <div class="hero-text">
-        <div class="hero-label">HARDWARE · EMBEDDED · POWER</div>
-        <h1 class="hero-name">Ahmed<br><span>Aboeita</span></h1>
-        <div class="hero-title">// HARDWARE DESIGN ENGINEER</div>
-        <p class="hero-desc">
-          Designing electronic systems, PCBs, and power electronics for
-          cutting-edge applications in oil & gas, EV charging, and motor control.
-          B.Sc. Electrical Power & Machines — Alexandria University.
-        </p>
-        <div class="hero-contacts">
-          <a href="tel:01280254974">📞 +20 128 025 4974</a>
-          <a href="mailto:ahmedaboeita2233@gmail.com">✉ EMAIL</a>
-          <a href="https://www.linkedin.com/in/ahmed-aboeita-747948204/" target="_blank">in LINKEDIN</a>
-          <a href="https://github.com/AhmedAbo-Eita" target="_blank">⌥ GITHUB</a>
+  <main>
+    <section id="hero" class="hero-section">
+      <div class="hero-orbit" aria-hidden="true"></div>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Hardware | Embedded | Power Electronics</p>
+          <h1>Reliable electronics from schematic to field.</h1>
+          <p class="hero-desc">
+            Hardware Design Engineer designing electronic systems, PCBs, and power stages for oil and gas tools,
+            EV charging, motor control, and embedded sensing platforms.
+          </p>
+
+          <div class="hero-actions" aria-label="Contact links">
+            <a class="primary-action" href="mailto:ahmedaboeita2233@gmail.com">Contact me</a>
+            <a class="ghost-action" href="https://www.linkedin.com/in/ahmed-aboeita-747948204/" target="_blank"
+              rel="noreferrer">LinkedIn</a>
+            <a class="ghost-action" href="https://github.com/AhmedAbo-Eita" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+
+          <div class="signal-strip" aria-label="Engineering focus areas">
+            <span>8-layer PCB</span>
+            <span>Signal Integrity</span>
+            <span>Power Conversion</span>
+            <span>Field Testing</span>
+          </div>
         </div>
+
+        <aside class="hero-panel" aria-label="Profile summary">
+          <div class="profile-shell">
+            <div class="profile-image">
+              <img src="profile.jpg" alt="Ahmed Aboeita">
+            </div>
+            <div class="profile-status">
+              <span class="status-dot"></span>
+              Available for hardware design roles
+            </div>
+          </div>
+
+          <div class="instrument-card">
+            <div class="instrument-header">
+              <span>Board bring-up console</span>
+              <span>LIVE</span>
+            </div>
+            <div class="scope-lines" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <dl class="quick-stats">
+              <div>
+                <dt>Current</dt>
+                <dd>MIT-Technologies</dd>
+              </div>
+              <div>
+                <dt>Base</dt>
+                <dd>Egypt / KL Malaysia</dd>
+              </div>
+              <div>
+                <dt>Degree</dt>
+                <dd>B.Sc. Power & Machines</dd>
+              </div>
+            </dl>
+          </div>
+        </aside>
       </div>
+    </section>
 
-      <div class="hero-photo">
-        <div class="photo-frame">
-          <div class="corner corner-tl"></div>
-          <div class="corner corner-tr"></div>
-          <div class="corner corner-bl"></div>
-          <div class="corner corner-br"></div>
-          <div class="photo-inner" id="photoInner">
-            <img id="photoImg"
-              src="profile.jpg"
-              alt="Ahmed Aboeita" style="display:block" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <input type="file" id="photo-input" accept="image/*" onchange="loadPhoto(event)">
-
-  <!-- Divider -->
-  <div class="section-divider"><svg class="divider-circuit" viewBox="0 0 1200 60" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="dg1" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="var(--accent)" stop-opacity="0" />
-          <stop offset="30%" stop-color="var(--accent)" stop-opacity="0.5" />
-          <stop offset="70%" stop-color="var(--accent2)" stop-opacity="0.5" />
-          <stop offset="100%" stop-color="var(--accent2)" stop-opacity="0" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M0 30 L100 30 L120 10 L200 10 L220 30 L400 30 L420 50 L500 50 L520 30 L700 30 L720 10 L800 10 L820 30 L1000 30 L1020 50 L1100 50 L1120 30 L1200 30"
-        fill="none" stroke="url(#dg1)" stroke-width="1.5" />
-      <circle cx="120" cy="10" r="3" fill="var(--accent)" opacity="0.6" />
-      <circle cx="420" cy="50" r="3" fill="var(--accent2)" opacity="0.6" />
-      <circle cx="720" cy="10" r="3" fill="var(--accent)" opacity="0.6" />
-      <circle cx="1020" cy="50" r="3" fill="var(--accent2)" opacity="0.6" />
-    </svg></div>
-
-  <!-- ===== EXPERIENCE ===== -->
-  <section id="experience">
-    <div class="section-inner">
-      <div class="section-header">
-        <span class="section-num">01</span>
-        <h2 class="section-title">EXPERIENCE</h2>
-        <div class="section-line"></div>
-      </div>
-      <div class="exp-list">
-
-        <div class="exp-item">
-          <div class="exp-meta">
-            <div class="exp-date">Oct 2024 – Present</div>
-            <div class="exp-loc">Hybrid · Egypt / KL Malaysia</div>
-          </div>
-          <div class="exp-body">
-            <div class="exp-role">Hardware Design Engineer</div>
-            <div class="exp-company">MIT-Technologies</div>
-            <ul class="exp-bullets">
-              <li>Developing electronic systems, circuits, and PCBs for smart tools used in the oil and gas industry.
-              </li>
-              <li>Overseeing testing and troubleshooting efforts to guarantee reliability and performance of electronic
-                components.</li>
-              <li>Fostering innovation and staying at the forefront of industry trends.</li>
-            </ul>
-          </div>
+    <section id="experience" class="content-section">
+      <div class="section-inner">
+        <div class="section-heading">
+          <p class="section-kicker">01 / Experience</p>
+          <h2>From prototype circuits to field-ready tools.</h2>
         </div>
 
-        <div class="exp-item">
-          <div class="exp-meta">
-            <div class="exp-date">Mar 2025 – Present</div>
-            <div class="exp-loc">KL Malaysia</div>
-          </div>
-          <div class="exp-body">
-            <div class="exp-role">In-Touch Engineer</div>
-            <div class="exp-company">MIT-Technologies</div>
-            <ul class="exp-bullets">
-              <li>Responsible for deployment of new technologies in the field.</li>
-              <li>Ensuring no failures — process improvement & implementation.</li>
-              <li>Readiness and resource planning for zero lost jobs.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="exp-item">
-          <div class="exp-meta">
-            <div class="exp-date">Apr 2024 – Aug 2024</div>
-            <div class="exp-loc">Cairo, Egypt</div>
-          </div>
-          <div class="exp-body">
-            <div class="exp-role">Hardware Engineer — Internship</div>
-            <div class="exp-company">EVFLASH</div>
-            <ul class="exp-bullets">
-              <li>Designed hardware systems for electric vehicle off-board AC chargers.</li>
-              <li>Analyzed system requirements and created PCB schematics.</li>
-              <li>Created PCB layouts following industry standards.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="exp-item">
-          <div class="exp-meta">
-            <div class="exp-date">Jun 2023 – Oct 2023</div>
-            <div class="exp-loc">Under Dr. Ayman Samy Khalil</div>
-          </div>
-          <div class="exp-body">
-            <div class="exp-role">Hardware Design Trainee</div>
-            <div class="exp-company">Training Program</div>
-            <ul class="exp-bullets">
-              <li>Designed a DC-DC buck converter from scratch.</li>
-              <li>Simulated the converter using MATLAB Simulink and LTspice.</li>
-              <li>Generated schematics and PCB layouts using Altium Designer.</li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Divider -->
-  <div class="section-divider"><svg class="divider-circuit" viewBox="0 0 1200 60" preserveAspectRatio="none">
-      <path
-        d="M0 30 L150 30 L170 50 L300 50 L320 30 L450 30 L470 10 L600 10 L620 30 L750 30 L770 50 L900 50 L920 30 L1050 30 L1070 10 L1200 10"
-        fill="none" stroke="url(#dg1)" stroke-width="1.5" />
-      <circle cx="170" cy="50" r="3" fill="var(--accent3)" opacity="0.6" />
-      <circle cx="470" cy="10" r="3" fill="var(--accent)" opacity="0.6" />
-      <circle cx="770" cy="50" r="3" fill="var(--accent3)" opacity="0.6" />
-      <circle cx="1070" cy="10" r="3" fill="var(--accent)" opacity="0.6" />
-    </svg></div>
-
-  <!-- ===== PROJECTS ===== -->
-  <section id="projects">
-    <div class="section-inner">
-      <div class="section-header">
-        <span class="section-num">02</span>
-        <h2 class="section-title">PROJECTS</h2>
-        <div class="section-line"></div>
-      </div>
-      <div class="projects-grid">
-
-        <div class="project-card">
-          <div class="project-tag">PCB · POWER ELECTRONICS · Jan 2026</div>
-          <div class="project-name">BLDC Motor Driver</div>
-          <p class="project-desc">High-performance 8-layer power PCB for a brushless DC motor driver. Engineered for
-            high-current applications and robust thermal management with advanced motor control circuitry.</p>
-          <ul class="project-bullets">
-            <li>8-layer stackup with complex signal integrity management</li>
-            <li>High-current traces & dedicated ground planes for EMI reduction</li>
-            <li>Power MOSFETs + driver stages for industrial/robotic applications</li>
-          </ul>
-        </div>
-
-        <div class="project-card">
-          <div class="project-tag">OIL & GAS · SENSING · Nov 2024</div>
-          <div class="project-name">ECCO LWD Tool</div>
-          <p class="project-desc">Logging While Drilling tool utilizing high-frequency ultrasonic sensing to evaluate
-            wellbore conditions in real time. Currently at TRL5 phase, undergoing testing in real drilling jobs.</p>
-          <ul class="project-bullets">
-            <li>Ultrasonic sensor firing and receiving board design</li>
-            <li>MAG610 magnetometer interface circuit with MCU integration</li>
-            <li>Hard iron & soft iron calibration for accurate sensor readings</li>
-          </ul>
-        </div>
-
-        <div class="project-card">
-          <div class="project-tag">EMBEDDED · IoT · Oct 2024</div>
-          <div class="project-name">ELOG System</div>
-          <p class="project-desc">Digital tracking platform for monitoring mechanical drilling tools. Designed for
-            ultra-low power consumption capable of operating for up to one year continuously.</p>
-          <ul class="project-bullets">
-            <li>Ultra-low-power logging system design (1-year battery life)</li>
-            <li>Accelerometer interface for inclination-based run-time detection</li>
-          </ul>
-        </div>
-
-        <div class="project-card">
-          <div class="project-tag">EV · POWER ELECTRONICS · Aug 2023</div>
-          <div class="project-name">Smart EV DC Fast Charger</div>
-          <p class="project-desc">Graduation project — full EV fast charger design consisting of an AC-DC active
-            rectifier and a DC-DC converter with advanced control strategies.</p>
-          <ul class="project-bullets">
-            <li>Simulated Dual Active Bridge (DAB) and LLC resonant converters</li>
-            <li>Implemented cascaded loop control for LLC resonant converters</li>
-            <li>Battery charging control using DAB converter</li>
-          </ul>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Divider -->
-  <div class="section-divider"><svg class="divider-circuit" viewBox="0 0 1200 60" preserveAspectRatio="none">
-      <path
-        d="M0 10 L80 10 L100 30 L300 30 L320 50 L500 50 L520 30 L600 30 L620 10 L800 10 L820 30 L1000 30 L1020 50 L1200 50"
-        fill="none" stroke="url(#dg1)" stroke-width="1.5" />
-      <circle cx="100" cy="30" r="3" fill="var(--accent2)" opacity="0.6" />
-      <circle cx="520" cy="30" r="3" fill="var(--accent)" opacity="0.6" />
-      <circle cx="820" cy="30" r="3" fill="var(--accent2)" opacity="0.6" />
-    </svg></div>
-
-  <!-- ===== SKILLS ===== -->
-  <section id="skills">
-    <div class="section-inner">
-      <div class="section-header">
-        <span class="section-num">03</span>
-        <h2 class="section-title">TECHNICAL STACK</h2>
-        <div class="section-line"></div>
-      </div>
-      <div class="skills-grid">
-        <div class="skill-group">
-          <div class="skill-group-name">DESIGN</div>
-          <div class="skill-tags">
-            <span class="skill-tag">PCB Design</span>
-            <span class="skill-tag">Schematics</span>
-            <span class="skill-tag">High-Speed Design</span>
-            <span class="skill-tag">Signal Integrity</span>
-            <span class="skill-tag">EMI/EMC</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-name">EDA TOOLS</div>
-          <div class="skill-tags">
-            <span class="skill-tag">Altium Designer</span>
-            <span class="skill-tag">KiCad</span>
-            <span class="skill-tag">ADS</span>
-            <span class="skill-tag">LTspice</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-name">SIMULATION</div>
-          <div class="skill-tags">
-            <span class="skill-tag">MATLAB</span>
-            <span class="skill-tag">Simulink</span>
-            <span class="skill-tag">LTspice</span>
-            <span class="skill-tag">MBD</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-name">PROGRAMMING</div>
-          <div class="skill-tags">
-            <span class="skill-tag">C</span>
-            <span class="skill-tag">Modern C++</span>
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">Embedded C</span>
-            <span class="skill-tag">Qt</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-name">EMBEDDED</div>
-          <div class="skill-tags">
-            <span class="skill-tag">ATmega</span>
-            <span class="skill-tag">STM32</span>
-            <span class="skill-tag">TI C2000</span>
-            <span class="skill-tag">ARM</span>
-            <span class="skill-tag">RTOS</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-name">POWER ELEC.</div>
-          <div class="skill-tags">
-            <span class="skill-tag">DC-DC Converters</span>
-            <span class="skill-tag">Gate Drivers</span>
-            <span class="skill-tag">EV Charging</span>
-            <span class="skill-tag">DAB</span>
-            <span class="skill-tag">LLC</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Divider -->
-  <div class="section-divider"><svg class="divider-circuit" viewBox="0 0 1200 60" preserveAspectRatio="none">
-      <path
-        d="M0 50 L100 50 L120 30 L250 30 L270 10 L450 10 L470 30 L650 30 L670 50 L800 50 L820 30 L950 30 L970 10 L1100 10 L1120 30 L1200 30"
-        fill="none" stroke="url(#dg1)" stroke-width="1.5" />
-      <circle cx="270" cy="10" r="3" fill="var(--accent)" opacity="0.6" />
-      <circle cx="670" cy="50" r="3" fill="var(--accent2)" opacity="0.6" />
-      <circle cx="970" cy="10" r="3" fill="var(--accent)" opacity="0.6" />
-    </svg></div>
-
-  <!-- ===== EDUCATION ===== -->
-  <section id="education">
-    <div class="section-inner">
-      <div class="section-header">
-        <span class="section-num">04</span>
-        <h2 class="section-title">EDUCATION</h2>
-        <div class="section-line"></div>
-      </div>
-      <div class="edu-card">
-        <div>
-          <div class="edu-degree">B.Sc. Electrical Power & Machines Engineering</div>
-          <div class="edu-school">Faculty of Engineering — Alexandria University</div>
-          <div class="edu-period">Sep 2019 – Jun 2024</div>
-        </div>
-        <div>
-          <div class="edu-gpa">3.01</div>
-          <div class="edu-gpa-label">CGPA / 4.0</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Divider -->
-  <div class="section-divider"><svg class="divider-circuit" viewBox="0 0 1200 60" preserveAspectRatio="none">
-      <path d="M0 30 L200 30 L220 10 L400 10 L420 30 L600 30 L620 50 L800 50 L820 30 L1000 30 L1020 10 L1200 10"
-        fill="none" stroke="url(#dg1)" stroke-width="1.5" />
-      <circle cx="220" cy="10" r="3" fill="var(--accent3)" opacity="0.6" />
-      <circle cx="620" cy="50" r="3" fill="var(--accent)" opacity="0.6" />
-      <circle cx="1020" cy="10" r="3" fill="var(--accent3)" opacity="0.6" />
-    </svg></div>
-
-  <!-- ===== COURSES ===== -->
-  <section id="courses">
-    <div class="section-inner">
-      <div class="section-header">
-        <span class="section-num">05</span>
-        <h2 class="section-title">COURSES & CERTIFICATIONS</h2>
-        <div class="section-line"></div>
-      </div>
-      <div class="courses-list">
-
-        <div class="course-item"
-          data-pdf="certificates/high_speed_digital_design.pdf, certificates/high_speed_digital_design_2.pdf, certificates/high_speed_digital_design_3.pdf, certificates/high_speed_digital_design_4.pdf"
-          data-pdf-names="Part 1: High-Speed Design Foundations, Part 2: Single-ended Transmission Lines & Signal Behavior, Part 3: Differential Pair Transmission Lines and Signals, Part 4: High-speed Serial Links">
-          <div class="course-item-header">
-            <div class="course-icon">⚡</div>
-            <div>
-              <div class="course-name">High-Speed Digital Design Masterclass</div>
-              <div class="course-detail">PROF. DR. ERIC BOGATIN · Apr 2026 – Present · Online Masterclass</div>
-              <div class="course-cert-badge">📄 View Certificate</div>
-              <ul class="course-bullets">
-                <li>Identifying and solving noise, crosstalk, and power integrity issues</li>
-                <li>Designing high-speed traces and board layers for impedance control</li>
-                <li>Advanced modeling & measurements for timing and signal health</li>
+        <div class="timeline">
+          <article class="timeline-item reveal">
+            <div class="timeline-meta">
+              <span>Oct 2024 - Present</span>
+              <span>Hybrid | Egypt / KL Malaysia</span>
+            </div>
+            <div class="timeline-body">
+              <h3>Hardware Design Engineer</h3>
+              <p class="company">MIT-Technologies</p>
+              <ul>
+                <li>Developing electronic systems, circuits, and PCBs for smart oil and gas tools.</li>
+                <li>Leading testing and troubleshooting to improve reliability and electronic performance.</li>
+                <li>Driving design improvements through field feedback and emerging hardware practices.</li>
               </ul>
             </div>
-          </div>
-          <div class="course-cert-container">
-            <div class="course-cert-title"></div>
-            <div class="course-cert-viewer">
-              <iframe class="course-cert-iframe" src="" frameborder="0"></iframe>
-              <button class="cert-nav-btn cert-prev-btn" style="display: none;" type="button">◀</button>
-              <button class="cert-nav-btn cert-next-btn" style="display: none;" type="button">▶</button>
-            </div>
-            <div class="course-cert-counter" style="display: none;"></div>
-          </div>
-        </div>
+          </article>
 
-        <div class="course-item" data-pdf="certificates/mixed_signal_hardware_design.pdf"
-          data-pdf-names="Mixed-Signal Hardware Design">
-          <div class="course-item-header">
-            <div class="course-icon">◈</div>
-            <div>
-              <div class="course-name">Mixed-Signal Hardware Design</div>
-              <div class="course-detail">PHILIP SALMONY · Jan 2026 – Feb 2026 · Online Course</div>
-              <div class="course-cert-badge">📄 View Certificate</div>
-              <ul class="course-bullets">
-                <li>Full hardware life-cycle from concept to manufacturing-ready prototypes</li>
-                <li>4-layer board design integrating USB, MCUs, and switching converters</li>
-                <li>High-precision analog filters, Op-Amps, and ADC/DAC interfaces</li>
+          <article class="timeline-item reveal">
+            <div class="timeline-meta">
+              <span>Mar 2025 - Present</span>
+              <span>KL Malaysia</span>
+            </div>
+            <div class="timeline-body">
+              <h3>In-Touch Engineer</h3>
+              <p class="company">MIT-Technologies</p>
+              <ul>
+                <li>Supporting deployment of new technologies in field environments.</li>
+                <li>Improving processes to reduce failures and protect job continuity.</li>
+                <li>Planning readiness, resources, and execution for zero lost jobs.</li>
               </ul>
             </div>
-          </div>
-          <div class="course-cert-container">
-            <div class="course-cert-title"></div>
-            <div class="course-cert-viewer">
-              <iframe class="course-cert-iframe" src="" frameborder="0"></iframe>
-              <button class="cert-nav-btn cert-prev-btn" style="display: none;" type="button">◀</button>
-              <button class="cert-nav-btn cert-next-btn" style="display: none;" type="button">▶</button>
-            </div>
-            <div class="course-cert-counter" style="display: none;"></div>
-          </div>
-        </div>
+          </article>
 
-        <div class="course-item" data-pdf="certificates/mastering-embedded-systems.pdf"
-          data-pdf-names="Mastering Embedded Systems Diploma">
-          <div class="course-item-header">
-            <div class="course-icon">⊕</div>
-            <div>
-              <div class="course-name">Mastering Embedded Systems Diploma</div>
-              <div class="course-detail">Jan 2023 – Oct 2024 · Online Diploma</div>
-              <div class="course-cert-badge">📄 View Certificate</div>
-              <ul class="course-bullets">
-                <li>Git, C, Embedded C, Data Structures</li>
-                <li>Microcontroller architecture, ARM, Testing and Validation</li>
-                <li>ATmega, STM32, and TI C2000 microcontrollers</li>
+          <article class="timeline-item reveal">
+            <div class="timeline-meta">
+              <span>Apr 2024 - Aug 2024</span>
+              <span>Cairo, Egypt</span>
+            </div>
+            <div class="timeline-body">
+              <h3>Hardware Engineer - Internship</h3>
+              <p class="company">EVFLASH</p>
+              <ul>
+                <li>Designed hardware systems for electric vehicle off-board AC chargers.</li>
+                <li>Analyzed system requirements and created PCB schematics.</li>
+                <li>Built PCB layouts following industry manufacturing standards.</li>
               </ul>
             </div>
-          </div>
-          <div class="course-cert-container">
-            <div class="course-cert-title"></div>
-            <div class="course-cert-viewer">
-              <iframe class="course-cert-iframe" src="" frameborder="0"></iframe>
-              <button class="cert-nav-btn cert-prev-btn" style="display: none;" type="button">◀</button>
-              <button class="cert-nav-btn cert-next-btn" style="display: none;" type="button">▶</button>
-            </div>
-            <div class="course-cert-counter" style="display: none;"></div>
-          </div>
-        </div>
+          </article>
 
-        <div class="course-item">
-          <div class="course-item-header">
-            <div class="course-icon">▶</div>
-            <div>
-              <div class="course-name">Self-Study — Udemy Courses</div>
-              <div class="course-detail">VARIOUS INSTRUCTORS · Ongoing</div>
-              <ul class="course-bullets">
-                <li>Ultimate Power Electronics & Electrical Protection Bundle</li>
-                <li>Model Based Development (MBD) for Automotive & Simulink/Stateflow</li>
-                <li>Qt 6 C++ GUI Development · C++ Programming · MCU Programming for Power Electronics</li>
+          <article class="timeline-item reveal">
+            <div class="timeline-meta">
+              <span>Jun 2023 - Oct 2023</span>
+              <span>Training Program</span>
+            </div>
+            <div class="timeline-body">
+              <h3>Hardware Design Trainee</h3>
+              <p class="company">Under Dr. Ayman Samy Khalil</p>
+              <ul>
+                <li>Designed a DC-DC buck converter from scratch.</li>
+                <li>Simulated converter behavior using MATLAB Simulink and LTspice.</li>
+                <li>Generated schematics and PCB layouts using Altium Designer.</li>
               </ul>
             </div>
-          </div>
-          <div class="course-cert-container">
-            <iframe class="course-cert-iframe" src="" frameborder="0"></iframe>
-          </div>
+          </article>
         </div>
-
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-text">
-      <span class="footer-accent">AHMED ABOEITA</span> · HARDWARE DESIGN ENGINEER · EGYPT<br><br>
-    </div>
+    <section id="projects" class="content-section alt-section">
+      <div class="section-inner">
+        <div class="section-heading">
+          <p class="section-kicker">02 / Selected Projects</p>
+          <h2>Hardware systems with power, sensing, and signal integrity at the center.</h2>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card reveal">
+            <p class="project-tag">PCB | Power Electronics | Jan 2026</p>
+            <h3>BLDC Motor Driver</h3>
+            <p>High-performance 8-layer power PCB for a brushless DC motor driver, engineered for high-current
+              applications and robust thermal behavior.</p>
+            <ul>
+              <li>8-layer stackup with complex signal integrity management</li>
+              <li>High-current routing and dedicated ground planes for EMI reduction</li>
+              <li>Power MOSFETs and driver stages for industrial and robotic systems</li>
+            </ul>
+          </article>
+
+          <article class="project-card reveal">
+            <p class="project-tag">Oil & Gas | Sensing | Nov 2024</p>
+            <h3>ECCO LWD Tool</h3>
+            <p>Logging While Drilling tool using high-frequency ultrasonic sensing to evaluate wellbore conditions in
+              real time. Currently at TRL5 and tested in drilling jobs.</p>
+            <ul>
+              <li>Ultrasonic sensor firing and receiving board design</li>
+              <li>MAG610 magnetometer interface circuit with MCU integration</li>
+              <li>Hard iron and soft iron calibration for accurate sensor readings</li>
+            </ul>
+          </article>
+
+          <article class="project-card reveal">
+            <p class="project-tag">Embedded | IoT | Oct 2024</p>
+            <h3>ELOG System</h3>
+            <p>Digital tracking platform for mechanical drilling tools, designed for ultra-low power operation and
+              long-term field logging.</p>
+            <ul>
+              <li>Ultra-low-power logging system targeting one-year battery life</li>
+              <li>Accelerometer interface for inclination-based runtime detection</li>
+              <li>Embedded sensing chain designed for harsh field conditions</li>
+            </ul>
+          </article>
+
+          <article class="project-card reveal">
+            <p class="project-tag">EV | Power Electronics | Aug 2023</p>
+            <h3>Smart EV DC Fast Charger</h3>
+            <p>Graduation project covering full EV fast charger design, including AC-DC active rectifier and DC-DC
+              converter control strategies.</p>
+            <ul>
+              <li>Simulated Dual Active Bridge and LLC resonant converters</li>
+              <li>Implemented cascaded loop control for LLC converters</li>
+              <li>Designed battery charging control using a DAB converter</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="content-section">
+      <div class="section-inner">
+        <div class="section-heading">
+          <p class="section-kicker">03 / Technical Stack</p>
+          <h2>Tools and domains used across the hardware design cycle.</h2>
+        </div>
+
+        <div class="skills-grid">
+          <article class="skill-group reveal">
+            <h3>Design</h3>
+            <div class="skill-tags">
+              <span>PCB Design</span><span>Schematics</span><span>High-Speed Design</span><span>Signal
+                Integrity</span><span>EMI/EMC</span>
+            </div>
+          </article>
+          <article class="skill-group reveal">
+            <h3>EDA Tools</h3>
+            <div class="skill-tags">
+              <span>Altium Designer</span><span>KiCad</span><span>ADS</span><span>LTspice</span>
+            </div>
+          </article>
+          <article class="skill-group reveal">
+            <h3>Simulation</h3>
+            <div class="skill-tags">
+              <span>MATLAB</span><span>Simulink</span><span>LTspice</span><span>MBD</span>
+            </div>
+          </article>
+          <article class="skill-group reveal">
+            <h3>Programming</h3>
+            <div class="skill-tags">
+              <span>C</span><span>Modern C++</span><span>Python</span><span>Embedded C</span><span>Qt</span>
+            </div>
+          </article>
+          <article class="skill-group reveal">
+            <h3>Embedded</h3>
+            <div class="skill-tags">
+              <span>ATmega</span><span>STM32</span><span>TI C2000</span><span>ARM</span><span>RTOS</span>
+            </div>
+          </article>
+          <article class="skill-group reveal">
+            <h3>Power Electronics</h3>
+            <div class="skill-tags">
+              <span>DC-DC Converters</span><span>Gate Drivers</span><span>EV Charging</span><span>DAB</span><span>LLC</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="education" class="content-section alt-section">
+      <div class="section-inner">
+        <div class="section-heading">
+          <p class="section-kicker">04 / Education</p>
+          <h2>Electrical engineering foundation for power and embedded hardware.</h2>
+        </div>
+
+        <article class="education-card reveal">
+          <div>
+            <h3>B.Sc. Electrical Power & Machines Engineering</h3>
+            <p>Faculty of Engineering - Alexandria University</p>
+            <span>Sep 2019 - Jun 2024</span>
+          </div>
+          <div class="gpa-box">
+            <strong>3.01</strong>
+            <span>CGPA / 4.0</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="courses" class="content-section">
+      <div class="section-inner">
+        <div class="section-heading">
+          <p class="section-kicker">05 / Courses & Certifications</p>
+          <h2>Focused learning in high-speed design, embedded systems, and power electronics.</h2>
+        </div>
+
+        <div class="courses-list">
+          <article class="course-item reveal"
+            data-pdf="certificates/high_speed_digital_design.pdf, certificates/high_speed_digital_design_2.pdf, certificates/high_speed_digital_design_3.pdf, certificates/high_speed_digital_design_4.pdf"
+            data-pdf-names="Part 1: High-Speed Design Foundations, Part 2: Single-ended Transmission Lines & Signal Behavior, Part 3: Differential Pair Transmission Lines and Signals, Part 4: High-speed Serial Links">
+            <div class="course-top">
+              <div class="course-icon">HS</div>
+              <div>
+                <h3>High-Speed Digital Design Masterclass</h3>
+                <p>Prof. Dr. Eric Bogatin | Apr 2026 - Present | Online Masterclass</p>
+                <span class="course-cert-badge">View Certificate</span>
+              </div>
+            </div>
+            <ul>
+              <li>Identifying and solving noise, crosstalk, and power integrity issues</li>
+              <li>Designing high-speed traces and board layers for impedance control</li>
+              <li>Advanced modeling and measurements for timing and signal health</li>
+            </ul>
+            <div class="course-cert-container">
+              <div class="course-cert-title"></div>
+              <div class="course-cert-viewer">
+                <iframe class="course-cert-iframe" src="" title="High-Speed Digital Design certificate"></iframe>
+                <button class="cert-nav-btn cert-prev-btn" type="button" aria-label="Previous certificate">Prev</button>
+                <button class="cert-nav-btn cert-next-btn" type="button" aria-label="Next certificate">Next</button>
+              </div>
+              <div class="course-cert-counter"></div>
+            </div>
+          </article>
+
+          <article class="course-item reveal">
+            <div class="course-top">
+              <div class="course-icon">MS</div>
+              <div>
+                <h3>Mixed-Signal Hardware Design</h3>
+                <p>Philip Salmony | Jan 2026 - Feb 2026 | Online Course</p>
+              </div>
+            </div>
+            <ul>
+              <li>Full hardware life cycle from concept to manufacturing-ready prototypes</li>
+              <li>4-layer board design integrating USB, MCUs, and switching converters</li>
+              <li>High-precision analog filters, op-amps, and ADC/DAC interfaces</li>
+            </ul>
+          </article>
+
+          <article class="course-item reveal" data-pdf="certificates/mastering-embedded-systems.pdf"
+            data-pdf-names="Mastering Embedded Systems Diploma">
+            <div class="course-top">
+              <div class="course-icon">ES</div>
+              <div>
+                <h3>Mastering Embedded Systems Diploma</h3>
+                <p>Jan 2023 - Oct 2024 | Online Diploma</p>
+                <span class="course-cert-badge">View Certificate</span>
+              </div>
+            </div>
+            <ul>
+              <li>Git, C, Embedded C, and data structures</li>
+              <li>Microcontroller architecture, ARM, testing, and validation</li>
+              <li>ATmega, STM32, and TI C2000 microcontrollers</li>
+            </ul>
+            <div class="course-cert-container">
+              <div class="course-cert-title"></div>
+              <div class="course-cert-viewer">
+                <iframe class="course-cert-iframe" src="" title="Mastering Embedded Systems certificate"></iframe>
+                <button class="cert-nav-btn cert-prev-btn" type="button" aria-label="Previous certificate">Prev</button>
+                <button class="cert-nav-btn cert-next-btn" type="button" aria-label="Next certificate">Next</button>
+              </div>
+              <div class="course-cert-counter"></div>
+            </div>
+          </article>
+
+          <article class="course-item reveal">
+            <div class="course-top">
+              <div class="course-icon">SD</div>
+              <div>
+                <h3>Self-Study - Udemy Courses</h3>
+                <p>Various instructors | Ongoing</p>
+              </div>
+            </div>
+            <ul>
+              <li>Ultimate Power Electronics & Electrical Protection Bundle</li>
+              <li>Model Based Development for Automotive & Simulink/Stateflow</li>
+              <li>Qt 6 C++ GUI Development, C++ Programming, and MCU Programming for Power Electronics</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Ahmed Aboeita | Hardware Design Engineer | Egypt</p>
+    <a href="tel:01280254974">+20 128 025 4974</a>
   </footer>
 
   <script src="script.js"></script>

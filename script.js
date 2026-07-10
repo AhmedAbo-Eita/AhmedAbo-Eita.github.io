@@ -1,233 +1,240 @@
 // ===== THEME TOGGLE =====
 function toggleTheme() {
   const html = document.documentElement;
-  const isDark = html.getAttribute('data-theme') === 'dark';
-  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  document.getElementById('themeLabel').textContent = isDark ? 'LIGHT' : 'DARK';
-}
-
-// ===== PHOTO UPLOAD =====
-function loadPhoto(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const img = document.getElementById('photoImg');
-    const placeholder = document.getElementById('photoPlaceholder');
-    img.src = e.target.result;
-    img.style.display = 'block';
-    placeholder.style.display = 'none';
-  };
-  reader.readAsDataURL(file);
+  const isDark = html.getAttribute("data-theme") === "dark";
+  html.setAttribute("data-theme", isDark ? "light" : "dark");
+  document.getElementById("themeLabel").textContent = isDark ? "Light" : "Dark";
 }
 
 // ===== CIRCUIT CANVAS =====
-const canvas = document.getElementById('circuitCanvas');
-const ctx = canvas.getContext('2d');
-let nodes = [];
-let W, H;
+const canvas = document.getElementById("circuitCanvas");
+const ctx = canvas.getContext("2d");
+let width = 0;
+let height = 0;
+let traces = [];
+let mouse = { x: 0, y: 0, active: false };
 
-function resize() {
-  W = canvas.width = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener('resize', resize);
-
-function getAccentColor() {
-  const theme = document.documentElement.getAttribute('data-theme');
-  return theme === 'dark' ? 'rgba(0,212,255,' : 'rgba(0,119,170,';
+function accentColor(alpha = 1) {
+  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  return isDark ? `rgba(122, 241, 255, ${alpha})` : `rgba(0, 126, 167, ${alpha})`;
 }
 
-class Node {
-  constructor() { this.reset(); }
-  reset() {
-    this.x = Math.random() * W;
-    this.y = Math.random() * H;
-    this.vx = (Math.random() - 0.5) * 0.3;
-    this.vy = (Math.random() - 0.5) * 0.3;
-    this.r = Math.random() * 2 + 1;
-    this.alpha = Math.random() * 0.4 + 0.1;
-    this.type = Math.random() > 0.7 ? 'square' : 'circle';
-  }
-  update() {
-    this.x += this.vx; this.y += this.vy;
-    if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
-  }
-  draw() {
-    const c = getAccentColor();
-    ctx.fillStyle = c + this.alpha + ')';
-    ctx.strokeStyle = c + (this.alpha * 1.5) + ')';
-    if (this.type === 'square') {
-      ctx.fillRect(this.x - this.r, this.y - this.r, this.r * 2, this.r * 2);
-    } else {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
+function secondAccent(alpha = 1) {
+  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  return isDark ? `rgba(57, 255, 157, ${alpha})` : `rgba(0, 140, 97, ${alpha})`;
 }
 
-for (let i = 0; i < 60; i++) nodes.push(new Node());
-
-function drawConnections() {
-  const c = getAccentColor();
-  for (let i = 0; i < nodes.length; i++) {
-    for (let j = i + 1; j < nodes.length; j++) {
-      const dx = nodes[i].x - nodes[j].x;
-      const dy = nodes[i].y - nodes[j].y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 120) {
-        const alpha = (1 - dist / 120) * 0.12;
-        ctx.strokeStyle = c + alpha + ')';
-        ctx.lineWidth = 0.5;
-        ctx.beginPath();
-        // Orthogonal PCB-style connections
-        ctx.moveTo(nodes[i].x, nodes[i].y);
-        ctx.lineTo(nodes[i].x, nodes[j].y);
-        ctx.lineTo(nodes[j].x, nodes[j].y);
-        ctx.stroke();
-      }
-    }
-  }
+function resizeCanvas() {
+  const ratio = Math.min(window.devicePixelRatio || 1, 2);
+  width = window.innerWidth;
+  height = window.innerHeight;
+  canvas.width = width * ratio;
+  canvas.height = height * ratio;
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  buildTraces();
 }
 
-function animate() {
-  ctx.clearRect(0, 0, W, H);
-  drawConnections();
-  nodes.forEach(n => { n.update(); n.draw(); });
-  requestAnimationFrame(animate);
+function buildTraces() {
+  const count = Math.max(22, Math.floor((width * height) / 44000));
+  traces = Array.from({ length: count }, () => {
+    const x = Math.random() * width;
+    const y = Math.random() * height;
+    const horizontal = Math.random() > 0.42;
+    const length = 70 + Math.random() * 210;
+    return {
+      x,
+      y,
+      vx: (Math.random() - 0.5) * 0.18,
+      vy: (Math.random() - 0.5) * 0.18,
+      horizontal,
+      length,
+      pulse: Math.random(),
+      speed: 0.004 + Math.random() * 0.008,
+      nodeSize: 2 + Math.random() * 2.4,
+    };
+  });
 }
-animate();
 
-// ===== INTERSECTION OBSERVER =====
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
+function drawTrace(trace) {
+  trace.x += trace.vx;
+  trace.y += trace.vy;
+  trace.pulse = (trace.pulse + trace.speed) % 1;
+
+  if (trace.x < -220) trace.x = width + 40;
+  if (trace.x > width + 220) trace.x = -40;
+  if (trace.y < -220) trace.y = height + 40;
+  if (trace.y > height + 220) trace.y = -40;
+
+  const bend = trace.length * 0.34;
+  const endX = trace.horizontal ? trace.x + trace.length : trace.x + bend;
+  const endY = trace.horizontal ? trace.y + bend : trace.y + trace.length;
+  const midX = trace.horizontal ? trace.x + bend : trace.x;
+  const midY = trace.horizontal ? trace.y : trace.y + bend;
+  const alpha = 0.1 + Math.sin(trace.pulse * Math.PI) * 0.22;
+
+  ctx.strokeStyle = accentColor(alpha);
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(trace.x, trace.y);
+  ctx.lineTo(midX, midY);
+  ctx.lineTo(endX, endY);
+  ctx.stroke();
+
+  const pulseX = trace.x + (endX - trace.x) * trace.pulse;
+  const pulseY = trace.y + (endY - trace.y) * trace.pulse;
+  ctx.fillStyle = secondAccent(0.55);
+  ctx.beginPath();
+  ctx.arc(pulseX, pulseY, trace.nodeSize, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = accentColor(0.32);
+  ctx.fillRect(trace.x - 2, trace.y - 2, 4, 4);
+  ctx.fillRect(endX - 2, endY - 2, 4, 4);
+}
+
+function drawMouseField() {
+  if (!mouse.active) return;
+  const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 180);
+  gradient.addColorStop(0, accentColor(0.13));
+  gradient.addColorStop(1, accentColor(0));
+  ctx.fillStyle = gradient;
+  ctx.fillRect(mouse.x - 180, mouse.y - 180, 360, 360);
+}
+
+function animateCanvas() {
+  ctx.clearRect(0, 0, width, height);
+  drawMouseField();
+  traces.forEach(drawTrace);
+  requestAnimationFrame(animateCanvas);
+}
+
+window.addEventListener("resize", resizeCanvas);
+window.addEventListener("mousemove", (event) => {
+  mouse = { x: event.clientX, y: event.clientY, active: true };
+});
+window.addEventListener("mouseleave", () => {
+  mouse.active = false;
+});
+
+resizeCanvas();
+animateCanvas();
+
+// ===== SCROLL REVEALS AND ACTIVE NAV =====
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), i * 100);
+      entry.target.classList.add("visible");
+      revealObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.15 });
 
-document.querySelectorAll('.exp-item, .project-card, .skill-group, .course-item').forEach(el => observer.observe(el));
-
-// Stagger project cards
-document.querySelectorAll('.project-card').forEach((card, i) => {
-  card.style.transitionDelay = (i * 0.08) + 's';
-});
-document.querySelectorAll('.skill-group').forEach((g, i) => {
-  g.style.transitionDelay = (i * 0.06) + 's';
+document.querySelectorAll(".reveal").forEach((element, index) => {
+  element.style.transitionDelay = `${Math.min(index * 45, 260)}ms`;
+  revealObserver.observe(element);
 });
 
-// ===== COURSES CERTIFICATE HOVER/TAP LAZY LOADING & MULTI-CERT SLIDER =====
-document.querySelectorAll('.course-item').forEach(item => {
-  const pdfUrl = item.getAttribute('data-pdf');
-  if (pdfUrl) {
-    item.classList.add('has-cert');
-    const iframe = item.querySelector('.course-cert-iframe');
-    const counter = item.querySelector('.course-cert-counter');
-    const prevBtn = item.querySelector('.cert-prev-btn');
-    const nextBtn = item.querySelector('.cert-next-btn');
-    const titleEl = item.querySelector('.course-cert-title');
+const sections = document.querySelectorAll("main section[id]");
+const navLinks = document.querySelectorAll(".nav-links a");
 
-    // Support comma-separated URLs for multiple certificates and names
-    const pdfs = pdfUrl.split(',').map(s => s.trim()).filter(Boolean);
-    const pdfNamesAttr = item.getAttribute('data-pdf-names');
-    const pdfNames = pdfNamesAttr ? pdfNamesAttr.split(',').map(s => s.trim()) : [];
-    
-    let currentIndex = 0;
-    let isAnimating = false;
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+    navLinks.forEach((link) => {
+      link.classList.toggle("active", link.getAttribute("href") === `#${entry.target.id}`);
+    });
+  });
+}, { rootMargin: "-45% 0px -50% 0px" });
 
-    const getCertTitle = (index) => {
-      if (pdfNames[index]) return pdfNames[index];
-      const fallbackTitle = item.querySelector('.course-name').textContent;
-      return pdfs.length > 1 ? `${fallbackTitle} - Part ${index + 1}` : fallbackTitle;
-    };
+sections.forEach((section) => navObserver.observe(section));
 
-    if (pdfs.length > 1) {
-      if (prevBtn) prevBtn.style.display = 'flex';
-      if (nextBtn) nextBtn.style.display = 'flex';
-      if (counter) {
-        counter.style.display = 'block';
-        counter.textContent = `1 of ${pdfs.length}`;
+// ===== CERTIFICATE VIEWER =====
+document.querySelectorAll(".course-item").forEach((item) => {
+  const pdfUrl = item.getAttribute("data-pdf");
+  if (!pdfUrl) return;
+
+  item.classList.add("has-cert");
+  const iframe = item.querySelector(".course-cert-iframe");
+  const counter = item.querySelector(".course-cert-counter");
+  const prevBtn = item.querySelector(".cert-prev-btn");
+  const nextBtn = item.querySelector(".cert-next-btn");
+  const titleEl = item.querySelector(".course-cert-title");
+  const pdfs = pdfUrl.split(",").map((value) => value.trim()).filter(Boolean);
+  const pdfNames = (item.getAttribute("data-pdf-names") || "").split(",").map((value) => value.trim());
+  let currentIndex = 0;
+  let isAnimating = false;
+
+  function titleFor(index) {
+    return pdfNames[index] || item.querySelector("h3").textContent;
+  }
+
+  function setFrame(index) {
+    if (!iframe) return;
+    iframe.setAttribute("src", `${pdfs[index]}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`);
+    if (titleEl) titleEl.textContent = titleFor(index);
+    if (counter) counter.textContent = `${index + 1} of ${pdfs.length}`;
+  }
+
+  function loadPdf() {
+    if (iframe && !iframe.getAttribute("src")) setFrame(currentIndex);
+  }
+
+  function switchCertificate(direction) {
+    if (isAnimating || pdfs.length < 2 || !iframe) return;
+    isAnimating = true;
+    const outClass = direction === "next" ? "slide-out-left" : "slide-out-right";
+    const inClass = direction === "next" ? "slide-in-right" : "slide-in-left";
+
+    iframe.classList.add(outClass);
+    if (titleEl) titleEl.classList.add(outClass);
+
+    window.setTimeout(() => {
+      currentIndex = direction === "next"
+        ? (currentIndex + 1) % pdfs.length
+        : (currentIndex - 1 + pdfs.length) % pdfs.length;
+      setFrame(currentIndex);
+
+      iframe.classList.remove(outClass);
+      iframe.classList.add(inClass);
+      if (titleEl) {
+        titleEl.classList.remove(outClass);
+        titleEl.classList.add(inClass);
       }
 
-      const switchCertificate = (direction) => {
-        if (isAnimating || !iframe) return;
-        isAnimating = true;
+      iframe.offsetWidth;
+      iframe.classList.remove(inClass);
+      if (titleEl) titleEl.classList.remove(inClass);
 
-        const outClass = direction === 'next' ? 'slide-out-left' : 'slide-out-right';
-        const inClass = direction === 'next' ? 'slide-in-right' : 'slide-in-left';
+      window.setTimeout(() => {
+        isAnimating = false;
+      }, 260);
+    }, 240);
+  }
 
-        // 1. Slide out current frame and title
-        iframe.classList.add(outClass);
-        if (titleEl) titleEl.classList.add(outClass);
-
-        setTimeout(() => {
-          // 2. Change the source, counter, and title text while off-screen
-          if (direction === 'next') {
-            currentIndex = (currentIndex + 1) % pdfs.length;
-          } else {
-            currentIndex = (currentIndex - 1 + pdfs.length) % pdfs.length;
-          }
-          iframe.setAttribute('src', pdfs[currentIndex] + '#toolbar=0&navpanes=0&scrollbar=0&view=FitH');
-          if (counter) counter.textContent = `${currentIndex + 1} of ${pdfs.length}`;
-          if (titleEl) titleEl.textContent = getCertTitle(currentIndex);
-
-          // 3. Teleport elements to the opposite side silently
-          iframe.classList.remove(outClass);
-          iframe.classList.add(inClass);
-          if (titleEl) {
-            titleEl.classList.remove(outClass);
-            titleEl.classList.add(inClass);
-          }
-
-          // Force repaint
-          iframe.offsetWidth;
-          if (titleEl) titleEl.offsetWidth;
-
-          // 4. Slide back in to center position
-          iframe.classList.remove(inClass);
-          if (titleEl) titleEl.classList.remove(inClass);
-
-          // Unlock after slide-in animation finishes
-          setTimeout(() => {
-            isAnimating = false;
-          }, 250);
-        }, 250);
-      };
-
-      if (prevBtn) {
-        prevBtn.addEventListener('click', (e) => {
-          e.stopPropagation(); // Stop click from bubbling and collapsing the card
-          switchCertificate('prev');
-        });
-      }
-
-      if (nextBtn) {
-        nextBtn.addEventListener('click', (e) => {
-          e.stopPropagation(); // Stop click from bubbling and collapsing the card
-          switchCertificate('next');
-        });
-      }
-    }
-
-    const loadPdf = () => {
-      if (iframe && !iframe.getAttribute('src')) {
-        iframe.setAttribute('src', pdfs[currentIndex] + '#toolbar=0&navpanes=0&scrollbar=0&view=FitH');
-        if (titleEl) titleEl.textContent = getCertTitle(currentIndex);
-      }
-    };
-
-    item.addEventListener('mouseenter', loadPdf);
-    
-    // Support for mobile tap / click toggle
-    item.addEventListener('click', (e) => {
-      // If the click happened on elements inside the certificate container, don't collapse
-      if (e.target.closest('.course-cert-container')) return;
-      
+  if (pdfs.length < 2) {
+    if (prevBtn) prevBtn.style.display = "none";
+    if (nextBtn) nextBtn.style.display = "none";
+    if (counter) counter.style.display = "none";
+  } else {
+    if (counter) counter.textContent = `1 of ${pdfs.length}`;
+    prevBtn?.addEventListener("click", (event) => {
+      event.stopPropagation();
       loadPdf();
-      item.classList.toggle('expanded');
+      switchCertificate("prev");
+    });
+    nextBtn?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      loadPdf();
+      switchCertificate("next");
     });
   }
+
+  item.addEventListener("mouseenter", loadPdf);
+  item.addEventListener("click", (event) => {
+    if (event.target.closest(".course-cert-container")) return;
+    loadPdf();
+    item.classList.toggle("expanded");
+  });
 });
