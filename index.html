@@ -67,7 +67,7 @@
         <aside class="hero-panel" aria-label="Profile summary">
           <div class="profile-shell">
             <div class="profile-image">
-              <img src="profile.jpeg" alt="Ahmed Aboeita">
+              <img src="profile.jpeg" alt="Ahmed Aboeita" width="400" height="400" decoding="async" fetchpriority="high">
             </div>
             <div class="profile-status">
               <span class="status-dot"></span>
@@ -185,8 +185,11 @@
         </div>
 
         <div class="projects-grid">
-          <article class="project-card reveal">
-            <p class="project-tag">PCB | Power Electronics | Jan 2026</p>
+          <article class="project-card reveal" data-project-id="bldc-motor-driver" tabindex="0" role="button" aria-label="View BLDC Motor Driver project details and 3D renders">
+            <div class="project-card-header">
+              <p class="project-tag">PCB | Power Electronics | Jan 2026</p>
+              <span class="project-card-badge">Explore Project ↗</span>
+            </div>
             <h3>BLDC Motor Driver</h3>
             <p>High-performance 8-layer power PCB for a brushless DC motor driver, engineered for high-current
               applications and robust thermal behavior.</p>
@@ -197,8 +200,11 @@
             </ul>
           </article>
 
-          <article class="project-card reveal">
-            <p class="project-tag">Oil & Gas | Sensing | Nov 2024</p>
+          <article class="project-card reveal" data-project-id="ecco-lwd" tabindex="0" role="button" aria-label="View ECCO LWD Tool technical specs">
+            <div class="project-card-header">
+              <p class="project-tag">Oil & Gas | Sensing | Nov 2024</p>
+              <span class="project-card-badge">Explore Specs ↗</span>
+            </div>
             <h3>ECCO LWD Tool</h3>
             <p>Logging While Drilling tool using high-frequency ultrasonic sensing to evaluate wellbore conditions in
               real time. Currently at TRL5 and tested in drilling jobs.</p>
@@ -209,8 +215,11 @@
             </ul>
           </article>
 
-          <article class="project-card reveal">
-            <p class="project-tag">Embedded | IoT | Oct 2024</p>
+          <article class="project-card reveal" data-project-id="elog-system" tabindex="0" role="button" aria-label="View ELOG System technical specs">
+            <div class="project-card-header">
+              <p class="project-tag">Embedded | IoT | Oct 2024</p>
+              <span class="project-card-badge">Explore Specs ↗</span>
+            </div>
             <h3>ELOG System</h3>
             <p>Digital tracking platform for mechanical drilling tools, designed for ultra-low power operation and
               long-term field logging.</p>
@@ -221,8 +230,11 @@
             </ul>
           </article>
 
-          <article class="project-card reveal">
-            <p class="project-tag">EV | Power Electronics | Aug 2023</p>
+          <article class="project-card reveal" data-project-id="ev-fast-charger" tabindex="0" role="button" aria-label="View Smart EV DC Fast Charger technical specs">
+            <div class="project-card-header">
+              <p class="project-tag">EV | Power Electronics | Aug 2023</p>
+              <span class="project-card-badge">Explore Specs ↗</span>
+            </div>
             <h3>Smart EV DC Fast Charger</h3>
             <p>Graduation project covering full EV fast charger design, including AC-DC active rectifier and DC-DC
               converter control strategies.</p>
@@ -416,6 +428,77 @@
     <p>Ahmed Aboeita | Hardware Design Engineer | Egypt</p>
     <a href="tel:01280254974">+20 128 025 4974</a>
   </footer>
+
+  <!-- Project Details Modal (Upwork-style 2-Column Dialog) -->
+  <div id="projectModalOverlay" class="project-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalProjectTitle">
+    <div class="project-modal-dialog">
+      <button class="modal-close-btn" id="modalCloseBtn" type="button" aria-label="Close project modal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-content-grid">
+        <!-- Left Column: Details, Specifications, & Features -->
+        <div class="modal-details-col">
+          <div class="modal-header">
+            <div class="modal-meta-top">
+              <span class="modal-tag" id="modalProjectTag">PCB | Power Electronics</span>
+              <span class="modal-type-badge" id="modalTypeBadge">Open Source ✦</span>
+            </div>
+            <h2 class="modal-title" id="modalProjectTitle">Project Title</h2>
+          </div>
+
+          <div class="modal-body-content">
+            <section class="modal-section">
+              <h3 class="modal-section-heading">Overview</h3>
+              <p class="modal-desc" id="modalProjectDesc"></p>
+            </section>
+
+            <section class="modal-section" id="modalSpecsSection">
+              <h3 class="modal-section-heading">Technical Specifications</h3>
+              <div class="modal-specs-table-wrapper">
+                <table class="modal-specs-table">
+                  <tbody id="modalSpecsTableBody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="modal-section" id="modalFeaturesSection">
+              <h3 class="modal-section-heading">Key Hardware Features</h3>
+              <div class="modal-features-list" id="modalFeaturesList">
+                <!-- Populated dynamically -->
+              </div>
+            </section>
+
+            <div class="modal-actions" id="modalActions">
+              <!-- Action buttons populated dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Project 3D Visuals & Gallery -->
+        <div class="modal-gallery-col">
+          <div class="modal-gallery-header">
+            <span class="modal-gallery-badge">Hardware Visuals</span>
+            <span class="modal-gallery-count" id="modalGalleryCount">1 / 2</span>
+          </div>
+
+          <div class="modal-image-wrapper">
+            <img id="modalMainImg" src="Project/BLDC_MC_V1.0/bldc_top.png" alt="BLDC Motor Driver 3D Render" class="modal-main-img">
+            <div class="modal-img-caption" id="modalImgCaption">Top-side 3D render of BLDC MC V1.0</div>
+          </div>
+
+          <div class="modal-thumbnails" id="modalThumbnails">
+            <!-- Thumbnails inserted dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
