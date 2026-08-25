@@ -34,8 +34,8 @@ function resizeCanvas() {
   height = window.innerHeight;
   canvas.width = Math.floor(width * ratio);
   canvas.height = Math.floor(height * ratio);
-  canvas.style.width = `${width}px`;
-  canvas.style.height = `${height}px`;
+  canvas.style.width = "100%";
+  canvas.style.height = "100%";
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
   buildTraces();
 }
