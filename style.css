@@ -154,15 +154,17 @@ a {
 }
 
 .brand-mark {
-  display: grid;
+  display: block;
   width: 32px;
   height: 32px;
-  place-items: center;
-  border: 1px solid var(--border-strong);
   border-radius: 6px;
-  color: var(--bg);
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  box-shadow: 0 0 24px var(--glow);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25), 0 0 16px rgba(255, 255, 255, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.brand:hover .brand-mark {
+  transform: scale(1.06);
+  box-shadow: 0 0 20px rgba(122, 241, 255, 0.35);
 }
 
 .nav-links {
@@ -629,21 +631,32 @@ li::before {
   gap: 20px;
 }
 
-/* ===== PROJECT EXPANDABLE ACCORDION (MATCHES CERTIFICATE ANIMATION) ===== */
+/* ===== PROJECT CARD WITH BLUR HOVER & 3D PREVIEW ===== */
 .project-card {
   position: relative;
   min-height: 338px;
-  padding: 26px;
+  padding: 0;
   overflow: hidden;
   cursor: pointer;
   outline: none;
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease, box-shadow 0.28s ease;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.32s ease, box-shadow 0.32s ease;
   will-change: transform;
 }
 
 .project-card:focus-visible {
   border-color: var(--accent);
   box-shadow: 0 0 0 2px var(--accent), 0 24px 60px var(--shadow);
+}
+
+/* Inner Content that gets blurred on hover */
+.project-card-inner {
+  position: relative;
+  z-index: 1;
+  padding: 26px;
+  height: 100%;
+  box-sizing: border-box;
+  transition: filter 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: filter, opacity, transform;
 }
 
 /* Cybernetic Glowing Border Sweep on Hover */
@@ -657,6 +670,7 @@ li::before {
   opacity: 0;
   transition: opacity 0.28s ease;
   pointer-events: none;
+  z-index: 0;
 }
 
 .project-card::after {
@@ -672,11 +686,7 @@ li::before {
   opacity: 0;
   transition: opacity 0.32s ease;
   pointer-events: none;
-}
-
-.project-card > * {
-  position: relative;
-  z-index: 1;
+  z-index: 6;
 }
 
 /* Elevation on Card Hover */
@@ -689,6 +699,14 @@ li::before {
 .project-card:hover::before,
 .project-card:hover::after {
   opacity: 1;
+}
+
+/* Blur & Dim underlying content on hover (70% visible, blurred text behind) */
+.project-card:hover .project-card-inner,
+.project-card:focus-within .project-card-inner {
+  filter: blur(3.5px) brightness(0.85);
+  opacity: 0.68;
+  transform: scale(0.985);
 }
 
 .project-card-header {
@@ -708,28 +726,51 @@ li::before {
   text-transform: uppercase;
 }
 
-/* Explore Project Badge Gets Bigger on Hover */
+/* Project Type Badges (Open Source vs Proprietary) */
 .project-card-badge {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 5px 11px;
-  border: 1px solid var(--border);
+  padding: 4px 10px;
   border-radius: 6px;
-  color: var(--muted);
-  background: rgba(122, 241, 255, 0.05);
   font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
-  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card-badge.badge-open-source {
+  color: var(--accent-2);
+  background: rgba(57, 255, 157, 0.1);
+  border: 1px solid rgba(57, 255, 157, 0.38);
+  box-shadow: 0 0 14px rgba(57, 255, 157, 0.16);
+}
+
+:root[data-theme="light"] .project-card-badge.badge-open-source {
+  color: #008c61;
+  background: rgba(0, 140, 97, 0.08);
+  border-color: rgba(0, 140, 97, 0.32);
+}
+
+/* Private / Non-Open Source Badge: Refined Silver/Gray */
+.project-card-badge.badge-private,
+.project-card-badge.badge-proprietary {
+  color: var(--muted);
+  background: rgba(167, 181, 194, 0.09);
+  border: 1px solid rgba(167, 181, 194, 0.28);
+  box-shadow: 0 0 12px rgba(167, 181, 194, 0.08);
+}
+
+:root[data-theme="light"] .project-card-badge.badge-private,
+:root[data-theme="light"] .project-card-badge.badge-proprietary {
+  color: #506274;
+  background: rgba(80, 98, 116, 0.08);
+  border-color: rgba(80, 98, 116, 0.25);
 }
 
 .project-card:hover .project-card-badge {
-  color: var(--accent);
-  border-color: var(--accent);
-  background: rgba(122, 241, 255, 0.14);
-  box-shadow: 0 0 14px var(--glow);
-  transform: translateX(4px) scale(1.1);
+  transform: translateY(-1px);
 }
 
 .project-card h3 {
@@ -745,6 +786,106 @@ li::before {
 .project-card li {
   font-family: "JetBrains Mono", monospace;
   font-size: 0.8rem;
+}
+
+/* ===== PROJECT HOVER OVERLAY (70% TRANSLUCENT BLUR + BIG 3D VIEW + BUTTON) ===== */
+.project-hover-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(7, 9, 13, 0.46);
+  backdrop-filter: blur(5px) saturate(135%);
+  -webkit-backdrop-filter: blur(5px) saturate(135%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(0.96);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1) 0.1s,
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) 0.1s,
+              visibility 0.3s 0.1s;
+  border-radius: 8px;
+}
+
+:root[data-theme="light"] .project-hover-overlay {
+  background: rgba(246, 248, 251, 0.55);
+  backdrop-filter: blur(5px) saturate(120%);
+  -webkit-backdrop-filter: blur(5px) saturate(120%);
+}
+
+.project-card:hover .project-hover-overlay,
+.project-card:focus-visible .project-hover-overlay,
+.project-card:focus-within .project-hover-overlay {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.project-hover-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+/* Big 3D PCB Front View with No Rectangle Frame */
+.hover-3d-img {
+  width: 92%;
+  max-width: 390px;
+  height: 185px;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(122, 241, 255, 0.22));
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.project-card:hover .hover-3d-img {
+  transform: scale(1.08);
+}
+
+/* Explore Project Glowing Action Button */
+.project-hover-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 26px;
+  border: none;
+  border-radius: 7px;
+  color: #07090d;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  box-shadow: 0 8px 26px var(--glow), 0 0 20px rgba(57, 255, 157, 0.35);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.22s ease,
+              filter 0.22s ease;
+  will-change: transform;
+}
+
+.project-hover-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 14px 38px var(--glow), 0 0 28px rgba(57, 255, 157, 0.55);
+}
+
+.project-hover-btn svg {
+  transition: transform 0.22s ease;
+}
+
+.project-hover-btn:hover svg {
+  transform: translate(2px, -2px);
 }
 
 .skills-grid {
@@ -850,17 +991,39 @@ li::before {
 }
 
 .course-icon {
-  display: grid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex: 0 0 auto;
-  width: 46px;
-  height: 46px;
-  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 5px;
   border: 1px solid var(--border-strong);
-  border-radius: 7px;
-  color: var(--bg);
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  font-size: 0.78rem;
-  font-weight: 800;
+  border-radius: 9px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.course-icon.course-icon-dark {
+  padding: 0;
+  background: #1b353a;
+}
+
+.course-item:hover .course-icon {
+  transform: scale(1.05);
+}
+
+.course-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.course-icon.course-icon-dark img {
+  object-fit: cover;
 }
 
 .course-top h3 {
@@ -1637,5 +1800,17 @@ body.modal-open {
 
   .modal-specs-param {
     width: 44%;
+  }
+
+  .hover-3d-img {
+    height: 140px;
+  }
+
+  .project-hover-overlay {
+    padding: 16px;
+  }
+
+  .project-hover-content {
+    gap: 14px;
   }
 }

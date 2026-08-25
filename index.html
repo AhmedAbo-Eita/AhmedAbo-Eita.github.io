@@ -11,6 +11,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
     rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -19,7 +20,7 @@
 
   <header class="site-header">
     <a class="brand" href="#hero" aria-label="Ahmed Aboeita home">
-      <span class="brand-mark">AA</span>
+      <img src="favicon.svg" alt="AE" class="brand-mark" width="32" height="32">
       <span>Ahmed Aboeita</span>
     </a>
 
@@ -67,7 +68,8 @@
         <aside class="hero-panel" aria-label="Profile summary">
           <div class="profile-shell">
             <div class="profile-image">
-              <img src="profile.jpeg" alt="Ahmed Aboeita" width="400" height="400" decoding="async" fetchpriority="high">
+              <img src="profile.jpg" alt="Ahmed Aboeita" width="400" height="400" decoding="async"
+                fetchpriority="high">
             </div>
             <div class="profile-status">
               <span class="status-dot"></span>
@@ -76,13 +78,6 @@
           </div>
 
           <div class="instrument-card">
-            <div class="instrument-header">
-              <span>Board bring-up console</span>
-              <span>LIVE</span>
-            </div>
-            <div class="scope-lines" aria-hidden="true">
-              <span></span><span></span><span></span><span></span>
-            </div>
             <dl class="quick-stats">
               <div>
                 <dt>Current</dt>
@@ -94,7 +89,7 @@
               </div>
               <div>
                 <dt>Degree</dt>
-                <dd>B.Sc. Power & Machines</dd>
+                <dd>B.Sc. Electrical Power & Machines</dd>
               </div>
             </dl>
           </div>
@@ -126,21 +121,6 @@
             </div>
           </article>
 
-          <article class="timeline-item reveal">
-            <div class="timeline-meta">
-              <span>Mar 2025 - Present</span>
-              <span>KL Malaysia</span>
-            </div>
-            <div class="timeline-body">
-              <h3>In-Touch Engineer</h3>
-              <p class="company">MIT-Technologies</p>
-              <ul>
-                <li>Supporting deployment of new technologies in field environments.</li>
-                <li>Improving processes to reduce failures and protect job continuity.</li>
-                <li>Planning readiness, resources, and execution for zero lost jobs.</li>
-              </ul>
-            </div>
-          </article>
 
           <article class="timeline-item reveal">
             <div class="timeline-meta">
@@ -185,64 +165,129 @@
         </div>
 
         <div class="projects-grid">
-          <article class="project-card reveal" data-project-id="bldc-motor-driver" tabindex="0" role="button" aria-label="View BLDC Motor Driver project details and 3D renders">
-            <div class="project-card-header">
-              <p class="project-tag">PCB | Power Electronics | Jan 2026</p>
-              <span class="project-card-badge">Explore Project ↗</span>
+          <article class="project-card reveal" data-project-id="bldc-motor-driver" tabindex="0" role="button"
+            aria-label="View BLDC Motor Driver project details and 3D renders">
+            <div class="project-card-inner">
+              <div class="project-card-header">
+                <p class="project-tag">PCB | Power Electronics | Jan 2026</p>
+                <span class="project-card-badge badge-open-source">Open Source ✦</span>
+              </div>
+              <h3>BLDC Motor Driver</h3>
+              <p>High-performance 8-layer power PCB for a brushless DC motor driver, engineered for high-current
+                applications and robust thermal behavior.</p>
+              <ul>
+                <li>8-layer stackup with complex signal integrity management</li>
+                <li>High-current routing and dedicated ground planes for EMI reduction</li>
+                <li>Power MOSFETs and driver stages for industrial and robotic systems</li>
+              </ul>
             </div>
-            <h3>BLDC Motor Driver</h3>
-            <p>High-performance 8-layer power PCB for a brushless DC motor driver, engineered for high-current
-              applications and robust thermal behavior.</p>
-            <ul>
-              <li>8-layer stackup with complex signal integrity management</li>
-              <li>High-current routing and dedicated ground planes for EMI reduction</li>
-              <li>Power MOSFETs and driver stages for industrial and robotic systems</li>
-            </ul>
+
+            <!-- Interactive Hover Overlay (Blur + 3D PCB Front View + Explore Button) -->
+            <div class="project-hover-overlay" aria-hidden="true">
+              <div class="project-hover-content">
+                <img src="Project/BLDC_MC_V1.0/bldc_top.png" alt="BLDC Motor Driver PCB Front 3D View" class="hover-3d-img" loading="lazy">
+                <button type="button" class="project-hover-btn" tabindex="-1">
+                  <span>Explore Project</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
           </article>
 
-          <article class="project-card reveal" data-project-id="ecco-lwd" tabindex="0" role="button" aria-label="View ECCO LWD Tool technical specs">
-            <div class="project-card-header">
-              <p class="project-tag">Oil & Gas | Sensing | Nov 2024</p>
-              <span class="project-card-badge">Explore Specs ↗</span>
+          <article class="project-card reveal" data-project-id="ecco-lwd" tabindex="0" role="button"
+            aria-label="View ECCO LWD Tool technical specs">
+            <div class="project-card-inner">
+              <div class="project-card-header">
+                <p class="project-tag">Oil & Gas | Sensing | Nov 2024</p>
+                <span class="project-card-badge badge-private">Private ✦</span>
+              </div>
+              <h3>ECCO LWD Tool</h3>
+              <p>Logging While Drilling tool using high-frequency ultrasonic sensing to evaluate wellbore conditions in
+                real time. Currently at TRL5 and tested in drilling jobs.</p>
+              <ul>
+                <li>Ultrasonic sensor firing and receiving board design</li>
+                <li>MAG610 magnetometer interface circuit with MCU integration</li>
+                <li>Hard iron and soft iron calibration for accurate sensor readings</li>
+              </ul>
             </div>
-            <h3>ECCO LWD Tool</h3>
-            <p>Logging While Drilling tool using high-frequency ultrasonic sensing to evaluate wellbore conditions in
-              real time. Currently at TRL5 and tested in drilling jobs.</p>
-            <ul>
-              <li>Ultrasonic sensor firing and receiving board design</li>
-              <li>MAG610 magnetometer interface circuit with MCU integration</li>
-              <li>Hard iron and soft iron calibration for accurate sensor readings</li>
-            </ul>
+
+            <!-- Interactive Hover Overlay (Blur + Explore Button) -->
+            <div class="project-hover-overlay" aria-hidden="true">
+              <div class="project-hover-content">
+                <button type="button" class="project-hover-btn" tabindex="-1">
+                  <span>Explore Project</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
           </article>
 
-          <article class="project-card reveal" data-project-id="elog-system" tabindex="0" role="button" aria-label="View ELOG System technical specs">
-            <div class="project-card-header">
-              <p class="project-tag">Embedded | IoT | Oct 2024</p>
-              <span class="project-card-badge">Explore Specs ↗</span>
+          <article class="project-card reveal" data-project-id="elog-system" tabindex="0" role="button"
+            aria-label="View ELOG System technical specs">
+            <div class="project-card-inner">
+              <div class="project-card-header">
+                <p class="project-tag">Embedded | IoT | Oct 2024</p>
+                <span class="project-card-badge badge-private">Private ✦</span>
+              </div>
+              <h3>ELOG System</h3>
+              <p>Digital tracking platform for mechanical drilling tools, designed for ultra-low power operation and
+                long-term field logging.</p>
+              <ul>
+                <li>Ultra-low-power logging system targeting one-year battery life</li>
+                <li>Accelerometer interface for inclination-based runtime detection</li>
+                <li>Embedded sensing chain designed for harsh field conditions</li>
+              </ul>
             </div>
-            <h3>ELOG System</h3>
-            <p>Digital tracking platform for mechanical drilling tools, designed for ultra-low power operation and
-              long-term field logging.</p>
-            <ul>
-              <li>Ultra-low-power logging system targeting one-year battery life</li>
-              <li>Accelerometer interface for inclination-based runtime detection</li>
-              <li>Embedded sensing chain designed for harsh field conditions</li>
-            </ul>
+
+            <!-- Interactive Hover Overlay (Blur + Explore Button) -->
+            <div class="project-hover-overlay" aria-hidden="true">
+              <div class="project-hover-content">
+                <button type="button" class="project-hover-btn" tabindex="-1">
+                  <span>Explore Project</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
           </article>
 
-          <article class="project-card reveal" data-project-id="ev-fast-charger" tabindex="0" role="button" aria-label="View Smart EV DC Fast Charger technical specs">
-            <div class="project-card-header">
-              <p class="project-tag">EV | Power Electronics | Aug 2023</p>
-              <span class="project-card-badge">Explore Specs ↗</span>
+          <article class="project-card reveal" data-project-id="ev-fast-charger" tabindex="0" role="button"
+            aria-label="View Smart EV DC Fast Charger technical specs">
+            <div class="project-card-inner">
+              <div class="project-card-header">
+                <p class="project-tag">EV | Power Electronics | Aug 2023</p>
+                <span class="project-card-badge badge-private">Private ✦</span>
+              </div>
+              <h3>Smart EV DC Fast Charger</h3>
+              <p>Graduation project covering full EV fast charger design, including AC-DC active rectifier and DC-DC
+                converter control strategies.</p>
+              <ul>
+                <li>Simulated Dual Active Bridge and LLC resonant converters</li>
+                <li>Implemented cascaded loop control for LLC converters</li>
+                <li>Designed battery charging control using a DAB converter</li>
+              </ul>
             </div>
-            <h3>Smart EV DC Fast Charger</h3>
-            <p>Graduation project covering full EV fast charger design, including AC-DC active rectifier and DC-DC
-              converter control strategies.</p>
-            <ul>
-              <li>Simulated Dual Active Bridge and LLC resonant converters</li>
-              <li>Implemented cascaded loop control for LLC converters</li>
-              <li>Designed battery charging control using a DAB converter</li>
-            </ul>
+
+            <!-- Interactive Hover Overlay (Blur + Explore Button) -->
+            <div class="project-hover-overlay" aria-hidden="true">
+              <div class="project-hover-content">
+                <button type="button" class="project-hover-btn" tabindex="-1">
+                  <span>Explore Project</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
           </article>
         </div>
       </div>
@@ -290,7 +335,8 @@
           <article class="skill-group reveal">
             <h3>Power Electronics</h3>
             <div class="skill-tags">
-              <span>DC-DC Converters</span><span>Gate Drivers</span><span>EV Charging</span><span>DAB</span><span>LLC</span>
+              <span>DC-DC Converters</span><span>Gate Drivers</span><span>EV
+                Charging</span><span>DAB</span><span>LLC</span>
             </div>
           </article>
         </div>
@@ -301,7 +347,7 @@
       <div class="section-inner">
         <div class="section-heading">
           <p class="section-kicker">04 / Education</p>
-          <h2>Electrical engineering foundation for power and embedded hardware.</h2>
+          <h2>Electrical engineering foundation for power electronics.</h2>
         </div>
 
         <article class="education-card reveal">
@@ -330,7 +376,9 @@
             data-pdf="certificates/high_speed_digital_design.pdf, certificates/high_speed_digital_design_2.pdf, certificates/high_speed_digital_design_3.pdf, certificates/high_speed_digital_design_4.pdf"
             data-pdf-names="Part 1: High-Speed Design Foundations, Part 2: Single-ended Transmission Lines & Signal Behavior, Part 3: Differential Pair Transmission Lines and Signals, Part 4: High-speed Serial Links">
             <div class="course-top">
-              <div class="course-icon">HS</div>
+              <div class="course-icon">
+                <img src="Icons/The Engineering EEcosystem.png" alt="The EEcosystem" loading="lazy">
+              </div>
               <div>
                 <h3>High-Speed Digital Design Masterclass</h3>
                 <p>Prof. Dr. Eric Bogatin | Apr 2026 - Present | Online Masterclass</p>
@@ -356,7 +404,9 @@
           <article class="course-item reveal" data-pdf="certificates/Mixed-Signal Hardware Design.pdf"
             data-pdf-names="Mixed-Signal Hardware Design">
             <div class="course-top">
-              <div class="course-icon">MS</div>
+              <div class="course-icon course-icon-dark">
+                <img src="Icons/Fedevel.png" alt="FEDEVEL Academy" loading="lazy">
+              </div>
               <div>
                 <h3>Mixed-Signal Hardware Design</h3>
                 <p>Philip Salmony | Jan 2026 - Feb 2026 | Online Course</p>
@@ -382,7 +432,9 @@
           <article class="course-item reveal" data-pdf="certificates/mastering-embedded-systems.pdf"
             data-pdf-names="Mastering Embedded Systems Diploma">
             <div class="course-top">
-              <div class="course-icon">ES</div>
+              <div class="course-icon">
+                <img src="Icons/Learn_in_depth.png" alt="Learn In Depth" loading="lazy">
+              </div>
               <div>
                 <h3>Mastering Embedded Systems Diploma</h3>
                 <p>Jan 2023 - Oct 2024 | Online Diploma</p>
@@ -407,7 +459,9 @@
 
           <article class="course-item reveal">
             <div class="course-top">
-              <div class="course-icon">SD</div>
+              <div class="course-icon">
+                <img src="Icons/udemy.png" alt="Udemy" loading="lazy">
+              </div>
               <div>
                 <h3>Self-Study - Udemy Courses</h3>
                 <p>Various instructors | Ongoing</p>
@@ -430,10 +484,12 @@
   </footer>
 
   <!-- Project Details Modal (Upwork-style 2-Column Dialog) -->
-  <div id="projectModalOverlay" class="project-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalProjectTitle">
+  <div id="projectModalOverlay" class="project-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true"
+    aria-labelledby="modalProjectTitle">
     <div class="project-modal-dialog">
       <button class="modal-close-btn" id="modalCloseBtn" type="button" aria-label="Close project modal">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
@@ -488,7 +544,8 @@
           </div>
 
           <div class="modal-image-wrapper">
-            <img id="modalMainImg" src="Project/BLDC_MC_V1.0/bldc_top.png" alt="BLDC Motor Driver 3D Render" class="modal-main-img">
+            <img id="modalMainImg" src="Project/BLDC_MC_V1.0/bldc_top.png" alt="BLDC Motor Driver 3D Render"
+              class="modal-main-img">
             <div class="modal-img-caption" id="modalImgCaption">Top-side 3D render of BLDC MC V1.0</div>
           </div>
 
