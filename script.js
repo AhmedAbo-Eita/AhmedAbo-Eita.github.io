@@ -1,12 +1,12 @@
-// ===== THEME & COLOR CACHING =====
+// ===== THEME & COLOR CACHING — Precision Workshop =====
 let isDarkTheme = document.documentElement.getAttribute("data-theme") === "dark";
-let accentRgb = isDarkTheme ? "122, 241, 255" : "0, 126, 167";
-let secondAccentRgb = isDarkTheme ? "57, 255, 157" : "0, 140, 97";
+let accentRgb = isDarkTheme ? "255, 126, 74" : "214, 90, 40";
+let secondAccentRgb = isDarkTheme ? "91, 192, 190" : "42, 125, 123";
 
 function updateThemeColors() {
   isDarkTheme = document.documentElement.getAttribute("data-theme") === "dark";
-  accentRgb = isDarkTheme ? "122, 241, 255" : "0, 126, 167";
-  secondAccentRgb = isDarkTheme ? "57, 255, 157" : "0, 140, 97";
+  accentRgb = isDarkTheme ? "255, 126, 74" : "214, 90, 40";
+  secondAccentRgb = isDarkTheme ? "91, 192, 190" : "42, 125, 123";
 }
 
 function toggleTheme() {
