@@ -377,9 +377,226 @@ const projectsData = {
       },
       {
         title: "Closed-Loop Control & Protection",
+      }
+    ],
+    images: [],
+    actions: []
+  },
+  "high-speed-digital-design": {
+    isCourse: true,
+    isOpenSource: true,
+    typeBadgeText: "Verified ✦",
+    typeBadgeClass: "badge-open-source",
+    title: "High-Speed Digital Design Masterclass",
+    tag: "Signal Integrity | Eric Bogatin | Apr 2026",
+    description:
+      "Comprehensive 4-part masterclass led by Prof. Dr. Eric Bogatin covering high-speed transmission line fundamentals, return path continuity, differential pair routing, dielectric losses, crosstalk mitigation, and gigabit serial link design.",
+    specs: [
+      { param: "Instructor", value: "Prof. Dr. Eric Bogatin", note: "Signal Integrity Evangelist & Professor at CU Boulder" },
+      { param: "Institution", value: "The Engineering EEcosystem", note: "Advanced Engineering Education Platform" },
+      { param: "Scope & Series", value: "4-Part Comprehensive Masterclass", note: "Foundations, Single-Ended, Differential, Serial Links" },
+      { param: "Core Engineering Domain", value: "Signal Integrity (SI) & Power Integrity (PI)", note: "High-frequency PCB stackup, impedance matching, EMC" }
+    ],
+    features: [
+      {
+        title: "Part 1: High-Speed Design Foundations",
         items: [
-          "Cascaded voltage and current control loops tuned for rapid dynamic response.",
-          "Automated transition between constant current (CC) and constant voltage (CV) charging phases."
+          "Bandwidth vs rise time relationships and lumped vs distributed circuit models.",
+          "Characteristic impedance, return path continuity, and loop inductance control.",
+          "Decoupling capacitor placement and PDN impedance optimization."
+        ]
+      },
+      {
+        title: "Part 2: Single-Ended Transmission Lines & Signal Behavior",
+        items: [
+          "Reflection noise, termination topologies (series, parallel, AC), and overshoot control.",
+          "Microstrip and stripline impedance calculations and layer stackup rules.",
+          "Dielectric constant (Dk) and dissipation factor (Df) high-frequency losses."
+        ]
+      },
+      {
+        title: "Part 3: Differential Pair Transmission Lines & Signals",
+        items: [
+          "Odd/even mode impedance, differential impedance (Zdiff), and common-mode conversion.",
+          "Symmetric routing, intra-pair skew, and length matching constraints.",
+          "Crosstalk minimization between adjacent high-speed differential pairs."
+        ]
+      },
+      {
+        title: "Part 4: High-Speed Serial Links",
+        items: [
+          "Eye diagram analysis, jitter decomposition (RJ, DJ, ISI), and BER targets.",
+          "Loss compensation: Pre-emphasis, de-emphasis, and continuous-time linear equalization (CTLE).",
+          "Via stubs, backdrilling, and high-speed connector breakouts."
+        ]
+      }
+    ],
+    images: [
+      {
+        src: "certificates/high_speed_digital_design.jpeg",
+        caption: "Part 1: High-Speed Design Foundations — Prof. Dr. Eric Bogatin (The Engineering EEcosystem)",
+        label: "Part 1"
+      },
+      {
+        src: "certificates/high_speed_digital_design_2.jpeg",
+        caption: "Part 2: Single-ended Transmission Lines & Signal Behavior — Prof. Dr. Eric Bogatin",
+        label: "Part 2"
+      },
+      {
+        src: "certificates/high_speed_digital_design_3.jpeg",
+        caption: "Part 3: Differential Pair Transmission Lines and Signals — Prof. Dr. Eric Bogatin",
+        label: "Part 3"
+      },
+      {
+        src: "certificates/high_speed_digital_design_4_page-0001.jpg",
+        caption: "Part 4: High-speed Serial Links — Prof. Dr. Eric Bogatin",
+        label: "Part 4"
+      }
+    ],
+    actions: [
+      { label: "Download Certificate PDF ↗", url: "certificates/high_speed_digital_design.pdf", isPrimary: true }
+    ]
+  },
+  "mixed-signal-hardware-design": {
+    isCourse: true,
+    isOpenSource: true,
+    typeBadgeText: "Verified ✦",
+    typeBadgeClass: "badge-open-source",
+    title: "Mixed-Signal Hardware Design",
+    tag: "PCB Design | FEDEVEL | Feb 2026",
+    description:
+      "Full hardware life cycle from concept to manufacturing-ready prototypes. Completed 4-layer mixed-signal board design integrating USB, microcontrollers, switching power converters, and high-precision analog sensing chains.",
+    specs: [
+      { param: "Instructor", value: "Philip Salmony", note: "Hardware Design Engineer & Educator" },
+      { param: "Academy", value: "FEDEVEL Academy", note: "Professional Hardware Design Institution" },
+      { param: "Board Architecture", value: "4-Layer Mixed-Signal Board", note: "Integrated digital MCU, USB, and precision analog frontend" },
+      { param: "Design Tools", value: "Altium Designer", note: "Schematic capture, PCB layout, Gerber generation, and BOM management" }
+    ],
+    features: [
+      {
+        title: "Analog & Digital Partitioning",
+        items: [
+          "Proper ground plane management (star grounding & split ground planes with bridge routing).",
+          "Minimizing digital switching noise coupling into sensitive analog sensor lines.",
+          "Differential routing for precision ADC analog inputs and op-amp filters."
+        ]
+      },
+      {
+        title: "Power Supply & Converter Design",
+        items: [
+          "High-efficiency switching regulator layout with low-EMI switch node loops.",
+          "Linear low-dropout (LDO) post-regulation for ultra-clean analog voltage rails.",
+          "Input reverse-polarity protection, TVS surge clamping, and power sequencing."
+        ]
+      },
+      {
+        title: "Design for Manufacturing (DFM/DFA)",
+        items: [
+          "Generating IPC-compliant footprints, solder paste masks, and drill charts.",
+          "BOM optimization and component lifecycle risk assessment.",
+          "Automated test point placement and design for testability (DFT)."
+        ]
+      }
+    ],
+    images: [
+      {
+        src: "certificates/Mixed-Signal Hardware Design_page-0001.jpg",
+        caption: "Mixed-Signal Hardware Design Certificate — FEDEVEL Academy (Philip Salmony)",
+        label: "Certificate"
+      }
+    ],
+    actions: [
+      { label: "Download Certificate PDF ↗", url: "certificates/Mixed-Signal Hardware Design.pdf", isPrimary: true }
+    ]
+  },
+  "mastering-embedded-systems": {
+    isCourse: true,
+    isOpenSource: true,
+    typeBadgeText: "Verified ✦",
+    typeBadgeClass: "badge-open-source",
+    title: "Mastering Embedded Systems Diploma",
+    tag: "Embedded | Learn In Depth | Oct 2024",
+    description:
+      "Intensive embedded systems engineering diploma covering bare-metal firmware development, hardware abstraction layers (HAL), communication protocols (UART, SPI, I2C, CAN), RTOS scheduling, and MCU peripherals across ARM Cortex-M, STM32, and TI C2000.",
+    specs: [
+      { param: "Program", value: "Mastering Embedded Systems Diploma", note: "Comprehensive Embedded Engineering Curriculum" },
+      { param: "Platform", value: "Learn In Depth", note: "Professional Embedded Systems Academy" },
+      { param: "Target Architectures", value: "ARM Cortex-M (STM32), AVR (ATmega), TI C2000", note: "32-bit & 8-bit embedded architectures" },
+      { param: "Core Languages", value: "C, Embedded C, Modern C++", note: "Low-level register programming & MISRA-C standards" }
+    ],
+    features: [
+      {
+        title: "Microcontroller Peripherals & Drivers",
+        items: [
+          "Developed bare-metal register-level drivers for GPIO, Timers, PWM, ADC, and NVIC.",
+          "Implemented master/slave drivers for UART, SPI, and I2C communication protocols.",
+          "CAN bus architecture, message filtering, and transceiver interfacing."
+        ]
+      },
+      {
+        title: "Real-Time Operating Systems (FreeRTOS)",
+        items: [
+          "Task creation, preemptive priority scheduling, and context switching.",
+          "Inter-task communication using Queues, Semaphores, and Event Groups.",
+          "Memory management, stack overflow protection, and priority inversion mitigation."
+        ]
+      },
+      {
+        title: "Hardware-Software Co-Design",
+        items: [
+          "Interfacing sensors, motor drivers, LCDs, and wireless transceivers.",
+          "Low-power operating modes and sleep-state current optimization.",
+          "Debugging with hardware oscilloscopes, logic analyzers, and SWD/JTAG debuggers."
+        ]
+      }
+    ],
+    images: [
+      {
+        src: "certificates/mastering-embedded-systems.jpeg",
+        caption: "Mastering Embedded Systems Diploma Certificate — Learn In Depth",
+        label: "Diploma"
+      }
+    ],
+    actions: [
+      { label: "Download Certificate PDF ↗", url: "certificates/mastering-embedded-systems.pdf", isPrimary: true }
+    ]
+  },
+  "udemy-self-study": {
+    isCourse: true,
+    isOpenSource: false,
+    typeBadgeText: "Self-Study ✦",
+    typeBadgeClass: "badge-private",
+    title: "Self-Study & Specialized Courses",
+    tag: "Power Electronics | Embedded | Ongoing",
+    description:
+      "Continuous self-directed learning and deep-dive technical courses spanning power electronics topologies, model-based development, and software tools.",
+    specs: [
+      { param: "Focus Areas", value: "Power Electronics & GUI Development", note: "Automotive MBD, Simulink, and Qt 6 C++" },
+      { param: "Platforms", value: "Udemy & Professional Courses", note: "Continuous technical advancement" }
+    ],
+    features: [
+      {
+        title: "Power Electronics & Electrical Protection",
+        items: [
+          "Design and analysis of DC-DC switch-mode converters (Buck, Boost, Flyback, Full-Bridge).",
+          "Transformer design, magnetic core selection, and high-frequency inductor winding.",
+          "Electrical power system protection schemes, relays, and circuit breakers."
+        ]
+      },
+      {
+        title: "Model-Based Development (MBD) for Automotive",
+        items: [
+          "MATLAB / Simulink and Stateflow control algorithms.",
+          "Auto-code generation for automotive ECUs and motor control loops.",
+          "MIL / SIL verification and testing."
+        ]
+      },
+      {
+        title: "Qt 6 C++ GUI Development",
+        items: [
+          "Cross-platform desktop application development for hardware testing tools.",
+          "Real-time telemetry plotting, serial/CAN communication GUI widgets.",
+          "Multi-threading for asynchronous hardware data logging."
         ]
       }
     ],
@@ -395,11 +612,15 @@ const modalProjectTag = document.getElementById("modalProjectTag");
 const modalTypeBadge = document.getElementById("modalTypeBadge");
 const modalProjectTitle = document.getElementById("modalProjectTitle");
 const modalProjectDesc = document.getElementById("modalProjectDesc");
+const modalSpecsHeading = document.getElementById("modalSpecsHeading");
 const modalSpecsTableBody = document.getElementById("modalSpecsTableBody");
 const modalSpecsSection = document.getElementById("modalSpecsSection");
+const modalFeaturesHeading = document.getElementById("modalFeaturesHeading");
 const modalFeaturesSection = document.getElementById("modalFeaturesSection");
 const modalFeaturesList = document.getElementById("modalFeaturesList");
+const modalGalleryBadge = document.getElementById("modalGalleryBadge");
 const modalActions = document.getElementById("modalActions");
+const modalGalleryActions = document.getElementById("modalGalleryActions");
 const modalMainImg = document.getElementById("modalMainImg");
 const modalImgCaption = document.getElementById("modalImgCaption");
 const modalThumbnails = document.getElementById("modalThumbnails");
@@ -416,9 +637,9 @@ function setModalImage(index) {
   modalMainImg.style.opacity = "0";
   setTimeout(() => {
     modalMainImg.src = currentImg.src;
-    modalMainImg.alt = currentImg.caption || "Project Image";
+    modalMainImg.alt = currentImg.caption || "Image Preview";
     modalImgCaption.textContent = currentImg.caption || "";
-    modalGalleryCount.textContent = `${currentImageIndex + 1} / ${currentProjectImages.length}`;
+    modalGalleryCount.textContent = (currentProjectImages.length > 1) ? `${currentImageIndex + 1} / ${currentProjectImages.length}` : (modalDialog.classList.contains("modal-mode-certificate") ? "Verified ✦" : `1 / 1`);
     modalMainImg.style.opacity = "1";
   }, 120);
 
@@ -433,17 +654,30 @@ function openProjectModal(projectId) {
   const project = projectsData[projectId];
   if (!project || !modalDialog) return;
 
-  // Set Modal Mode (Open-Source vs Company Project)
-  if (project.isOpenSource) {
-    modalDialog.classList.remove("modal-mode-proprietary");
-    modalDialog.classList.add("modal-mode-opensource");
+  const isCertOnly = project.isCourse && project.images && project.images.length > 0;
+
+  // Set Modal Mode
+  if (isCertOnly) {
+    modalDialog.className = "project-modal-dialog modal-mode-certificate";
+    if (modalGalleryBadge) modalGalleryBadge.textContent = project.title;
+    if (modalGalleryCount) modalGalleryCount.textContent = project.typeBadgeText || "Verified ✦";
+  } else if (project.isOpenSource) {
+    modalDialog.className = "project-modal-dialog modal-mode-opensource";
+    if (modalGalleryBadge) modalGalleryBadge.textContent = "Hardware Visuals";
   } else {
-    modalDialog.classList.remove("modal-mode-opensource");
-    modalDialog.classList.add("modal-mode-proprietary");
+    modalDialog.className = "project-modal-dialog modal-mode-proprietary";
+  }
+
+  // Set Dynamic Section Headings for details
+  if (modalSpecsHeading) {
+    modalSpecsHeading.textContent = project.isCourse ? "Credential & Verification" : "Technical Specifications";
+  }
+  if (modalFeaturesHeading) {
+    modalFeaturesHeading.textContent = project.isCourse ? "Syllabus & Core Competencies" : "Key Hardware Features";
   }
 
   // Set Meta & Type Badge
-  modalProjectTag.textContent = project.tag || "Hardware Project";
+  modalProjectTag.textContent = project.tag || (project.isCourse ? "Course & Certification" : "Hardware Project");
   if (modalTypeBadge) {
     if (project.typeBadgeText) {
       modalTypeBadge.style.display = "inline-flex";
@@ -453,11 +687,11 @@ function openProjectModal(projectId) {
       modalTypeBadge.style.display = "none";
     }
   }
-  modalProjectTitle.textContent = project.title || "Project Details";
+  modalProjectTitle.textContent = project.title || "Details";
   modalProjectDesc.textContent = project.description || "";
 
   // Render Specifications Table
-  if (project.specs && project.specs.length > 0) {
+  if (project.specs && project.specs.length > 0 && !isCertOnly) {
     modalSpecsSection.style.display = "flex";
     modalSpecsTableBody.innerHTML = project.specs
       .map(
@@ -476,8 +710,8 @@ function openProjectModal(projectId) {
     modalSpecsSection.style.display = "none";
   }
 
-  // Render Features List
-  if (project.features && project.features.length > 0) {
+  // Render Features / Topics List
+  if (project.features && project.features.length > 0 && !isCertOnly) {
     modalFeaturesSection.style.display = "flex";
     modalFeaturesList.innerHTML = project.features
       .map(
@@ -495,43 +729,75 @@ function openProjectModal(projectId) {
     modalFeaturesSection.style.display = "none";
   }
 
-  // Render Actions (Links)
-  if (project.actions && project.actions.length > 0) {
-    modalActions.style.display = "flex";
-    modalActions.innerHTML = project.actions
-      .map((a) => {
-        let iconSvg = "";
-        const urlLower = (a.url || "").toLowerCase();
-        const labelLower = (a.label || "").toLowerCase();
-        if (urlLower.includes("github.com") && !labelLower.includes("readme")) {
-          iconSvg = `<svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>`;
-        } else if (labelLower.includes("readme") || labelLower.includes("doc")) {
-          iconSvg = `<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`;
-        } else {
-          iconSvg = `<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>`;
-        }
-        return `
-        <a href="${a.url}" target="_blank" rel="noreferrer" class="${a.isPrimary ? "modal-github-btn" : "modal-secondary-btn"}">
-          ${iconSvg}
-          <span>${a.label}</span>
-        </a>
-      `;
-      })
-      .join("");
+  // Render Actions
+  if (isCertOnly) {
+    // Certificate download action rendered inside gallery
+    if (modalActions) {
+      modalActions.style.display = "none";
+      modalActions.innerHTML = "";
+    }
+    if (modalGalleryActions) {
+      if (project.actions && project.actions.length > 0) {
+        modalGalleryActions.style.display = "flex";
+        modalGalleryActions.innerHTML = project.actions
+          .map(
+            (a) => `
+            <a href="${a.url}" target="_blank" rel="noreferrer" class="modal-github-btn">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="12" y2="18"></line><line x1="15" y1="15" x2="12" y2="18"></line></svg>
+              <span>${a.label}</span>
+            </a>
+          `
+          )
+          .join("");
+      } else {
+        modalGalleryActions.style.display = "none";
+        modalGalleryActions.innerHTML = "";
+      }
+    }
   } else {
-    modalActions.style.display = "none";
-    modalActions.innerHTML = "";
+    if (modalGalleryActions) {
+      modalGalleryActions.style.display = "none";
+      modalGalleryActions.innerHTML = "";
+    }
+    if (project.actions && project.actions.length > 0) {
+      modalActions.style.display = "flex";
+      modalActions.innerHTML = project.actions
+        .map((a) => {
+          let iconSvg = "";
+          const urlLower = (a.url || "").toLowerCase();
+          const labelLower = (a.label || "").toLowerCase();
+          if (urlLower.includes("github.com") && !labelLower.includes("readme")) {
+            iconSvg = `<svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>`;
+          } else if (urlLower.includes(".pdf") || labelLower.includes("pdf") || labelLower.includes("certificate")) {
+            iconSvg = `<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="12" y2="18"></line><line x1="15" y1="15" x2="12" y2="18"></line></svg>`;
+          } else if (labelLower.includes("readme") || labelLower.includes("doc")) {
+            iconSvg = `<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`;
+          } else {
+            iconSvg = `<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>`;
+          }
+          return `
+          <a href="${a.url}" target="_blank" rel="noreferrer" class="${a.isPrimary ? "modal-github-btn" : "modal-secondary-btn"}">
+            ${iconSvg}
+            <span>${a.label}</span>
+          </a>
+        `;
+        })
+        .join("");
+    } else {
+      modalActions.style.display = "none";
+      modalActions.innerHTML = "";
+    }
   }
 
-  // Render Images (Open Source Mode only)
+  // Render Images (Open Source & Certificate Modes)
   currentProjectImages = project.images || [];
   currentImageIndex = 0;
 
-  if (project.isOpenSource && currentProjectImages.length > 0) {
+  if ((project.isOpenSource || isCertOnly) && currentProjectImages.length > 0) {
     modalMainImg.src = currentProjectImages[0].src;
-    modalMainImg.alt = currentProjectImages[0].caption || "Project Image";
+    modalMainImg.alt = currentProjectImages[0].caption || "Image Preview";
     modalImgCaption.textContent = currentProjectImages[0].caption || "";
-    modalGalleryCount.textContent = `1 / ${currentProjectImages.length}`;
+    modalGalleryCount.textContent = (currentProjectImages.length > 1) ? `1 / ${currentProjectImages.length}` : (isCertOnly ? (project.typeBadgeText || "Verified ✦") : `1 / 1`);
 
     if (currentProjectImages.length > 1) {
       modalThumbnails.style.display = "grid";
@@ -576,20 +842,20 @@ function closeProjectModal() {
   }
 }
 
-// Hook Project Cards: Click & Keyboard Triggers to Open Modal
-document.querySelectorAll(".project-card[data-project-id]").forEach((card) => {
-  const projectId = card.getAttribute("data-project-id");
+// Hook Project & Course Cards: Click & Keyboard Triggers to Open Modal Popup
+document.querySelectorAll(".project-card[data-project-id], .course-card[data-course-id]").forEach((card) => {
+  const cardId = card.getAttribute("data-project-id") || card.getAttribute("data-course-id");
 
   // Click trigger
   card.addEventListener("click", () => {
-    openProjectModal(projectId);
+    openProjectModal(cardId);
   });
 
   // Keyboard accessibility
   card.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
-      openProjectModal(projectId);
+      openProjectModal(cardId);
     }
   });
 });
@@ -618,92 +884,3 @@ window.addEventListener("keydown", (e) => {
   }
 });
 
-// ===== CERTIFICATE VIEWER =====
-document.querySelectorAll(".course-item").forEach((item) => {
-  const pdfUrl = item.getAttribute("data-pdf");
-  if (!pdfUrl) return;
-
-  item.classList.add("has-cert");
-  const iframe = item.querySelector(".course-cert-iframe");
-  const counter = item.querySelector(".course-cert-counter");
-  const prevBtn = item.querySelector(".cert-prev-btn");
-  const nextBtn = item.querySelector(".cert-next-btn");
-  const titleEl = item.querySelector(".course-cert-title");
-  const pdfs = pdfUrl.split(",").map((value) => value.trim()).filter(Boolean);
-  const pdfNames = (item.getAttribute("data-pdf-names") || "").split(",").map((value) => value.trim());
-  let currentIndex = 0;
-  let isAnimating = false;
-
-  function titleFor(index) {
-    return pdfNames[index] || item.querySelector("h3")?.textContent || "";
-  }
-
-  function setFrame(index) {
-    if (!iframe) return;
-    iframe.setAttribute("src", `${pdfs[index]}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`);
-    if (titleEl) titleEl.textContent = titleFor(index);
-    if (counter) counter.textContent = `${index + 1} of ${pdfs.length}`;
-  }
-
-  function loadPdf() {
-    if (iframe && !iframe.getAttribute("src")) setFrame(currentIndex);
-  }
-
-  function switchCertificate(direction) {
-    if (isAnimating || pdfs.length < 2 || !iframe) return;
-    isAnimating = true;
-    const outClass = direction === "next" ? "slide-out-left" : "slide-out-right";
-    const inClass = direction === "next" ? "slide-in-right" : "slide-in-left";
-
-    iframe.classList.add(outClass);
-    if (titleEl) titleEl.classList.add(outClass);
-
-    window.setTimeout(() => {
-      currentIndex = direction === "next"
-        ? (currentIndex + 1) % pdfs.length
-        : (currentIndex - 1 + pdfs.length) % pdfs.length;
-      setFrame(currentIndex);
-
-      iframe.classList.remove(outClass);
-      iframe.classList.add(inClass);
-      if (titleEl) {
-        titleEl.classList.remove(outClass);
-        titleEl.classList.add(inClass);
-      }
-
-      // Trigger reflow
-      void iframe.offsetWidth;
-      iframe.classList.remove(inClass);
-      if (titleEl) titleEl.classList.remove(inClass);
-
-      window.setTimeout(() => {
-        isAnimating = false;
-      }, 260);
-    }, 240);
-  }
-
-  if (pdfs.length < 2) {
-    if (prevBtn) prevBtn.style.display = "none";
-    if (nextBtn) nextBtn.style.display = "none";
-    if (counter) counter.style.display = "none";
-  } else {
-    if (counter) counter.textContent = `1 of ${pdfs.length}`;
-    prevBtn?.addEventListener("click", (event) => {
-      event.stopPropagation();
-      loadPdf();
-      switchCertificate("prev");
-    });
-    nextBtn?.addEventListener("click", (event) => {
-      event.stopPropagation();
-      loadPdf();
-      switchCertificate("next");
-    });
-  }
-
-  item.addEventListener("mouseenter", loadPdf, { passive: true });
-  item.addEventListener("click", (event) => {
-    if (event.target.closest(".course-cert-container")) return;
-    loadPdf();
-    item.classList.toggle("expanded");
-  });
-});
