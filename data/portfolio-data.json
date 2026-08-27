@@ -1,0 +1,565 @@
+{
+  "hero": {
+    "eyebrow": "Hardware | Embedded | Power Electronics",
+    "title": "Reliable electronics from schematic to field.",
+    "description": "Hardware Design Engineer designing electronic systems, PCBs, and power stages for oil and gas tools, EV charging, motor control, and embedded sensing platforms.",
+    "email": "ahmedaboeita2233@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/ahmed-aboeita-747948204/",
+    "github": "https://github.com/AhmedAbo-Eita",
+    "status": "Available for hardware design roles",
+    "signals": [
+      "8-layer PCB",
+      "Signal Integrity",
+      "Power Conversion",
+      "Field Testing"
+    ],
+    "quickStats": [
+      { "label": "Current", "value": "MIT-Technologies" },
+      { "label": "Base", "value": "Egypt / KL Malaysia" },
+      { "label": "Degree", "value": "B.Sc. Electrical Power & Machines" }
+    ]
+  },
+  "experiences": [
+    {
+      "id": "exp-1",
+      "role": "Hardware Design Engineer",
+      "company": "MIT-Technologies",
+      "dates": "Oct 2024 - Present",
+      "location": "Hybrid | Egypt / KL Malaysia",
+      "bullets": [
+        "Developing electronic systems, circuits, and PCBs for smart oil and gas tools.",
+        "Leading testing and troubleshooting to improve reliability and electronic performance.",
+        "Driving design improvements through field feedback and emerging hardware practices."
+      ]
+    },
+    {
+      "id": "exp-2",
+      "role": "Hardware Engineer - Internship",
+      "company": "EVFLASH",
+      "dates": "Apr 2024 - Aug 2024",
+      "location": "Cairo, Egypt",
+      "bullets": [
+        "Designed hardware systems for electric vehicle off-board AC chargers.",
+        "Analyzed system requirements and created PCB schematics.",
+        "Built PCB layouts following industry manufacturing standards."
+      ]
+    },
+    {
+      "id": "exp-3",
+      "role": "Hardware Design Trainee",
+      "company": "Under Dr. Ayman Samy Khalil",
+      "dates": "Jun 2023 - Oct 2023",
+      "location": "Training Program",
+      "bullets": [
+        "Designed a DC-DC buck converter from scratch.",
+        "Simulated converter behavior using MATLAB Simulink and LTspice.",
+        "Generated schematics and PCB layouts using Altium Designer."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "bldc-motor-driver",
+      "isOpenSource": true,
+      "typeBadgeText": "Open Source ✦",
+      "typeBadgeClass": "badge-open-source",
+      "title": "60V / 30A High-Performance BLDC & PMSM Motor Controller (ESC)",
+      "cardTitle": "BLDC Motor Driver",
+      "tag": "PCB | Power Electronics | Jan 2026",
+      "cardExcerpt": "High-performance 8-layer power PCB for a brushless DC motor driver, engineered for high-current applications and robust thermal behavior.",
+      "cardBullets": [
+        "8-layer stackup with complex signal integrity management",
+        "High-current routing and dedicated ground planes for EMI reduction",
+        "Power MOSFETs and driver stages for industrial and robotic systems"
+      ],
+      "hoverImage": "Project/BLDC_MC_V1.0/bldc_top.png",
+      "description": "A compact, high-efficiency, 3-phase Field-Oriented Control (FOC) motor controller designed for high-power robotics, e-mobility, and industrial automation. Built on the STM32G431RBT6 ARM Cortex-M4 MCU and the TI DRV8353HRTAR smart gate driver, this board supports high-frequency switching up to 100 kHz with extensive hardware protection, sensor feedback, and connectivity.",
+      "specs": [
+        { "param": "Input DC Bus Voltage (V_BUS)", "value": "24V – 60V (60V Maximum)", "note": "High-voltage bulk capacitor bank + TVS transient clamping" },
+        { "param": "Maximum Phase Current", "value": "30A Maximum", "note": "Dependent on external heatsinking and thermal interface" },
+        { "param": "Maximum Switching Frequency", "value": "Up to 100 kHz PWM", "note": "Hardware-accelerated CORDIC/FMAC trigonometric engine" },
+        { "param": "Operating Temperature (T_A)", "value": "-40°C to +125°C", "note": "Designed for High-TG180 PCB substrates" },
+        { "param": "Main Processing Unit", "value": "STM32G431RBT6 (170 MHz)", "note": "ARM Cortex-M4 with FPU, 128KB Flash, 32KB SRAM" },
+        { "param": "Gate Driver IC", "value": "TI DRV8353HRTAR", "note": "Smart Gate Drive (1.4A source / 700mA sink)" },
+        { "param": "Power MOSFETs", "value": "6x Infineon BSC027N10NS5", "note": "100V, 2.7 mΩ, SuperSO-8 (TDSON-8)" },
+        { "param": "Current Sense Shunts", "value": "3x 1 mΩ Metal Plate", "note": "Low-side 3-shunt topology with Kelvin Sensing" },
+        { "param": "PCB Stackup / Form Factor", "value": "8-Layer High-TG180 FR4", "note": "2 oz outer copper / 1 oz inner planes" }
+      ],
+      "features": [
+        {
+          "title": "1. Processing & Control Core",
+          "items": [
+            "STM32G431RBT6 MCU: High-performance motor control MCU with integrated CORDIC co-processor for near-zero latency Park/Clarke transformations.",
+            "Dual Clock Source: 24 MHz primary oscillator for system PLL and 32.768 kHz crystal for precise real-time timing.",
+            "Onboard Memory: 256 Kbit SPI EEPROM (25LC256-E/SN) for non-volatile calibration parameters, PID coefficients, and motor profiles."
+          ]
+        },
+        {
+          "title": "2. Inverter Power Stage & Gate Drive",
+          "items": [
+            "Smart Gate Driver (DRV8353H): Eliminates external gate resistors via software-tunable IDRIVE configuration with integrated V_DS monitoring for shoot-through protection.",
+            "Optimized Power Stage: Low R_DS(on) (2.7 mΩ) 100V OptiMOS 5 MOSFETs paired with localized 1 nF + 4.7 Ω switch-node RC snubbers to eliminate parasitic ringing.",
+            "DC-Link Decoupling: Low-ESR parallel ceramic capacitor bank (4x 47 µF + 2x 100 nF) immediately across the inverter bridge for fast switching transient absorption."
+          ]
+        },
+        {
+          "title": "3. Sensing & Signal Conditioning",
+          "items": [
+            "3-Phase Low-Side Current Sensing: 1 mΩ shunts routed via strict 4-wire Kelvin differential pairs directly into DRV8353 current sense amplifiers.",
+            "Phase Voltage / Sensorless BEMF Sensing: Three buffered resistor divider networks (100 kΩ / 2.7 kΩ) with filter capacitors."
+          ]
+        }
+      ],
+      "images": [
+        {
+          "src": "Project/BLDC_MC_V1.0/bldc_top.png",
+          "caption": "Top-side 3D render of BLDC MC V1.0 (Controller, Gate Driver, Inverter Power Stage & Connectors)",
+          "label": "Top 3D View"
+        },
+        {
+          "src": "Project/BLDC_MC_V1.0/bldc_bottom.png",
+          "caption": "Bottom-side 3D render of BLDC MC V1.0 (Bulk Capacitors, Power Decoupling & Hall Sensor Conditioning)",
+          "label": "Bottom 3D View"
+        }
+      ],
+      "actions": [
+        { "label": "View on GitHub ↗", "url": "https://github.com/AhmedAbo-Eita/BLDC_Motor_Driver", "isPrimary": true },
+        { "label": "Hardware Readme ↗", "url": "https://github.com/AhmedAbo-Eita/BLDC_Motor_Driver/blob/main/Hardware/BLDC_MC_V1.0/Readme.md", "isPrimary": false }
+      ]
+    },
+    {
+      "id": "ecco-lwd",
+      "isOpenSource": false,
+      "typeBadgeText": "Private ✦",
+      "typeBadgeClass": "badge-private",
+      "title": "ECCO LWD Tool - Ultrasonic Logging While Drilling",
+      "cardTitle": "ECCO LWD Tool",
+      "tag": "Oil & Gas | Sensing | Nov 2024",
+      "cardExcerpt": "Logging While Drilling tool using high-frequency ultrasonic sensing to evaluate wellbore conditions in real time. Currently at TRL5 and tested in drilling jobs.",
+      "cardBullets": [
+        "Ultrasonic sensor firing and receiving board design",
+        "MAG610 magnetometer interface circuit with MCU integration",
+        "Hard iron and soft iron calibration for accurate sensor readings"
+      ],
+      "hoverImage": "",
+      "description": "Logging While Drilling (LWD) downhole electronic platform utilizing high-frequency ultrasonic acoustic sensing to evaluate wellbore geometry, caliper dimensions, and cement integrity in real-time drilling jobs. Engineered specifically for harsh downhole environments featuring high ambient temperatures, severe shock, and intense vibration.",
+      "specs": [
+        { "param": "Technology Readiness Level", "value": "TRL 5 (Field Tested)", "note": "Deployed and validated in actual drilling operations" },
+        { "param": "Acoustic Transducers", "value": "High-Frequency Ultrasonic Transceiver", "note": "Custom high-voltage firing and low-noise receiving AFE" },
+        { "param": "Magnetic Telemetry", "value": "MAG610 3-Axis Magnetometer", "note": "Hard iron & soft iron digital calibration algorithms implemented" },
+        { "param": "Operating Environment", "value": "Downhole Oil & Gas Wells", "note": "High pressure, vibration damping, and elevated temperatures" },
+        { "param": "Key Engineering Role", "value": "Circuit Design & Field Bring-Up", "note": "PCB schematics, signal conditioning, and troubleshooting" }
+      ],
+      "features": [
+        {
+          "title": "Acoustic Transceiver & Front-End Architecture",
+          "items": [
+            "High-voltage pulse excitation circuitry designed for fast acoustic transducer firing.",
+            "High-gain, ultra-low-noise analog receiving chain with precision bandpass filtering.",
+            "High-speed ADC digitization and real-time echo time-of-flight acoustic caliper calculation."
+          ]
+        },
+        {
+          "title": "Directional Compass & Magnetometer Interface",
+          "items": [
+            "MAG610 3-axis magnetometer integration for toolface azimuth and borehole orientation tracking.",
+            "Embedded calibration routine for compensating tool chassis magnetic distortion."
+          ]
+        },
+        {
+          "title": "Downhole Ruggedization & Reliability",
+          "items": [
+            "PCB layout and component selection rated for harsh shock, vibration, and thermal stress.",
+            "Field testing and root-cause analysis for zero-lost-time operations."
+          ]
+        }
+      ],
+      "images": [],
+      "actions": []
+    },
+    {
+      "id": "elog-system",
+      "isOpenSource": false,
+      "typeBadgeText": "Private ✦",
+      "typeBadgeClass": "badge-private",
+      "title": "ELOG System - Ultra-Low Power Mechanical Tool Tracker",
+      "cardTitle": "ELOG System",
+      "tag": "Embedded | IoT | Oct 2024",
+      "cardExcerpt": "Digital tracking platform for mechanical drilling tools, designed for ultra-low power operation and long-term field logging.",
+      "cardBullets": [
+        "Ultra-low-power logging system targeting one-year battery life",
+        "Accelerometer interface for inclination-based runtime detection",
+        "Embedded sensing chain designed for harsh field conditions"
+      ],
+      "hoverImage": "",
+      "description": "Autonomous digital tracking platform and environmental data logging system for downhole mechanical drilling tools. Designed from the ground up for ultra-low power consumption targeting more than one full year of continuous runtime on non-rechargeable battery packs.",
+      "specs": [
+        { "param": "Target Battery Life", "value": "> 1 Year Autonomous Runtime", "note": "Deep sleep duty cycling with sub-microamp standby current" },
+        { "param": "Motion & Runtime Detection", "value": "3-Axis Accelerometer Interface", "note": "Inclination and vibration-triggered dynamic wake-up" },
+        { "param": "Data Storage", "value": "Non-Volatile Flash Memory", "note": "High-density logging of tool vibration, shock, and runtime events" },
+        { "param": "Power Subsystem", "value": "Ultra-Low Quiescent LDO & Regulators", "note": "Power-gated sensors to prevent idle leakage" }
+      ],
+      "features": [
+        {
+          "title": "Ultra-Low Power Architecture",
+          "items": [
+            "Duty-cycled sensing engine with hardware interrupt wake-up routines.",
+            "Power-gated sensors to prevent parasitic current drain during inactive states.",
+            "Sophisticated battery discharge profiling for reliable downhole estimation."
+          ]
+        },
+        {
+          "title": "Sensor Integration & Detection",
+          "items": [
+            "Accelerometer interface for orientation, tool rotation, and vibration tracking.",
+            "Automated detection of mechanical tool engagement and operational runtime."
+          ]
+        }
+      ],
+      "images": [],
+      "actions": []
+    },
+    {
+      "id": "ev-fast-charger",
+      "isOpenSource": false,
+      "typeBadgeText": "Private ✦",
+      "typeBadgeClass": "badge-private",
+      "title": "Smart EV DC Fast Charger System",
+      "cardTitle": "Smart EV DC Fast Charger",
+      "tag": "EV | Power Electronics | Aug 2023",
+      "cardExcerpt": "Graduation project covering full EV fast charger design, including AC-DC active rectifier and DC-DC converter control strategies.",
+      "cardBullets": [
+        "Simulated Dual Active Bridge and LLC resonant converters",
+        "Implemented cascaded loop control for LLC converters",
+        "Designed battery charging control using a DAB converter"
+      ],
+      "hoverImage": "",
+      "description": "Comprehensive electric vehicle DC fast charger power stage and control architecture, including active grid rectification and bidirectional DC-DC converter topologies for high-efficiency battery charging profiles with smart digital control.",
+      "specs": [
+        { "param": "Converter Topologies", "value": "Dual Active Bridge (DAB) & LLC Resonant", "note": "Zero Voltage Switching (ZVS) high-frequency operation" },
+        { "param": "Control Scheme", "value": "Cascaded Loop Digital Control", "note": "Constant Current / Constant Voltage (CC/CV) battery charging profiles" },
+        { "param": "Simulation & Modeling", "value": "MATLAB Simulink & LTspice", "note": "Full system closed-loop verification and transient simulation" },
+        { "param": "Key Milestones", "value": "Graduation Project (Excellence)", "note": "Faculty of Engineering, Alexandria University" }
+      ],
+      "features": [
+        {
+          "title": "Power Stage Topology & Resonant Conversion",
+          "items": [
+            "Active front-end PFC rectifier for high power factor and minimal grid harmonic distortion.",
+            "High-frequency isolated DC-DC resonant stage (LLC/DAB) for galvanic isolation and high power density.",
+            "Zero-Voltage Switching (ZVS) across a wide load range to minimize switching losses."
+          ]
+        },
+        {
+          "title": "Closed-Loop Control & Protection",
+          "items": [
+            "Dual-loop digital PI control for seamless CC/CV transition during lithium-ion battery charge cycles.",
+            "Hardware overcurrent, overvoltage, and thermal protection cutoff circuits."
+          ]
+        }
+      ],
+      "images": [],
+      "actions": []
+    }
+  ],
+  "skills": [
+    {
+      "category": "Design",
+      "tags": ["PCB Design", "Schematics", "High-Speed Design", "Signal Integrity", "EMI/EMC"]
+    },
+    {
+      "category": "EDA Tools",
+      "tags": ["Altium Designer", "KiCad", "ADS", "LTspice"]
+    },
+    {
+      "category": "Simulation",
+      "tags": ["MATLAB", "Simulink", "LTspice", "MBD"]
+    },
+    {
+      "category": "Programming",
+      "tags": ["C", "Modern C++", "Python", "Embedded C", "Qt"]
+    },
+    {
+      "category": "Embedded",
+      "tags": ["ATmega", "STM32", "TI C2000", "ARM", "RTOS"]
+    },
+    {
+      "category": "Power Electronics",
+      "tags": ["DC-DC Converters", "Gate Drivers", "EV Charging", "DAB", "LLC"]
+    }
+  ],
+  "education": {
+    "degree": "B.Sc. Electrical Power & Machines Engineering",
+    "institution": "Faculty of Engineering - Alexandria University",
+    "dates": "Sep 2019 - Jun 2024",
+    "gpa": "3.01",
+    "gpaScale": "CGPA / 4.0"
+  },
+  "courses": [
+    {
+      "id": "high-speed-digital-design",
+      "isCourse": true,
+      "isOpenSource": true,
+      "typeBadgeText": "Verified ✦",
+      "typeBadgeClass": "badge-open-source",
+      "title": "High-Speed Digital Design Masterclass",
+      "cardTitle": "High-Speed Digital Design Masterclass",
+      "instructor": "Prof. Dr. Eric Bogatin",
+      "dates": "Apr 2026 - Present",
+      "type": "Online Masterclass",
+      "iconSrc": "Icons/The Engineering EEcosystem.png",
+      "iconDark": false,
+      "tag": "Signal Integrity | Eric Bogatin | Apr 2026",
+      "cardBullets": [
+        "Identifying and solving noise, crosstalk, and power integrity issues",
+        "Designing high-speed traces and board layers for impedance control",
+        "Advanced modeling and measurements for timing and signal health"
+      ],
+      "description": "Comprehensive 4-part masterclass led by Prof. Dr. Eric Bogatin covering high-speed transmission line fundamentals, return path continuity, differential pair routing, dielectric losses, crosstalk mitigation, and gigabit serial link design.",
+      "specs": [
+        { "param": "Instructor", "value": "Prof. Dr. Eric Bogatin", "note": "Signal Integrity Evangelist & Professor at CU Boulder" },
+        { "param": "Institution", "value": "The Engineering EEcosystem", "note": "Advanced Engineering Education Platform" },
+        { "param": "Scope & Series", "value": "4-Part Comprehensive Masterclass", "note": "Foundations, Single-Ended, Differential, Serial Links" },
+        { "param": "Core Engineering Domain", "value": "Signal Integrity (SI) & Power Integrity (PI)", "note": "High-frequency PCB stackup, impedance matching, EMC" }
+      ],
+      "features": [
+        {
+          "title": "Part 1: High-Speed Design Foundations",
+          "items": [
+            "Bandwidth vs rise time relationships and lumped vs distributed circuit models.",
+            "Characteristic impedance, return path continuity, and loop inductance control.",
+            "Decoupling capacitor placement and PDN impedance optimization."
+          ]
+        },
+        {
+          "title": "Part 2: Single-Ended Transmission Lines & Signal Behavior",
+          "items": [
+            "Reflection noise, termination topologies (series, parallel, AC), and overshoot control.",
+            "Microstrip and stripline impedance calculations and layer stackup rules.",
+            "Dielectric constant (Dk) and dissipation factor (Df) high-frequency losses."
+          ]
+        },
+        {
+          "title": "Part 3: Differential Pair Transmission Lines & Signals",
+          "items": [
+            "Odd/even mode impedance, differential impedance (Zdiff), and common-mode conversion.",
+            "Symmetric routing, intra-pair skew, and length matching constraints.",
+            "Crosstalk minimization between adjacent high-speed differential pairs."
+          ]
+        },
+        {
+          "title": "Part 4: High-Speed Serial Links",
+          "items": [
+            "Eye diagram analysis, jitter decomposition (RJ, DJ, ISI), and BER targets.",
+            "Loss compensation: Pre-emphasis, de-emphasis, and continuous-time linear equalization (CTLE).",
+            "Via stubs, backdrilling, and high-speed connector breakouts."
+          ]
+        }
+      ],
+      "images": [
+        {
+          "src": "certificates/high_speed_digital_design.jpeg",
+          "caption": "Part 1: High-Speed Design Foundations — Prof. Dr. Eric Bogatin (The Engineering EEcosystem)",
+          "label": "Part 1"
+        },
+        {
+          "src": "certificates/high_speed_digital_design_2.jpeg",
+          "caption": "Part 2: Single-ended Transmission Lines & Signal Behavior — Prof. Dr. Eric Bogatin",
+          "label": "Part 2"
+        },
+        {
+          "src": "certificates/high_speed_digital_design_3.jpeg",
+          "caption": "Part 3: Differential Pair Transmission Lines and Signals — Prof. Dr. Eric Bogatin",
+          "label": "Part 3"
+        },
+        {
+          "src": "certificates/high_speed_digital_design_4_page-0001.jpg",
+          "caption": "Part 4: High-speed Serial Links — Prof. Dr. Eric Bogatin",
+          "label": "Part 4"
+        }
+      ],
+      "actions": [
+        { "label": "Download Certificate PDF ↗", "url": "certificates/high_speed_digital_design.pdf", "isPrimary": true }
+      ]
+    },
+    {
+      "id": "mixed-signal-hardware-design",
+      "isCourse": true,
+      "isOpenSource": true,
+      "typeBadgeText": "Verified ✦",
+      "typeBadgeClass": "badge-open-source",
+      "title": "Mixed-Signal Hardware Design",
+      "cardTitle": "Mixed-Signal Hardware Design",
+      "instructor": "Philip Salmony",
+      "dates": "Jan 2026 - Feb 2026",
+      "type": "Online Course",
+      "iconSrc": "Icons/Fedevel.png",
+      "iconDark": true,
+      "tag": "PCB Design | FEDEVEL | Feb 2026",
+      "cardBullets": [
+        "Full hardware life cycle from concept to manufacturing-ready prototypes",
+        "4-layer board design integrating USB, MCUs, and switching converters",
+        "High-precision analog filters, op-amps, and ADC/DAC interfaces"
+      ],
+      "description": "Full hardware life cycle from concept to manufacturing-ready prototypes. Completed 4-layer mixed-signal board design integrating USB, microcontrollers, switching power converters, and high-precision analog sensing chains.",
+      "specs": [
+        { "param": "Instructor", "value": "Philip Salmony", "note": "Hardware Design Engineer & Educator" },
+        { "param": "Academy", "value": "FEDEVEL Academy", "note": "Professional Hardware Design Institution" },
+        { "param": "Board Architecture", "value": "4-Layer Mixed-Signal Board", "note": "Integrated digital MCU, USB, and precision analog frontend" },
+        { "param": "Design Tools", "value": "Altium Designer", "note": "Schematic capture, PCB layout, Gerber generation, and BOM management" }
+      ],
+      "features": [
+        {
+          "title": "Analog & Digital Partitioning",
+          "items": [
+            "Proper ground plane management (star grounding & split ground planes with bridge routing).",
+            "Minimizing digital switching noise coupling into sensitive analog sensor lines.",
+            "Differential routing for precision ADC analog inputs and op-amp filters."
+          ]
+        },
+        {
+          "title": "Power Supply & Converter Design",
+          "items": [
+            "High-efficiency switching regulator layout with low-EMI switch node loops.",
+            "Linear low-dropout (LDO) post-regulation for ultra-clean analog voltage rails.",
+            "Input reverse-polarity protection, TVS surge clamping, and power sequencing."
+          ]
+        },
+        {
+          "title": "Design for Manufacturing (DFM/DFA)",
+          "items": [
+            "Generating IPC-compliant footprints, solder paste masks, and drill charts.",
+            "BOM optimization and component lifecycle risk assessment.",
+            "Automated test point placement and design for testability (DFT)."
+          ]
+        }
+      ],
+      "images": [
+        {
+          "src": "certificates/Mixed-Signal Hardware Design_page-0001.jpg",
+          "caption": "Mixed-Signal Hardware Design Certificate — FEDEVEL Academy (Philip Salmony)",
+          "label": "Certificate"
+        }
+      ],
+      "actions": [
+        { "label": "Download Certificate PDF ↗", "url": "certificates/Mixed-Signal Hardware Design.pdf", "isPrimary": true }
+      ]
+    },
+    {
+      "id": "mastering-embedded-systems",
+      "isCourse": true,
+      "isOpenSource": true,
+      "typeBadgeText": "Verified ✦",
+      "typeBadgeClass": "badge-open-source",
+      "title": "Mastering Embedded Systems Diploma",
+      "cardTitle": "Mastering Embedded Systems Diploma",
+      "instructor": "Keroles Shenouda",
+      "dates": "Oct 2023 - Oct 2024",
+      "type": "Professional Diploma",
+      "iconSrc": "Icons/learn-in-depth.png",
+      "iconDark": false,
+      "tag": "Embedded | Learn In Depth | Oct 2024",
+      "cardBullets": [
+        "In-depth embedded C, ARM Cortex-M architecture, and MCU peripherals",
+        "Hardware abstraction layers (HAL), device drivers, and FreeRTOS scheduling",
+        "Communication protocols: UART, SPI, I2C, CAN, and hardware debugging"
+      ],
+      "description": "Intensive embedded systems engineering diploma covering bare-metal firmware development, hardware abstraction layers (HAL), communication protocols (UART, SPI, I2C, CAN), RTOS scheduling, and MCU peripherals across ARM Cortex-M, STM32, and TI C2000.",
+      "specs": [
+        { "param": "Program", "value": "Mastering Embedded Systems Diploma", "note": "Comprehensive Embedded Engineering Curriculum" },
+        { "param": "Platform", "value": "Learn In Depth", "note": "Professional Embedded Systems Academy" },
+        { "param": "Target Architectures", "value": "ARM Cortex-M (STM32), AVR (ATmega), TI C2000", "note": "32-bit & 8-bit embedded architectures" },
+        { "param": "Core Languages", "value": "C, Embedded C, Modern C++", "note": "Low-level register programming & MISRA-C standards" }
+      ],
+      "features": [
+        {
+          "title": "Microcontroller Peripherals & Drivers",
+          "items": [
+            "Developed bare-metal register-level drivers for GPIO, Timers, PWM, ADC, and NVIC.",
+            "Implemented master/slave drivers for UART, SPI, and I2C communication protocols.",
+            "CAN bus architecture, message filtering, and transceiver interfacing."
+          ]
+        },
+        {
+          "title": "Real-Time Operating Systems (FreeRTOS)",
+          "items": [
+            "Task creation, preemptive priority scheduling, and context switching.",
+            "Inter-task communication using Queues, Semaphores, and Event Groups.",
+            "Memory management, stack overflow protection, and priority inversion mitigation."
+          ]
+        },
+        {
+          "title": "Hardware-Software Co-Design",
+          "items": [
+            "Interfacing sensors, motor drivers, LCDs, and wireless transceivers.",
+            "Low-power operating modes and sleep-state current optimization.",
+            "Debugging with hardware oscilloscopes, logic analyzers, and SWD/JTAG debuggers."
+          ]
+        }
+      ],
+      "images": [
+        {
+          "src": "certificates/mastering-embedded-systems.jpeg",
+          "caption": "Mastering Embedded Systems Diploma Certificate — Learn In Depth",
+          "label": "Diploma"
+        }
+      ],
+      "actions": [
+        { "label": "Download Certificate PDF ↗", "url": "certificates/mastering-embedded-systems.pdf", "isPrimary": true }
+      ]
+    },
+    {
+      "id": "udemy-self-study",
+      "isCourse": true,
+      "isOpenSource": false,
+      "typeBadgeText": "Self-Study ✦",
+      "typeBadgeClass": "badge-private",
+      "title": "Self-Study & Specialized Courses",
+      "cardTitle": "Self-Study & Specialized Courses",
+      "instructor": "Various Instructors",
+      "dates": "Ongoing",
+      "type": "Self-Paced Courses",
+      "iconSrc": "Icons/Udemy.png",
+      "iconDark": false,
+      "tag": "Power Electronics | Embedded | Ongoing",
+      "cardBullets": [
+        "DC-DC switch mode converter topologies, magnetics, and closed-loop control",
+        "Model-Based Development (MBD) with MATLAB / Simulink for automotive",
+        "Modern C++ and Qt 6 GUI applications for hardware test automation"
+      ],
+      "description": "Continuous self-directed learning and deep-dive technical courses spanning power electronics topologies, model-based development, and software tools.",
+      "specs": [
+        { "param": "Focus Areas", "value": "Power Electronics & GUI Development", "note": "Automotive MBD, Simulink, and Qt 6 C++" },
+        { "param": "Platforms", "value": "Udemy & Professional Courses", "note": "Continuous technical advancement" }
+      ],
+      "features": [
+        {
+          "title": "Power Electronics & Electrical Protection",
+          "items": [
+            "Design and analysis of DC-DC switch-mode converters (Buck, Boost, Flyback, Full-Bridge).",
+            "Transformer design, magnetic core selection, and high-frequency inductor winding.",
+            "Electrical power system protection schemes, relays, and circuit breakers."
+          ]
+        },
+        {
+          "title": "Model-Based Development (MBD) for Automotive",
+          "items": [
+            "MATLAB / Simulink and Stateflow control algorithms.",
+            "Auto-code generation for automotive ECUs and motor control loops.",
+            "MIL / SIL verification and testing."
+          ]
+        },
+        {
+          "title": "Qt 6 C++ GUI Development",
+          "items": [
+            "Cross-platform desktop application development for hardware testing tools.",
+            "Real-time telemetry plotting, serial/CAN communication GUI widgets.",
+            "Multi-threading for asynchronous hardware data logging."
+          ]
+        }
+      ],
+      "images": [],
+      "actions": []
+    }
+  ]
+}
