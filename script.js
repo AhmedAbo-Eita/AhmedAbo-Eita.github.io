@@ -449,6 +449,7 @@ const DEFAULT_PORTFOLIO_DATA = {
     description:
       "Hardware Design Engineer designing electronic systems, PCBs, and power stages for oil and gas tools, EV charging, motor control, and embedded sensing platforms.",
     email: "ahmedaboeita2233@gmail.com",
+    avatar: "profile.jpg",
     linkedin: "https://www.linkedin.com/in/ahmed-aboeita-747948204/",
     github: "https://github.com/AhmedAbo-Eita",
     status: "Available for hardware design roles",
@@ -1134,6 +1135,13 @@ function renderHero() {
   const profileStatus = document.querySelector(".profile-status");
   if (profileStatus && h.status) {
     profileStatus.innerHTML = `<span class="status-dot"></span>${h.status}`;
+  }
+
+  const heroProfileImg = document.getElementById("heroProfileImg") || document.querySelector(".profile-image img");
+  if (heroProfileImg) {
+    if (h.avatar) {
+      heroProfileImg.src = h.avatar;
+    }
   }
 
   const quickStatsEl = document.querySelector(".quick-stats");
@@ -2048,14 +2056,343 @@ function renderAdminCoursesList() {
     .join("");
 }
 
+// ==========================================================================
+// ADMIN STUDIO DIRECT MEDIA UPLOADER & ASSET MANAGEMENT ENGINE
+// ==========================================================================
+const REPO_MEDIA_LIBRARY = {
+  icons: [
+    { label: "FEDEVEL Academy", path: "Icons/Fedevel.png" },
+    { label: "Learn In Depth", path: "Icons/Learn_in_depth.png" },
+    { label: "The Engineering EEcosystem", path: "Icons/The Engineering EEcosystem.png" },
+    { label: "Udemy", path: "Icons/udemy.png" }
+  ],
+  projects: [
+    { label: "BLDC Motor Controller - Top 3D View", path: "Project/BLDC_MC_V1.0/bldc_top.png" },
+    { label: "BLDC Motor Controller - Bottom 3D View", path: "Project/BLDC_MC_V1.0/bldc_bottom.png" }
+  ],
+  certificates: [
+    { label: "Mixed-Signal Hardware Design", path: "certificates/Mixed-Signal Hardware Design_page-0001.jpg" },
+    { label: "High Speed Digital Design 1", path: "certificates/high_speed_digital_design.jpeg" },
+    { label: "High Speed Digital Design 2", path: "certificates/high_speed_digital_design_2.jpeg" },
+    { label: "High Speed Digital Design 3", path: "certificates/high_speed_digital_design_3.jpeg" },
+    { label: "High Speed Digital Design 4", path: "certificates/high_speed_digital_design_4_page-0001.jpg" },
+    { label: "Mastering Embedded Systems", path: "certificates/mastering-embedded-systems.jpeg" }
+  ],
+  avatars: [
+    { label: "Profile Photo 1 (Default)", path: "profile.jpg" },
+    { label: "Profile Photo 2", path: "profile2.jpg" },
+    { label: "Profile Photo 3", path: "profile3.jpeg" }
+  ]
+};
+
+function readAndOptimizeMediaFile(file, maxDimension = 1600, quality = 0.85) {
+  return new Promise((resolve, reject) => {
+    if (!file) {
+      reject(new Error("No file provided"));
+      return;
+    }
+
+    const isPdf = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
+    const isSvg = file.type === "image/svg+xml" || file.name.toLowerCase().endsWith(".svg");
+
+    if (isPdf || isSvg) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        resolve({
+          dataUrl: e.target.result,
+          name: file.name,
+          isDoc: isPdf
+        });
+      };
+      reader.onerror = (err) => reject(err);
+      reader.readAsDataURL(file);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxDimension || height > maxDimension) {
+          if (width > height) {
+            height = Math.round((height * maxDimension) / width);
+            width = maxDimension;
+          } else {
+            width = Math.round((width * maxDimension) / height);
+            height = maxDimension;
+          }
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        let outputType = file.type === "image/png" ? "image/png" : "image/jpeg";
+        let dataUrl;
+        try {
+          dataUrl = canvas.toDataURL(outputType, quality);
+        } catch (err) {
+          dataUrl = e.target.result;
+        }
+
+        resolve({
+          dataUrl,
+          name: file.name,
+          isDoc: false
+        });
+      };
+      img.onerror = () => {
+        resolve({
+          dataUrl: e.target.result,
+          name: file.name,
+          isDoc: false
+        });
+      };
+      img.src = e.target.result;
+    };
+    reader.onerror = (err) => reject(err);
+    reader.readAsDataURL(file);
+  });
+}
+
+function buildMediaFieldHtml({ id, label, value = "", category = "all", helpText = "", accept = "image/*,.pdf,.svg" }) {
+  const hasValue = Boolean(value && value.trim());
+  const val = value ? value.trim() : "";
+  const isPdf = val.toLowerCase().endsWith(".pdf") || val.startsWith("data:application/pdf");
+  
+  // Library options
+  let libraryItems = [];
+  if (category === "all") {
+    Object.keys(REPO_MEDIA_LIBRARY).forEach((cat) => {
+      libraryItems = libraryItems.concat(REPO_MEDIA_LIBRARY[cat]);
+    });
+  } else if (REPO_MEDIA_LIBRARY[category]) {
+    libraryItems = REPO_MEDIA_LIBRARY[category];
+  }
+
+  const libraryOptionsHtml = libraryItems
+    .map((item) => `<option value="${escapeHtml(item.path)}" ${val === item.path ? "selected" : ""}>${escapeHtml(item.label)} (${item.path})</option>`)
+    .join("");
+
+  return `
+    <div class="admin-media-field" data-media-id="${id}">
+      <label for="${id}">${escapeHtml(label)}</label>
+      <div class="admin-media-box">
+        <input type="hidden" id="${id}" class="admin-media-value-input" value="${escapeHtml(val)}">
+        
+        <!-- Live Preview Card (shown if value exists) -->
+        <div class="admin-media-preview-card" style="display: ${hasValue ? "flex" : "none"};">
+          ${
+            isPdf
+              ? `<div class="admin-media-doc-badge">PDF</div>`
+              : `<img src="${hasValue ? escapeHtml(val) : ""}" alt="Preview" class="admin-media-thumb">`
+          }
+          <div class="admin-media-info">
+            <span class="admin-media-name">${hasValue ? (val.startsWith("data:") ? "Uploaded File (Direct Storage)" : val) : "No file selected"}</span>
+            <span class="admin-media-badge">${val.startsWith("data:") ? "✦ In-Memory Optimized" : "✦ Repository Asset"}</span>
+          </div>
+          <div class="admin-media-actions">
+            <button type="button" class="admin-btn admin-btn-sm admin-btn-ghost admin-media-replace-btn" title="Replace file">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              Upload
+            </button>
+            <button type="button" class="admin-icon-btn danger admin-media-remove-btn" title="Remove / Clear">✕</button>
+          </div>
+        </div>
+
+        <!-- Dropzone (shown if no value or when replacing) -->
+        <div class="admin-media-dropzone" style="display: ${hasValue ? "none" : "flex"};">
+          <div class="admin-media-dropzone-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          </div>
+          <div class="admin-media-dropzone-text">Click to upload or drag & drop file</div>
+          <div class="admin-media-dropzone-subtext">PNG, JPG, WebP, SVG, or PDF</div>
+          <input type="file" class="admin-media-file-input" accept="${accept}" style="display:none;">
+        </div>
+
+        <!-- Quick Library & Manual Toolbar -->
+        <div class="admin-media-toolbar">
+          ${
+            libraryItems.length > 0
+              ? `
+            <select class="admin-media-library-select" title="Choose an existing asset from the repository library">
+              <option value="">📁 Choose from library...</option>
+              ${libraryOptionsHtml}
+            </select>
+          `
+              : ""
+          }
+          <button type="button" class="admin-btn admin-btn-sm admin-btn-ghost admin-media-toggle-manual-btn" style="font-size:0.72rem;padding:4px 8px;">
+            ✏️ Path
+          </button>
+        </div>
+
+        <div class="admin-media-manual-row">
+          <input type="text" class="admin-media-manual-input" value="${escapeHtml(val)}" placeholder="e.g. Icons/Fedevel.png or https://...">
+          <button type="button" class="admin-btn admin-btn-sm admin-btn-primary admin-media-apply-manual-btn">Apply</button>
+        </div>
+
+        ${helpText ? `<small class="admin-help-text">${escapeHtml(helpText)}</small>` : ""}
+      </div>
+    </div>
+  `;
+}
+
+function initAllMediaFieldsIn(rootElement) {
+  if (!rootElement) return;
+
+  rootElement.querySelectorAll(".admin-media-field").forEach((field) => {
+    const valueInput = field.querySelector(".admin-media-value-input");
+    const previewCard = field.querySelector(".admin-media-preview-card");
+    const dropzone = field.querySelector(".admin-media-dropzone");
+    const fileInput = field.querySelector(".admin-media-file-input");
+    const replaceBtn = field.querySelector(".admin-media-replace-btn");
+    const removeBtn = field.querySelector(".admin-media-remove-btn");
+    const librarySelect = field.querySelector(".admin-media-library-select");
+    const toggleManualBtn = field.querySelector(".admin-media-toggle-manual-btn");
+    const manualRow = field.querySelector(".admin-media-manual-row");
+    const manualInput = field.querySelector(".admin-media-manual-input");
+    const applyManualBtn = field.querySelector(".admin-media-apply-manual-btn");
+
+    function updateMediaPreview(src, isDoc = false) {
+      if (!src) {
+        valueInput.value = "";
+        previewCard.style.display = "none";
+        dropzone.style.display = "flex";
+        if (manualInput) manualInput.value = "";
+        if (librarySelect) librarySelect.value = "";
+        return;
+      }
+
+      valueInput.value = src;
+      if (manualInput) manualInput.value = src;
+
+      const checkPdf = isDoc || src.toLowerCase().endsWith(".pdf") || src.startsWith("data:application/pdf");
+      const thumbEl = previewCard.querySelector(".admin-media-thumb");
+      const docBadge = previewCard.querySelector(".admin-media-doc-badge");
+      const nameEl = previewCard.querySelector(".admin-media-name");
+      const badgeEl = previewCard.querySelector(".admin-media-badge");
+
+      if (checkPdf) {
+        if (thumbEl) thumbEl.style.display = "none";
+        if (docBadge) docBadge.style.display = "grid";
+        else {
+          const newBadge = document.createElement("div");
+          newBadge.className = "admin-media-doc-badge";
+          newBadge.textContent = "PDF";
+          previewCard.insertBefore(newBadge, previewCard.firstChild);
+        }
+      } else {
+        if (docBadge) docBadge.style.display = "none";
+        if (thumbEl) {
+          thumbEl.src = src;
+          thumbEl.style.display = "block";
+        } else {
+          const newThumb = document.createElement("img");
+          newThumb.className = "admin-media-thumb";
+          newThumb.src = src;
+          newThumb.alt = "Preview";
+          previewCard.insertBefore(newThumb, previewCard.firstChild);
+        }
+      }
+
+      if (nameEl) nameEl.textContent = src.startsWith("data:") ? "Uploaded File (Direct Storage)" : src;
+      if (badgeEl) badgeEl.textContent = src.startsWith("data:") ? "✦ In-Memory Optimized" : "✦ Repository Asset";
+
+      previewCard.style.display = "flex";
+      dropzone.style.display = "none";
+    }
+
+    // Dropzone Click
+    dropzone?.addEventListener("click", () => fileInput?.click());
+    replaceBtn?.addEventListener("click", () => fileInput?.click());
+
+    // File Input change
+    fileInput?.addEventListener("change", async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      try {
+        const { dataUrl, isDoc } = await readAndOptimizeMediaFile(file);
+        updateMediaPreview(dataUrl, isDoc);
+        showToast("File uploaded successfully! ✦");
+      } catch (err) {
+        console.error(err);
+        showToast("Failed to process file: " + err.message, "error");
+      }
+    });
+
+    // Drag & Drop
+    dropzone?.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropzone.classList.add("dragover");
+    });
+    dropzone?.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
+    dropzone?.addEventListener("drop", async (e) => {
+      e.preventDefault();
+      dropzone.classList.remove("dragover");
+      const file = e.dataTransfer.files && e.dataTransfer.files[0];
+      if (!file) return;
+      try {
+        const { dataUrl, isDoc } = await readAndOptimizeMediaFile(file);
+        updateMediaPreview(dataUrl, isDoc);
+        showToast("File uploaded successfully! ✦");
+      } catch (err) {
+        console.error(err);
+        showToast("Failed to process file: " + err.message, "error");
+      }
+    });
+
+    // Remove button
+    removeBtn?.addEventListener("click", () => {
+      updateMediaPreview("");
+    });
+
+    // Library Select
+    librarySelect?.addEventListener("change", (e) => {
+      const val = e.target.value;
+      if (val) {
+        updateMediaPreview(val);
+      }
+    });
+
+    // Manual toggle
+    toggleManualBtn?.addEventListener("click", () => {
+      if (manualRow) manualRow.classList.toggle("active");
+    });
+
+    applyManualBtn?.addEventListener("click", () => {
+      if (manualInput) {
+        updateMediaPreview(manualInput.value.trim());
+        if (manualRow) manualRow.classList.remove("active");
+      }
+    });
+  });
+}
+
 // 5. Admin Hero Tab
 function renderAdminHeroTab() {
   const container = document.getElementById("adminHeroFormWrapper");
   const h = portfolioData.hero || {};
   if (!container) return;
 
+  const avatarMediaHtml = buildMediaFieldHtml({
+    id: "heroAvatar",
+    label: "Profile Photo / Avatar",
+    value: h.avatar || "profile.jpg",
+    category: "avatars",
+    helpText: "Upload a square portrait photo (PNG/JPG). It will display in the Hero section."
+  });
+
   container.innerHTML = `
     <form id="adminHeroForm" class="admin-form-grid">
+      <div class="admin-form-group full-width">
+        ${avatarMediaHtml}
+      </div>
       <div class="admin-form-group full-width">
         <label for="heroEyebrow">Eyebrow Subtitle</label>
         <input type="text" id="heroEyebrow" value="${h.eyebrow || ""}">
@@ -2096,9 +2433,12 @@ function renderAdminHeroTab() {
     </form>
   `;
 
+  initAllMediaFieldsIn(container);
+
   document.getElementById("adminSaveHeroBtn").addEventListener("click", () => {
     portfolioData.hero = {
       ...portfolioData.hero,
+      avatar: document.getElementById("heroAvatar")?.value.trim() || portfolioData.hero.avatar || "profile.jpg",
       eyebrow: document.getElementById("heroEyebrow").value,
       title: document.getElementById("heroTitle").value,
       description: document.getElementById("heroDesc").value,
@@ -2611,6 +2951,14 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
         }
       : portfolioData.projects.find((pr) => pr.id === idOrIndex) || {};
 
+    const hoverMediaHtml = buildMediaFieldHtml({
+      id: "editProjHoverImage",
+      label: "Hover 3D Render Image / Main PCB Visual",
+      value: p.hoverImage || "",
+      category: "projects",
+      helpText: "3D render or PCB visual shown when hovering project card and inside modal."
+    });
+
     formHtml = `
       <div class="admin-form-grid">
         <div class="admin-form-group">
@@ -2641,8 +2989,7 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
           <textarea id="editProjExcerpt" rows="2">${p.cardExcerpt || p.description || ""}</textarea>
         </div>
         <div class="admin-form-group full-width">
-          <label for="editProjHoverImage">Hover 3D Render Image Path (e.g. Project/BLDC_MC_V1.0/bldc_top.png)</label>
-          <input type="text" id="editProjHoverImage" value="${p.hoverImage || ""}">
+          ${hoverMediaHtml}
         </div>
         <div class="admin-form-group full-width">
           <label for="editProjDesc">Full Modal Description</label>
@@ -2692,25 +3039,21 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
         </div>
       </div>
 
-      <!-- Gallery Images Builder -->
+      <!-- Gallery Images Builder with Direct Upload & Batch Support -->
       <div class="admin-builder-section">
         <div class="admin-builder-header">
-          <h4>Gallery Visuals & Renders</h4>
-          <button type="button" class="admin-btn admin-btn-sm admin-btn-ghost" onclick="addImageRow('editProjImagesContainer')">+ Add Image</button>
+          <h4>Gallery Visuals & 3D Renders</h4>
+          <div style="display:flex;gap:6px;">
+            <label class="admin-btn admin-btn-sm admin-btn-primary" style="cursor:pointer;margin:0;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              <span>+ Upload Images</span>
+              <input type="file" accept="image/*,.svg" multiple style="display:none;" onchange="handleBatchMediaUpload(this.files, 'editProjImagesContainer', false)">
+            </label>
+            <button type="button" class="admin-btn admin-btn-sm admin-btn-ghost" onclick="addGalleryCardRow('editProjImagesContainer', {src:'',label:'Preview',caption:''}, false)">+ Add Row</button>
+          </div>
         </div>
         <div id="editProjImagesContainer">
-          ${(p.images || [])
-            .map(
-              (img) => `
-            <div class="admin-image-row">
-              <input type="text" class="img-src" value="${escapeHtml(img.src || "")}" placeholder="Image Path (e.g. Project/BLDC_MC_V1.0/bldc_top.png)">
-              <input type="text" class="img-label" value="${escapeHtml(img.label || "")}" placeholder="Tab Label (e.g. Top 3D View)">
-              <input type="text" class="img-caption" value="${escapeHtml(img.caption || "")}" placeholder="Caption">
-              <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">✕</button>
-            </div>
-          `
-            )
-            .join("")}
+          <!-- Populated after render -->
         </div>
       </div>
 
@@ -2789,6 +3132,14 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
         }
       : portfolioData.courses.find((cr) => cr.id === idOrIndex) || {};
 
+    const iconMediaHtml = buildMediaFieldHtml({
+      id: "editCourseIcon",
+      label: "Institution / Organization Icon",
+      value: c.iconSrc || "",
+      category: "icons",
+      helpText: "Square logo of academy or certification provider (PNG/SVG)."
+    });
+
     formHtml = `
       <div class="admin-form-grid">
         <div class="admin-form-group full-width">
@@ -2815,9 +3166,8 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
           <label for="editCourseBadgeText">Badge Text</label>
           <input type="text" id="editCourseBadgeText" value="${c.typeBadgeText || "Verified ✦"}">
         </div>
-        <div class="admin-form-group">
-          <label for="editCourseIcon">Institution Icon Path (e.g. Icons/Fedevel.png)</label>
-          <input type="text" id="editCourseIcon" value="${c.iconSrc || ""}">
+        <div class="admin-form-group full-width">
+          ${iconMediaHtml}
         </div>
         <div class="admin-form-group full-width">
           <label for="editCourseDesc">Overview & Syllabus Summary</label>
@@ -2845,25 +3195,21 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
         </div>
       </div>
 
-      <!-- Certificate Images / Gallery -->
+      <!-- Certificate Images / Proofs with Direct Upload & Batch Support -->
       <div class="admin-builder-section">
         <div class="admin-builder-header">
-          <h4>Certificate Image / Proof (Optional)</h4>
-          <button type="button" class="admin-btn admin-btn-sm admin-btn-ghost" onclick="addImageRow('editCourseImagesContainer')">+ Add Image</button>
+          <h4>Certificate Image / Document Proof</h4>
+          <div style="display:flex;gap:6px;">
+            <label class="admin-btn admin-btn-sm admin-btn-primary" style="cursor:pointer;margin:0;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              <span>+ Upload Certificate</span>
+              <input type="file" accept="image/*,.pdf,.svg" multiple style="display:none;" onchange="handleBatchMediaUpload(this.files, 'editCourseImagesContainer', true)">
+            </label>
+            <button type="button" class="admin-btn admin-btn-sm admin-btn-ghost" onclick="addGalleryCardRow('editCourseImagesContainer', {src:'',label:'Certificate',caption:''}, true)">+ Add Row</button>
+          </div>
         </div>
         <div id="editCourseImagesContainer">
-          ${(c.images || [])
-            .map(
-              (img) => `
-            <div class="admin-image-row">
-              <input type="text" class="img-src" value="${escapeHtml(img.src || "")}" placeholder="Certificate Image Path (e.g. certificates/Mixed-Signal Hardware Design_page-0001.jpg)">
-              <input type="text" class="img-label" value="${escapeHtml(img.label || "")}" placeholder="Label (e.g. Certificate)">
-              <input type="text" class="img-caption" value="${escapeHtml(img.caption || "")}" placeholder="Caption">
-              <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">✕</button>
-            </div>
-          `
-            )
-            .join("")}
+          <!-- Populated after render -->
         </div>
       </div>
 
@@ -2896,6 +3242,31 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
   adminItemModalBody.innerHTML = formHtml;
   adminItemModalOverlay.classList.add("active");
   adminItemModalOverlay.setAttribute("aria-hidden", "false");
+
+  // Initialize media dropzones in modal
+  initAllMediaFieldsIn(adminItemModalBody);
+
+  // Populate gallery cards for projects
+  if (type === "project") {
+    const projImages = isNew ? [] : (portfolioData.projects.find((pr) => pr.id === idOrIndex) || {}).images || [];
+    const projContainer = document.getElementById("editProjImagesContainer");
+    if (projContainer) {
+      if (projImages.length > 0) {
+        projImages.forEach((img) => addGalleryCardRow("editProjImagesContainer", img, false));
+      }
+    }
+  }
+
+  // Populate certificate cards for courses
+  if (type === "course") {
+    const courseImages = isNew ? [] : (portfolioData.courses.find((cr) => cr.id === idOrIndex) || {}).images || [];
+    const courseContainer = document.getElementById("editCourseImagesContainer");
+    if (courseContainer) {
+      if (courseImages.length > 0) {
+        courseImages.forEach((img) => addGalleryCardRow("editCourseImagesContainer", img, true));
+      }
+    }
+  }
 
   // Tag input listener for skills
   if (type === "skill") {
@@ -2959,19 +3330,101 @@ window.addSpecRow = function (containerId) {
   row.querySelector("input").focus();
 };
 
-window.addImageRow = function (containerId) {
+window.addGalleryCardRow = function (containerId, data = { src: "", label: "Preview", caption: "" }, isCertificate = false) {
   const c = document.getElementById(containerId);
   if (!c) return;
-  const row = document.createElement("div");
-  row.className = "admin-image-row";
-  row.innerHTML = `
-    <input type="text" class="img-src" placeholder="Image URL / Path">
-    <input type="text" class="img-label" placeholder="Label (e.g. Top View)">
-    <input type="text" class="img-caption" placeholder="Caption">
-    <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">✕</button>
+  const rowId = `gallery-row-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`;
+  const hasSrc = Boolean(data.src);
+  const isPdf = data.src && (data.src.toLowerCase().endsWith(".pdf") || data.src.startsWith("data:application/pdf"));
+
+  const card = document.createElement("div");
+  card.className = "admin-gallery-card";
+  card.id = rowId;
+  card.innerHTML = `
+    <div class="admin-gallery-card-thumb-wrap" title="Click to upload or replace visual">
+      ${
+        isPdf
+          ? `<div class="admin-media-doc-badge" style="width:100%;height:100%;border:none;">PDF</div>`
+          : `<img src="${hasSrc ? escapeHtml(data.src) : "favicon.svg"}" alt="Visual" class="admin-gallery-card-thumb" style="${hasSrc ? "" : "opacity:0.3;filter:grayscale(1);"}">`
+      }
+      <span class="admin-gallery-card-thumb-hover">Upload</span>
+      <input type="file" class="gallery-file-input" accept="image/*,.pdf,.svg" style="display:none;">
+    </div>
+    <div class="admin-gallery-card-inputs">
+      <div class="admin-gallery-card-inputs-row">
+        <input type="text" class="img-label" value="${escapeHtml(data.label || (isCertificate ? "Certificate" : "Preview"))}" placeholder="${isCertificate ? "Label (e.g. Certificate)" : "Tab Label (e.g. Top 3D View)"}" style="flex:1;">
+        <input type="text" class="img-src" value="${escapeHtml(data.src || "")}" placeholder="${isCertificate ? "Certificate Image Path or URL" : "Image Path or URL"}" style="flex:2;">
+      </div>
+      <input type="text" class="img-caption" value="${escapeHtml(data.caption || "")}" placeholder="Caption / Description...">
+    </div>
+    <div class="admin-gallery-card-actions">
+      <button type="button" class="admin-icon-btn danger" onclick="this.closest('.admin-gallery-card').remove()" title="Delete Image">✕</button>
+    </div>
   `;
-  c.appendChild(row);
-  row.querySelector("input").focus();
+
+  c.appendChild(card);
+
+  // Setup file picking for thumbnail
+  const thumbWrap = card.querySelector(".admin-gallery-card-thumb-wrap");
+  const fileInput = card.querySelector(".gallery-file-input");
+  const srcInput = card.querySelector(".img-src");
+
+  thumbWrap?.addEventListener("click", () => fileInput?.click());
+
+  fileInput?.addEventListener("change", async (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    try {
+      const { dataUrl, isDoc } = await readAndOptimizeMediaFile(file);
+      srcInput.value = dataUrl;
+      if (isDoc) {
+        thumbWrap.innerHTML = `<div class="admin-media-doc-badge" style="width:100%;height:100%;border:none;">PDF</div><span class="admin-gallery-card-thumb-hover">Upload</span><input type="file" class="gallery-file-input" accept="image/*,.pdf,.svg" style="display:none;">`;
+      } else {
+        thumbWrap.innerHTML = `<img src="${dataUrl}" alt="Visual" class="admin-gallery-card-thumb"><span class="admin-gallery-card-thumb-hover">Upload</span><input type="file" class="gallery-file-input" accept="image/*,.pdf,.svg" style="display:none;">`;
+      }
+      showToast("Visual uploaded! ✦");
+    } catch (err) {
+      console.error(err);
+      showToast("Upload failed: " + err.message, "error");
+    }
+  });
+
+  srcInput?.addEventListener("input", () => {
+    const val = srcInput.value.trim();
+    const imgEl = thumbWrap.querySelector("img");
+    if (imgEl && val) {
+      imgEl.src = val;
+      imgEl.style.opacity = "1";
+      imgEl.style.filter = "none";
+    }
+  });
+};
+
+window.handleBatchMediaUpload = async function (files, containerId, isCertificate = false) {
+  if (!files || files.length === 0) return;
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    try {
+      const { dataUrl, name, isDoc } = await readAndOptimizeMediaFile(file);
+      const cleanName = name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
+      window.addGalleryCardRow(
+        containerId,
+        {
+          src: dataUrl,
+          label: isCertificate ? "Certificate" : cleanName,
+          caption: cleanName
+        },
+        isCertificate
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  showToast(`Uploaded ${files.length} visual${files.length > 1 ? "s" : ""}! ✦`);
+};
+
+window.addImageRow = function (containerId) {
+  window.addGalleryCardRow(containerId, { src: "", label: "Preview", caption: "" }, false);
 };
 
 window.addActionRow = function (containerId) {
@@ -3052,11 +3505,13 @@ if (adminItemModalSaveBtn) {
         }))
         .filter((s) => s.param || s.value);
 
-      const images = Array.from(document.querySelectorAll("#editProjImagesContainer .admin-image-row"))
+      const images = Array.from(
+        document.querySelectorAll("#editProjImagesContainer .admin-gallery-card, #editProjImagesContainer .admin-image-row")
+      )
         .map((row) => ({
-          src: row.querySelector(".img-src").value.trim(),
-          label: row.querySelector(".img-label").value.trim() || "Preview",
-          caption: row.querySelector(".img-caption").value.trim()
+          src: row.querySelector(".img-src")?.value.trim() || "",
+          label: row.querySelector(".img-label")?.value.trim() || "Preview",
+          caption: row.querySelector(".img-caption")?.value.trim() || ""
         }))
         .filter((img) => img.src);
 
@@ -3146,11 +3601,13 @@ if (adminItemModalSaveBtn) {
         .map((i) => i.value.trim())
         .filter(Boolean);
 
-      const images = Array.from(document.querySelectorAll("#editCourseImagesContainer .admin-image-row"))
+      const images = Array.from(
+        document.querySelectorAll("#editCourseImagesContainer .admin-gallery-card, #editCourseImagesContainer .admin-image-row")
+      )
         .map((row) => ({
-          src: row.querySelector(".img-src").value.trim(),
-          label: row.querySelector(".img-label").value.trim() || "Certificate",
-          caption: row.querySelector(".img-caption").value.trim()
+          src: row.querySelector(".img-src")?.value.trim() || "",
+          label: row.querySelector(".img-label")?.value.trim() || "Certificate",
+          caption: row.querySelector(".img-caption")?.value.trim() || ""
         }))
         .filter((img) => img.src);
 
@@ -3213,7 +3670,7 @@ if (adminItemModalSaveBtn) {
     renderAll();
     renderAdminAllTabs();
     closeEditItemModal();
-    showToast("Changes saved successfully!");
+    showToast("Changes saved successfully! ✦");
   });
 }
 
