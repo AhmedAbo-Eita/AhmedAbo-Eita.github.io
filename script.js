@@ -1,5 +1,17 @@
 // ===== THEME & COLOR CACHING — Precision Workshop =====
-let isDarkTheme = document.documentElement.getAttribute("data-theme") === "dark";
+function getSystemTheme() {
+  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+function getStoredTheme() {
+  try {
+    const saved = sessionStorage.getItem("portfolio_theme");
+    if (saved === "dark" || saved === "light") return saved;
+  } catch (e) {}
+  return null;
+}
+
+let isDarkTheme = (document.documentElement.getAttribute("data-theme") || getStoredTheme() || getSystemTheme()) === "dark";
 let accentRgb = isDarkTheme ? "255, 126, 74" : "214, 90, 40";
 let secondAccentRgb = isDarkTheme ? "91, 192, 190" : "42, 125, 123";
 
@@ -9,15 +21,45 @@ function updateThemeColors() {
   secondAccentRgb = isDarkTheme ? "91, 192, 190" : "42, 125, 123";
 }
 
-function toggleTheme() {
+function applyTheme(theme, persist = false) {
   const html = document.documentElement;
-  isDarkTheme = html.getAttribute("data-theme") === "dark";
-  const newTheme = isDarkTheme ? "light" : "dark";
-  html.setAttribute("data-theme", newTheme);
+  html.setAttribute("data-theme", theme);
   const themeLabel = document.getElementById("themeLabel");
-  if (themeLabel) themeLabel.textContent = isDarkTheme ? "Light" : "Dark";
+  if (themeLabel) {
+    themeLabel.textContent = theme === "light" ? "Light" : "Dark";
+  }
+  if (persist) {
+    try {
+      sessionStorage.setItem("portfolio_theme", theme);
+    } catch (e) {}
+  }
   updateThemeColors();
 }
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute("data-theme") || (isDarkTheme ? "dark" : "light");
+  const newTheme = currentTheme === "dark" ? "light" : "dark";
+  applyTheme(newTheme, true);
+}
+
+// Automatically sync when system color scheme changes in OS
+if (window.matchMedia) {
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  const handleSystemThemeChange = (e) => {
+    try {
+      sessionStorage.removeItem("portfolio_theme");
+    } catch (err) {}
+    applyTheme(e.matches ? "dark" : "light", false);
+  };
+  if (mediaQuery.addEventListener) {
+    mediaQuery.addEventListener("change", handleSystemThemeChange);
+  } else if (mediaQuery.addListener) {
+    mediaQuery.addListener(handleSystemThemeChange);
+  }
+}
+
+// Initial theme label and variable sync
+applyTheme(document.documentElement.getAttribute("data-theme") || getStoredTheme() || getSystemTheme(), false);
 
 // ===== CIRCUIT CANVAS (HIGH PERFORMANCE) =====
 const canvas = document.getElementById("circuitCanvas");

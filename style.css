@@ -1,3 +1,46 @@
+:root {
+  /* Precision Workshop — Default (Dark) */
+  --bg: #0B0E14;
+  --bg-elevated: #12151F;
+  --bg-soft: #1A1E2B;
+  --surface: rgba(24, 27, 40, 0.88);
+  --surface-strong: #181B28;
+  --border: rgba(232, 220, 198, 0.11);
+  --border-strong: rgba(255, 126, 74, 0.32);
+  --text: #EAE6DD;
+  --muted: #9AA0B2;
+  --subtle: #6B7282;
+  --accent: #FF7E4A;
+  --accent-2: #5BC0BE;
+  --accent-3: #E8DCC6;
+  --danger: #E7575D;
+  --shadow: rgba(0, 0, 0, 0.48);
+  --glow: rgba(255, 126, 74, 0.18);
+  --grid: rgba(232, 220, 198, 0.042);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #FCFAF7;
+    --bg-elevated: #FFFFFF;
+    --bg-soft: #F0EBE3;
+    --surface: rgba(255, 255, 255, 0.94);
+    --surface-strong: #FFFFFF;
+    --border: rgba(26, 28, 30, 0.10);
+    --border-strong: rgba(214, 90, 40, 0.28);
+    --text: #1A1C1E;
+    --muted: #5E636E;
+    --subtle: #8A8F9A;
+    --accent: #D65A28;
+    --accent-2: #2A7D7B;
+    --accent-3: #8B7355;
+    --danger: #C21E56;
+    --shadow: rgba(26, 28, 30, 0.08);
+    --glow: rgba(214, 90, 40, 0.14);
+    --grid: rgba(26, 28, 30, 0.05);
+  }
+}
+
 :root[data-theme="dark"] {
   /* Precision Workshop — warm copper + midnight */
   --bg: #0B0E14;
