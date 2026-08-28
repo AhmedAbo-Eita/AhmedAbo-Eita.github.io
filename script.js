@@ -1,4 +1,122 @@
-// ===== THEME & COLOR CACHING — Precision Workshop =====
+// ===== PORTFOLIO DATA ACTIVE STATE =====
+let portfolioData = null;
+
+// ===== THEME & COLOR CACHING & TYPOGRAPHY MANAGER =====
+const THEME_PRESETS = [
+  {
+    id: "copper",
+    name: "Precision Copper",
+    desc: "Warm copper + desaturated teal — workshop default",
+    dark: { accent: "#FF7E4A", accent2: "#5BC0BE", bg: "#0B0E14", bgElevated: "#12151F", surface: "#181B28", text: "#EAE6DD" },
+    light: { accent: "#D65A28", accent2: "#2A7D7B", bg: "#FCFAF7", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#1A1C1E" }
+  },
+  {
+    id: "forge",
+    name: "Iron Forge",
+    desc: "Aged brass on cold steel — calipers, chassis, vise",
+    dark: { accent: "#C48A4A", accent2: "#7E96A8", bg: "#0F1418", bgElevated: "#171C22", surface: "#1F242B", text: "#E6E1D8" },
+    light: { accent: "#A65E2A", accent2: "#5B7385", bg: "#F3F0E8", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#1E1C1A" }
+  },
+  {
+    id: "graphite",
+    name: "Graphite Amber",
+    desc: "Desaturated amber signal on graphite — lab instrument",
+    dark: { accent: "#C9A86A", accent2: "#8E9B90", bg: "#131415", bgElevated: "#1A1D1E", surface: "#212426", text: "#E8E6E1" },
+    light: { accent: "#9C7A3A", accent2: "#6B7C6E", bg: "#F7F5F1", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#1E1E1C" }
+  },
+  {
+    id: "oxide",
+    name: "Oxide Field",
+    desc: "Iron oxide ink on sage olive — field manual",
+    dark: { accent: "#B86A3D", accent2: "#7A866B", bg: "#13110F", bgElevated: "#1B1816", surface: "#24211E", text: "#EDE8E0" },
+    light: { accent: "#8F4A24", accent2: "#5E6A52", bg: "#F4F1EB", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#1E1A16" }
+  },
+  {
+    id: "blueprint",
+    name: "Blueprint Archive",
+    desc: "Muted blueprint blue on linen — technical drawing",
+    dark: { accent: "#6A8EA8", accent2: "#C2B8A3", bg: "#0D1623", bgElevated: "#132034", surface: "#1A2B42", text: "#DDE6F0" },
+    light: { accent: "#4A6B8A", accent2: "#8B7F6E", bg: "#EEF2F6", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#121C26" }
+  },
+  {
+    id: "concrete",
+    name: "Concrete Lab",
+    desc: "Stone & concrete with ink — measured, quiet",
+    dark: { accent: "#B8BFC6", accent2: "#8F9AA6", bg: "#0E0F11", bgElevated: "#16171A", surface: "#1E1F24", text: "#EDEEF0" },
+    light: { accent: "#2E3440", accent2: "#6B7A8A", bg: "#F2F2F3", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#0E0F11" }
+  }
+];
+
+const GOOGLE_FONTS_HEADING = [
+  { name: "Sora", family: "'Sora', sans-serif" },
+  { name: "Instrument Sans", family: "'Instrument Sans', sans-serif" },
+  { name: "Newsreader", family: "'Newsreader', serif" },
+  { name: "IBM Plex Sans", family: "'IBM Plex Sans', sans-serif" },
+  { name: "Space Grotesk", family: "'Space Grotesk', sans-serif" },
+  { name: "Fragment Mono", family: "'Fragment Mono', monospace" }
+];
+
+const GOOGLE_FONTS_BODY = [
+  { name: "Inter", family: "'Inter', system-ui, -apple-system, sans-serif" },
+  { name: "IBM Plex Sans", family: "'IBM Plex Sans', sans-serif" },
+  { name: "Work Sans", family: "'Work Sans', sans-serif" },
+  { name: "Source Sans 3", family: "'Source Sans 3', sans-serif" },
+  { name: "Instrument Sans", family: "'Instrument Sans', sans-serif" }
+];
+
+const GOOGLE_FONTS_MONO = [
+  { name: "JetBrains Mono", family: "'JetBrains Mono', monospace" },
+  { name: "IBM Plex Mono", family: "'IBM Plex Mono', monospace" },
+  { name: "Fragment Mono", family: "'Fragment Mono', monospace" },
+  { name: "Space Mono", family: "'Space Mono', monospace" }
+];
+
+const DEFAULT_THEME = {
+  preset: "copper",
+  dark: {
+    accent: "#FF7E4A",
+    accent2: "#5BC0BE",
+    bg: "#0B0E14",
+    bgElevated: "#12151F",
+    surface: "#181B28",
+    text: "#EAE6DD"
+  },
+  light: {
+    accent: "#D65A28",
+    accent2: "#2A7D7B",
+    bg: "#FCFAF7",
+    bgElevated: "#FFFFFF",
+    surface: "#FFFFFF",
+    text: "#1A1C1E"
+  },
+  fonts: {
+    heading: "Sora",
+    body: "Inter",
+    mono: "JetBrains Mono"
+  }
+};
+
+function hexToRgb(hex) {
+  if (!hex) return "255, 126, 74";
+  let c = hex.replace("#", "").trim();
+  if (c.length === 3) c = c.split("").map((x) => x + x).join("");
+  if (c.length !== 6) return "255, 126, 74";
+  const num = parseInt(c, 16);
+  return `${(num >> 16) & 255}, ${(num >> 8) & 255}, ${num & 255}`;
+}
+
+function loadGoogleFont(fontName) {
+  if (!fontName || fontName === "System Sans") return;
+  const linkId = `gfont-${fontName.replace(/\s+/g, "-").toLowerCase()}`;
+  if (!document.getElementById(linkId)) {
+    const link = document.createElement("link");
+    link.id = linkId;
+    link.rel = "stylesheet";
+    link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}:wght@400;500;600;700;800&display=swap`;
+    document.head.appendChild(link);
+  }
+}
+
 function getSystemTheme() {
   return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
@@ -17,8 +135,62 @@ let secondAccentRgb = isDarkTheme ? "91, 192, 190" : "42, 125, 123";
 
 function updateThemeColors() {
   isDarkTheme = document.documentElement.getAttribute("data-theme") === "dark";
-  accentRgb = isDarkTheme ? "255, 126, 74" : "214, 90, 40";
-  secondAccentRgb = isDarkTheme ? "91, 192, 190" : "42, 125, 123";
+  const currentThemeObj = (portfolioData && portfolioData.theme) || DEFAULT_THEME;
+  const colors = (currentThemeObj && (isDarkTheme ? currentThemeObj.dark : currentThemeObj.light)) || {};
+
+  accentRgb = hexToRgb(colors.accent || (isDarkTheme ? "#FF7E4A" : "#D65A28"));
+  secondAccentRgb = hexToRgb(colors.accent2 || (isDarkTheme ? "#5BC0BE" : "#2A7D7B"));
+}
+
+function applyCustomTheme(themeData) {
+  const currentTheme = themeData || (portfolioData && portfolioData.theme) || DEFAULT_THEME;
+  if (!currentTheme) return;
+
+  const isDark = (document.documentElement.getAttribute("data-theme") || "dark") === "dark";
+  const colors = (isDark ? currentTheme.dark : currentTheme.light) || {};
+  const fonts = currentTheme.fonts || {};
+  const root = document.documentElement;
+
+  // Colors
+  if (colors.accent) {
+    root.style.setProperty("--accent", colors.accent);
+    root.style.setProperty("--border-strong", `color-mix(in srgb, ${colors.accent} 35%, transparent)`);
+    root.style.setProperty("--glow", `color-mix(in srgb, ${colors.accent} 20%, transparent)`);
+  }
+  if (colors.accent2) {
+    root.style.setProperty("--accent-2", colors.accent2);
+  }
+  if (colors.bg) {
+    root.style.setProperty("--bg", colors.bg);
+  }
+  if (colors.bgElevated) {
+    root.style.setProperty("--bg-elevated", colors.bgElevated);
+  }
+  if (colors.surface) {
+    root.style.setProperty("--surface-strong", colors.surface);
+  }
+  if (colors.text) {
+    root.style.setProperty("--text", colors.text);
+  }
+
+  // Fonts
+  if (fonts.heading) {
+    loadGoogleFont(fonts.heading);
+    const headingDef = GOOGLE_FONTS_HEADING.find((f) => f.name === fonts.heading);
+    root.style.setProperty("--font-heading", headingDef ? headingDef.family : `'${fonts.heading}', sans-serif`);
+  }
+  if (fonts.body) {
+    loadGoogleFont(fonts.body);
+    const bodyDef = GOOGLE_FONTS_BODY.find((f) => f.name === fonts.body);
+    root.style.setProperty("--font-body", bodyDef ? bodyDef.family : `'${fonts.body}', sans-serif`);
+  }
+  if (fonts.mono) {
+    loadGoogleFont(fonts.mono);
+    const monoDef = GOOGLE_FONTS_MONO.find((f) => f.name === fonts.mono);
+    root.style.setProperty("--font-mono", monoDef ? monoDef.family : `'${fonts.mono}', monospace`);
+  }
+
+  updateThemeColors();
 }
 
 function applyTheme(theme, persist = false) {
@@ -33,7 +205,7 @@ function applyTheme(theme, persist = false) {
       sessionStorage.setItem("portfolio_theme", theme);
     } catch (e) {}
   }
-  updateThemeColors();
+  applyCustomTheme();
 }
 
 function toggleTheme() {
@@ -841,11 +1013,35 @@ const DEFAULT_PORTFOLIO_DATA = {
       images: [],
       actions: []
     }
-  ]
+  ],
+  theme: {
+    preset: "copper",
+    dark: {
+      accent: "#FF7E4A",
+      accent2: "#5BC0BE",
+      bg: "#0B0E14",
+      bgElevated: "#12151F",
+      surface: "#181B28",
+      text: "#EAE6DD"
+    },
+    light: {
+      accent: "#D65A28",
+      accent2: "#2A7D7B",
+      bg: "#FCFAF7",
+      bgElevated: "#FFFFFF",
+      surface: "#FFFFFF",
+      text: "#1A1C1E"
+    },
+    fonts: {
+      heading: "Sora",
+      body: "Inter",
+      mono: "JetBrains Mono"
+    }
+  }
 };
 
 // Global Active State
-let portfolioData = JSON.parse(JSON.stringify(DEFAULT_PORTFOLIO_DATA));
+portfolioData = JSON.parse(JSON.stringify(DEFAULT_PORTFOLIO_DATA));
 let projectsLookup = {};
 
 // Load saved data or fetch from JSON
@@ -854,6 +1050,7 @@ async function initPortfolioData() {
   if (localSaved) {
     try {
       portfolioData = JSON.parse(localSaved);
+      applyCustomTheme();
       renderAll();
       return;
     } catch (e) {
@@ -870,6 +1067,7 @@ async function initPortfolioData() {
   } catch (err) {
     console.info("Using embedded default portfolio data", err);
   }
+  applyCustomTheme();
   renderAll();
 }
 
@@ -1654,6 +1852,7 @@ function renderAdminAllTabs() {
   renderAdminEducationTab();
   renderAdminCoursesList();
   renderAdminHeroTab();
+  renderAdminThemeTab();
   loadAdminSettings();
 }
 
@@ -1919,7 +2118,331 @@ function renderAdminHeroTab() {
   });
 }
 
-// 6. Settings & GitHub Sync Tab
+// 6. Admin Theme & Styling Tab
+function renderAdminThemeTab() {
+  const container = document.getElementById("adminThemeWrapper");
+  if (!container) return;
+
+  const currentTheme = portfolioData.theme || DEFAULT_PORTFOLIO_DATA.theme;
+  const currentPreset = currentTheme.preset || "copper";
+  const dark = currentTheme.dark || DEFAULT_PORTFOLIO_DATA.theme.dark;
+  const light = currentTheme.light || DEFAULT_PORTFOLIO_DATA.theme.light;
+  const fonts = currentTheme.fonts || DEFAULT_PORTFOLIO_DATA.theme.fonts;
+
+  container.innerHTML = `
+    <!-- Curated Presets -->
+    <div class="admin-theme-section">
+      <div class="admin-theme-section-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24"></path><path d="m14.83 9.17 4.24-4.24"></path><path d="m14.83 14.83 4.24 4.24"></path><path d="m9.17 14.83-4.24 4.24"></path></svg>
+        <span>Curated Color Palettes</span>
+      </div>
+      <p class="admin-theme-section-desc">Click any palette to preview immediately. You can fine-tune individual colors below.</p>
+      <div class="admin-presets-grid" id="adminPresetsGrid">
+        ${THEME_PRESETS.map(
+          (p) => `
+          <button type="button" class="admin-preset-card ${p.id === currentPreset ? "active" : ""}" data-preset-id="${p.id}">
+            <div class="admin-preset-info">
+              <h4>${p.name}</h4>
+              <p>${p.desc}</p>
+            </div>
+            <div class="admin-preset-swatches">
+              <span class="admin-swatch-dot" style="background:${p.dark.accent};" title="Accent: ${p.dark.accent}"></span>
+              <span class="admin-swatch-dot" style="background:${p.dark.accent2};" title="Secondary: ${p.dark.accent2}"></span>
+              <span class="admin-swatch-dot" style="background:${p.dark.bg};" title="Dark BG: ${p.dark.bg}"></span>
+              <span class="admin-swatch-dot" style="background:${p.light.bg};" title="Light BG: ${p.light.bg}"></span>
+            </div>
+          </button>
+        `
+        ).join("")}
+      </div>
+    </div>
+
+    <!-- Dark Mode Colors -->
+    <div class="admin-theme-section">
+      <div class="admin-theme-section-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+        <span>Dark Mode Colors</span>
+      </div>
+      <div class="admin-color-picker-grid">
+        <div class="admin-color-item">
+          <label for="colorDarkAccent">Primary Accent</label>
+          <div class="admin-color-input-wrapper">
+            <input type="color" class="admin-color-picker-native" id="pickerDarkAccent" value="${dark.accent || "#FF7E4A"}">
+            <input type="text" class="admin-color-hex-input" id="colorDarkAccent" value="${dark.accent || "#FF7E4A"}" maxlength="7">
+          </div>
+        </div>
+        <div class="admin-color-item">
+          <label for="colorDarkAccent2">Secondary Accent</label>
+          <div class="admin-color-input-wrapper">
+            <input type="color" class="admin-color-picker-native" id="pickerDarkAccent2" value="${dark.accent2 || "#5BC0BE"}">
+            <input type="text" class="admin-color-hex-input" id="colorDarkAccent2" value="${dark.accent2 || "#5BC0BE"}" maxlength="7">
+          </div>
+        </div>
+        <div class="admin-color-item">
+          <label for="colorDarkBg">Dark Background</label>
+          <div class="admin-color-input-wrapper">
+            <input type="color" class="admin-color-picker-native" id="pickerDarkBg" value="${dark.bg || "#0B0E14"}">
+            <input type="text" class="admin-color-hex-input" id="colorDarkBg" value="${dark.bg || "#0B0E14"}" maxlength="7">
+          </div>
+        </div>
+        <div class="admin-color-item">
+          <label for="colorDarkSurface">Surface / Cards</label>
+          <div class="admin-color-input-wrapper">
+            <input type="color" class="admin-color-picker-native" id="pickerDarkSurface" value="${dark.surface || "#181B28"}">
+            <input type="text" class="admin-color-hex-input" id="colorDarkSurface" value="${dark.surface || "#181B28"}" maxlength="7">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Light Mode Colors -->
+    <div class="admin-theme-section">
+      <div class="admin-theme-section-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+        <span>Light Mode Colors</span>
+      </div>
+      <div class="admin-color-picker-grid">
+        <div class="admin-color-item">
+          <label for="colorLightAccent">Primary Accent</label>
+          <div class="admin-color-input-wrapper">
+            <input type="color" class="admin-color-picker-native" id="pickerLightAccent" value="${light.accent || "#D65A28"}">
+            <input type="text" class="admin-color-hex-input" id="colorLightAccent" value="${light.accent || "#D65A28"}" maxlength="7">
+          </div>
+        </div>
+        <div class="admin-color-item">
+          <label for="colorLightAccent2">Secondary Accent</label>
+          <div class="admin-color-input-wrapper">
+            <input type="color" class="admin-color-picker-native" id="pickerLightAccent2" value="${light.accent2 || "#2A7D7B"}">
+            <input type="text" class="admin-color-hex-input" id="colorLightAccent2" value="${light.accent2 || "#2A7D7B"}" maxlength="7">
+          </div>
+        </div>
+        <div class="admin-color-item">
+          <label for="colorLightBg">Light Background</label>
+          <div class="admin-color-input-wrapper">
+            <input type="color" class="admin-color-picker-native" id="pickerLightBg" value="${light.bg || "#FCFAF7"}">
+            <input type="text" class="admin-color-hex-input" id="colorLightBg" value="${light.bg || "#FCFAF7"}" maxlength="7">
+          </div>
+        </div>
+        <div class="admin-color-item">
+          <label for="colorLightSurface">Surface / Cards</label>
+          <div class="admin-color-input-wrapper">
+            <input type="color" class="admin-color-picker-native" id="pickerLightSurface" value="${light.surface || "#FFFFFF"}">
+            <input type="text" class="admin-color-hex-input" id="colorLightSurface" value="${light.surface || "#FFFFFF"}" maxlength="7">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Typography & Fonts -->
+    <div class="admin-theme-section">
+      <div class="admin-theme-section-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>
+        <span>Typography & Fonts</span>
+      </div>
+      <div class="admin-typography-grid">
+        <div class="admin-font-group">
+          <label for="fontHeadingSelect">Headings & Titles</label>
+          <select id="fontHeadingSelect" class="admin-font-select">
+            ${GOOGLE_FONTS_HEADING.map((f) => `<option value="${f.name}" ${fonts.heading === f.name ? "selected" : ""}>${f.name}</option>`).join("")}
+          </select>
+          <div class="admin-font-preview-card" id="fontHeadingPreview">
+            <span class="admin-font-preview-title" style="font-family:var(--font-heading);">Reliable electronics from schematic to field.</span>
+            <span class="admin-font-preview-sample" style="font-family:var(--font-heading);">Heading sample typography (600/700 weight)</span>
+          </div>
+        </div>
+
+        <div class="admin-font-group">
+          <label for="fontBodySelect">Body Text & Descriptions</label>
+          <select id="fontBodySelect" class="admin-font-select">
+            ${GOOGLE_FONTS_BODY.map((f) => `<option value="${f.name}" ${fonts.body === f.name ? "selected" : ""}>${f.name}</option>`).join("")}
+          </select>
+          <div class="admin-font-preview-card" id="fontBodyPreview">
+            <span class="admin-font-preview-sample" style="font-family:var(--font-body);color:var(--text);">Hardware Design Engineer designing power stages and embedded sensing platforms.</span>
+          </div>
+        </div>
+
+        <div class="admin-font-group">
+          <label for="fontMonoSelect">Code, Specs & Monospace Badges</label>
+          <select id="fontMonoSelect" class="admin-font-select">
+            ${GOOGLE_FONTS_MONO.map((f) => `<option value="${f.name}" ${fonts.mono === f.name ? "selected" : ""}>${f.name}</option>`).join("")}
+          </select>
+          <div class="admin-font-preview-card" id="fontMonoPreview">
+            <span class="admin-font-preview-sample" style="font-family:var(--font-mono);color:var(--accent);">STM32G431RBT6 (170 MHz) // 8-layer PCB</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions Row -->
+    <div class="admin-form-group full-width admin-form-actions-row" style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <button type="button" class="admin-btn admin-btn-primary" id="adminSaveThemeBtn">
+        Save Theme & Fonts
+      </button>
+      <button type="button" class="admin-btn admin-btn-danger" id="adminResetThemeBtn">
+        Reset Theme to Default
+      </button>
+    </div>
+  `;
+
+  // Sync color pickers with hex text inputs & live preview
+  function syncColorPair(pickerId, inputId) {
+    const picker = document.getElementById(pickerId);
+    const input = document.getElementById(inputId);
+    if (!picker || !input) return;
+
+    picker.addEventListener("input", (e) => {
+      input.value = e.target.value.toUpperCase();
+      triggerLiveThemePreview();
+    });
+
+    input.addEventListener("input", (e) => {
+      let val = e.target.value.trim();
+      if (!val.startsWith("#")) val = "#" + val;
+      if (/^#[0-9A-F]{6}$/i.test(val)) {
+        picker.value = val;
+        triggerLiveThemePreview();
+      }
+    });
+  }
+
+  syncColorPair("pickerDarkAccent", "colorDarkAccent");
+  syncColorPair("pickerDarkAccent2", "colorDarkAccent2");
+  syncColorPair("pickerDarkBg", "colorDarkBg");
+  syncColorPair("pickerDarkSurface", "colorDarkSurface");
+
+  syncColorPair("pickerLightAccent", "colorLightAccent");
+  syncColorPair("pickerLightAccent2", "colorLightAccent2");
+  syncColorPair("pickerLightBg", "colorLightBg");
+  syncColorPair("pickerLightSurface", "colorLightSurface");
+
+  // Preset Selection Click
+  document.querySelectorAll("#adminPresetsGrid .admin-preset-card").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#adminPresetsGrid .admin-preset-card").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      const presetId = btn.getAttribute("data-preset-id");
+      const preset = THEME_PRESETS.find((p) => p.id === presetId);
+      if (preset) {
+        document.getElementById("pickerDarkAccent").value = preset.dark.accent;
+        document.getElementById("colorDarkAccent").value = preset.dark.accent;
+        document.getElementById("pickerDarkAccent2").value = preset.dark.accent2;
+        document.getElementById("colorDarkAccent2").value = preset.dark.accent2;
+        document.getElementById("pickerDarkBg").value = preset.dark.bg;
+        document.getElementById("colorDarkBg").value = preset.dark.bg;
+        document.getElementById("pickerDarkSurface").value = preset.dark.surface;
+        document.getElementById("colorDarkSurface").value = preset.dark.surface;
+
+        document.getElementById("pickerLightAccent").value = preset.light.accent;
+        document.getElementById("colorLightAccent").value = preset.light.accent;
+        document.getElementById("pickerLightAccent2").value = preset.light.accent2;
+        document.getElementById("colorLightAccent2").value = preset.light.accent2;
+        document.getElementById("pickerLightBg").value = preset.light.bg;
+        document.getElementById("colorLightBg").value = preset.light.bg;
+        document.getElementById("pickerLightSurface").value = preset.light.surface;
+        document.getElementById("colorLightSurface").value = preset.light.surface;
+
+        triggerLiveThemePreview(preset.id);
+      }
+    });
+  });
+
+  // Typography Select Listeners
+  const fontHeadingSelect = document.getElementById("fontHeadingSelect");
+  const fontBodySelect = document.getElementById("fontBodySelect");
+  const fontMonoSelect = document.getElementById("fontMonoSelect");
+
+  if (fontHeadingSelect) fontHeadingSelect.addEventListener("change", () => triggerLiveThemePreview());
+  if (fontBodySelect) fontBodySelect.addEventListener("change", () => triggerLiveThemePreview());
+  if (fontMonoSelect) fontMonoSelect.addEventListener("change", () => triggerLiveThemePreview());
+
+  function triggerLiveThemePreview(presetId = null) {
+    const activePresetBtn = document.querySelector("#adminPresetsGrid .admin-preset-card.active");
+    const activePreset = presetId || (activePresetBtn ? activePresetBtn.getAttribute("data-preset-id") : "custom");
+
+    const liveTheme = {
+      preset: activePreset,
+      dark: {
+        accent: document.getElementById("colorDarkAccent").value,
+        accent2: document.getElementById("colorDarkAccent2").value,
+        bg: document.getElementById("colorDarkBg").value,
+        bgElevated: document.getElementById("colorDarkBg").value,
+        surface: document.getElementById("colorDarkSurface").value,
+        text: dark.text || "#EAE6DD"
+      },
+      light: {
+        accent: document.getElementById("colorLightAccent").value,
+        accent2: document.getElementById("colorLightAccent2").value,
+        bg: document.getElementById("colorLightBg").value,
+        bgElevated: document.getElementById("colorLightBg").value,
+        surface: document.getElementById("colorLightSurface").value,
+        text: light.text || "#1A1C1E"
+      },
+      fonts: {
+        heading: document.getElementById("fontHeadingSelect").value,
+        body: document.getElementById("fontBodySelect").value,
+        mono: document.getElementById("fontMonoSelect").value
+      }
+    };
+
+    applyCustomTheme(liveTheme);
+  }
+
+  // Save Theme Button
+  const saveBtn = document.getElementById("adminSaveThemeBtn");
+  if (saveBtn) {
+    saveBtn.addEventListener("click", () => {
+      const activePresetBtn = document.querySelector("#adminPresetsGrid .admin-preset-card.active");
+      const activePreset = activePresetBtn ? activePresetBtn.getAttribute("data-preset-id") : "custom";
+
+      portfolioData.theme = {
+        preset: activePreset,
+        dark: {
+          accent: document.getElementById("colorDarkAccent").value,
+          accent2: document.getElementById("colorDarkAccent2").value,
+          bg: document.getElementById("colorDarkBg").value,
+          bgElevated: document.getElementById("colorDarkBg").value,
+          surface: document.getElementById("colorDarkSurface").value,
+          text: dark.text || "#EAE6DD"
+        },
+        light: {
+          accent: document.getElementById("colorLightAccent").value,
+          accent2: document.getElementById("colorLightAccent2").value,
+          bg: document.getElementById("colorLightBg").value,
+          bgElevated: document.getElementById("colorLightBg").value,
+          surface: document.getElementById("colorLightSurface").value,
+          text: light.text || "#1A1C1E"
+        },
+        fonts: {
+          heading: document.getElementById("fontHeadingSelect").value,
+          body: document.getElementById("fontBodySelect").value,
+          mono: document.getElementById("fontMonoSelect").value
+        }
+      };
+
+      savePortfolioDataLocally();
+      applyCustomTheme();
+      renderAll();
+      showToast("Theme & Typography saved successfully! ✦");
+    });
+  }
+
+  // Reset Theme Button
+  const resetBtn = document.getElementById("adminResetThemeBtn");
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      if (confirm("Reset theme, colors and typography back to Precision Copper default?")) {
+        portfolioData.theme = JSON.parse(JSON.stringify(DEFAULT_PORTFOLIO_DATA.theme));
+        savePortfolioDataLocally();
+        applyCustomTheme();
+        renderAll();
+        renderAdminThemeTab();
+        showToast("Theme reset to default Precision Copper.");
+      }
+    });
+  }
+}
+
+// 7. Settings & GitHub Sync Tab
 function loadAdminSettings() {
   const ghOwnerInput = document.getElementById("ghOwner");
   const ghRepoInput = document.getElementById("ghRepo");
@@ -1977,6 +2500,7 @@ if (adminResetDataBtn) {
     if (confirm("Reset all content back to defaults? This will erase local edits.")) {
       localStorage.removeItem("portfolio_data_override");
       portfolioData = JSON.parse(JSON.stringify(DEFAULT_PORTFOLIO_DATA));
+      applyCustomTheme();
       renderAll();
       renderAdminAllTabs();
       showToast("Reset to default portfolio content.");

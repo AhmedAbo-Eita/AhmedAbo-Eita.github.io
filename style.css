@@ -1,4 +1,9 @@
 :root {
+  /* Typography Variables */
+  --font-heading: "Sora", sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
   /* Precision Workshop — Default (Dark) */
   --bg: #0B0E14;
   --bg-elevated: #12151F;
@@ -107,7 +112,7 @@ body {
     radial-gradient(circle at 85% 12%, rgba(91, 192, 190, 0.08), transparent 26rem),
     linear-gradient(135deg, var(--bg), var(--bg-elevated) 52%, var(--bg));
   color: var(--text);
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-family: var(--font-body);
   overflow-x: hidden;
   transition: background 0.35s ease, color 0.35s ease;
   -webkit-font-smoothing: antialiased;
@@ -201,7 +206,7 @@ a {
 .modal-thumb-btn span,
 .project-card-badge,
 .signal-strip span {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
 }
 
 .brand {
@@ -211,7 +216,7 @@ a {
   min-width: max-content;
   color: var(--text);
   text-decoration: none;
-  font-family: "Sora", sans-serif;
+  font-family: var(--font-heading);
   font-size: 0.88rem;
   font-weight: 700;
 }
@@ -360,7 +365,7 @@ a {
 
 h1,
 h2 {
-  font-family: "Sora", "Inter", sans-serif;
+  font-family: var(--font-heading);
   letter-spacing: -0.012em;
   line-height: 1.08;
   word-spacing: 0.02em;
@@ -368,7 +373,7 @@ h2 {
 
 h3,
 h4 {
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: var(--font-heading);
   letter-spacing: -0.01em;
 }
 
@@ -410,7 +415,7 @@ h4 {
   min-height: 46px;
   padding: 0 20px;
   border-radius: 7px;
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 0.92rem;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -3387,5 +3392,228 @@ body.modal-open {
 .spin-anim {
   animation: spinAnim 0.8s linear infinite;
 }
+
+/* ==========================================================================
+   ADMIN STUDIO — THEME & TYPOGRAPHY MANAGER STYLES
+   ========================================================================== */
+.admin-theme-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.admin-theme-section:last-child {
+  margin-bottom: 0;
+}
+
+.admin-theme-section-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-theme-section-desc {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* Presets Grid */
+.admin-presets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 12px;
+}
+
+.admin-preset-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 13px 15px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-strong) 85%, transparent);
+  cursor: pointer;
+  transition: all 0.22s ease;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-preset-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--shadow);
+}
+
+.admin-preset-card.active {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--surface-strong) 95%, var(--accent) 5%);
+  box-shadow: 0 0 16px var(--glow), 0 4px 18px var(--shadow);
+}
+
+.admin-preset-card.active::after {
+  content: "✓ Active";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.admin-preset-info h4 {
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: var(--text);
+}
+
+.admin-preset-info p {
+  font-size: 0.74rem;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+
+.admin-preset-swatches {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-swatch-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+}
+
+/* Color Pickers Grid */
+.admin-color-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.admin-color-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-color-item label {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.admin-color-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px 4px 6px;
+  transition: border-color 0.2s;
+}
+
+.admin-color-input-wrapper:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--glow);
+}
+
+.admin-color-picker-native {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.admin-color-picker-native::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.admin-color-picker-native::-webkit-color-swatch {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+}
+
+.admin-color-hex-input {
+  font-family: var(--font-mono) !important;
+  font-size: 0.82rem !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--text) !important;
+  padding: 4px 0 !important;
+  width: 100% !important;
+  outline: none !important;
+  text-transform: uppercase;
+}
+
+/* Typography Grid */
+.admin-typography-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.admin-font-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-font-group label {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.admin-font-preview-card {
+  padding: 12px 14px;
+  border-radius: 6px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-font-preview-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.admin-font-preview-sample {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
 
 

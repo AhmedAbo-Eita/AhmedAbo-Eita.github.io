@@ -561,5 +561,29 @@
       "images": [],
       "actions": []
     }
-  ]
+  ],
+  "theme": {
+    "preset": "copper",
+    "dark": {
+      "accent": "#FF7E4A",
+      "accent2": "#5BC0BE",
+      "bg": "#0B0E14",
+      "bgElevated": "#12151F",
+      "surface": "#181B28",
+      "text": "#EAE6DD"
+    },
+    "light": {
+      "accent": "#D65A28",
+      "accent2": "#2A7D7B",
+      "bg": "#FCFAF7",
+      "bgElevated": "#FFFFFF",
+      "surface": "#FFFFFF",
+      "text": "#1A1C1E"
+    },
+    "fonts": {
+      "heading": "Sora",
+      "body": "Inter",
+      "mono": "JetBrains Mono"
+    }
+  }
 }
