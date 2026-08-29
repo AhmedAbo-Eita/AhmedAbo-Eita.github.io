@@ -1849,6 +1849,13 @@ document.querySelectorAll(".admin-sidebar-nav .admin-nav-item").forEach((btn) =>
     const targetTabId = btn.getAttribute("data-tab");
     const targetPane = document.getElementById(targetTabId);
     if (targetPane) targetPane.classList.add("active");
+
+    // Smooth horizontal centering of active tab on mobile scrollable strip
+    btn.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+
+    // Reset panel scroll position to top
+    const mainPanel = document.querySelector(".admin-main-panel");
+    if (mainPanel) mainPanel.scrollTop = 0;
   });
 });
 

@@ -3586,54 +3586,678 @@ body.modal-open {
   color: var(--text);
 }
 
-/* Responsive Admin Layout — keeps workshop density on mobile */
-@media (max-width: 880px) {
-  .admin-studio-dialog { height: 94vh; max-height: 94vh; }
-  .admin-body-layout { flex-direction: column; }
-  .admin-sidebar-nav {
-    flex-direction: row;
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    padding: 8px 8px;
-    gap: 6px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .admin-sidebar-nav::-webkit-scrollbar { display: none; }
-  .admin-nav-item { white-space: nowrap; padding: 8px 11px; font-size: 0.80rem; }
-  .admin-main-panel { padding: 16px 14px; }
-  .admin-form-grid { grid-template-columns: 1fr; }
-  .admin-header { padding: 12px 14px; flex-wrap: wrap; }
-  .admin-header-actions { width: 100%; justify-content: flex-end; }
-}
+/* ==========================================================================
+   ADMIN STUDIO RESPONSIVE MOBILE OPTIMIZATION
+   ========================================================================== */
 
-@media (max-width: 768px) {
+/* Tablet & Intermediate Screens (<= 880px) */
+@media (max-width: 880px) {
+  .admin-studio-dialog {
+    height: 94vh;
+    max-height: 94vh;
+  }
+  
   .admin-body-layout {
     flex-direction: column;
   }
-
+  
   .admin-sidebar-nav {
     flex-direction: row;
     width: 100%;
     border-right: none;
     border-bottom: 1px solid var(--border);
-    padding: 8px;
+    padding: 8px 10px;
+    gap: 8px;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    background: color-mix(in srgb, var(--surface-strong) 96%, transparent);
+    flex-shrink: 0;
+    scroll-snap-type: x proximity;
+  }
+  
+  .admin-sidebar-nav::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .admin-nav-item {
+    white-space: nowrap;
+    padding: 8px 13px;
+    font-size: 0.82rem;
+    border-radius: 20px;
+    min-height: 38px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+  
+  .admin-main-panel {
+    padding: 18px 16px 28px;
+  }
+  
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .admin-header {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+/* Mobile Phones (<= 680px) */
+@media (max-width: 680px) {
+  /* Full Viewport App-like Experience */
+  .admin-studio-overlay {
+    padding: 0;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+
+  .admin-studio-dialog {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+    border: none;
+    transform: translateY(16px);
+    box-shadow: none;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .admin-studio-overlay.active .admin-studio-dialog {
+    transform: translateY(0);
+  }
+
+  /* Compact Native Mobile Header */
+  .admin-header {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: nowrap;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-strong);
+    min-height: 52px;
+  }
+
+  .admin-header-title {
+    flex: 1;
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .admin-header h2 {
+    font-size: 0.94rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .admin-header-subtitle {
+    display: none;
+  }
+
+  .admin-header-actions {
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .admin-header-actions .admin-btn {
+    min-height: 34px;
+    padding: 0 10px;
+    font-size: 0.76rem;
+    gap: 5px;
+    border-radius: 6px;
+  }
+
+  .admin-close-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .admin-close-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Sleek Scrollable Tab Strip */
+  .admin-sidebar-nav {
+    padding: 7px 8px;
+    gap: 6px;
+    border-bottom: 1px solid var(--border);
   }
 
   .admin-nav-item {
-    white-space: nowrap;
-    padding: 8px 12px;
+    padding: 7px 11px;
+    font-size: 0.78rem;
+    gap: 6px;
+    min-height: 35px;
   }
 
+  .admin-nav-item svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  /* Main Workspace Area */
   .admin-main-panel {
-    padding: 16px;
+    padding: 14px 12px 36px;
   }
 
-  .admin-form-grid {
+  .admin-tab-pane {
+    max-width: 100%;
+  }
+
+  /* Pane Headers: Stacked with Full-Width Action Button */
+  .admin-pane-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+  }
+
+  .admin-pane-header h3 {
+    font-size: 1.02rem;
+  }
+
+  .admin-pane-header p {
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+
+  .admin-pane-header .admin-btn {
+    width: 100%;
+    min-height: 40px;
+    justify-content: center;
+    font-size: 0.84rem;
+  }
+
+  /* Item Cards: Mobile Stacked with Clear Bottom Action Bar */
+  .admin-item-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .admin-item-info {
+    width: 100%;
+  }
+
+  .admin-item-title-row {
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 5px;
+  }
+
+  .admin-item-title {
+    font-size: 0.88rem;
+  }
+
+  .admin-item-subtitle {
+    font-size: 0.78rem;
+  }
+
+  .admin-item-meta {
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+
+  .admin-item-actions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    border-top: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+    padding-top: 8px;
+    margin-top: 2px;
+  }
+
+  .admin-icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 7px;
+  }
+
+  .admin-icon-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Card Boxes & Form Controls */
+  .admin-card-box {
+    padding: 14px 12px;
+    margin-bottom: 14px;
+    border-radius: 8px;
+  }
+
+  .admin-form-group {
+    gap: 5px;
+  }
+
+  .admin-form-group label {
+    font-size: 0.70rem;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .admin-form-group input[type="text"],
+  .admin-form-group input[type="email"],
+  .admin-form-group input[type="password"],
+  .admin-form-group input[type="url"],
+  .admin-form-group select,
+  .admin-form-group textarea {
+    font-size: 16px; /* Prevents iOS auto-zoom */
+    padding: 10px 11px;
+    min-height: 42px;
+    border-radius: 7px;
+  }
+
+  .admin-form-group textarea {
+    min-height: 90px;
+  }
+
+  .admin-form-actions-row {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .admin-form-actions-row .admin-btn {
+    width: 100%;
+    min-height: 42px;
+    justify-content: center;
+  }
+
+  /* Alert / Setup Note Box */
+  .admin-alert-box {
+    padding: 12px;
+    gap: 10px;
+    font-size: 0.78rem;
+    flex-direction: column;
+  }
+
+  /* Dynamic Builder Rows on Mobile */
+  .admin-builder-section {
+    padding: 11px 10px;
+    margin-top: 12px;
+  }
+
+  .admin-builder-header {
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .admin-builder-header h4 {
+    font-size: 0.70rem;
+  }
+
+  /* Spec Rows: Stacked Grid on Narrow Screens */
+  .admin-spec-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 36px;
+    gap: 6px;
+    align-items: center;
+    padding: 8px;
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    margin-bottom: 8px;
+  }
+
+  .admin-spec-row .spec-param {
+    grid-column: 1 / 2;
+    font-size: 16px;
+  }
+
+  .admin-spec-row .spec-val {
+    grid-column: 2 / 3;
+    font-size: 16px;
+  }
+
+  .admin-spec-row .spec-note {
+    grid-column: 1 / 3;
+    font-size: 16px;
+  }
+
+  .admin-spec-row .admin-icon-btn {
+    grid-column: 3 / 4;
+    grid-row: 1 / 3;
+    align-self: center;
+    justify-self: center;
+    width: 36px;
+    height: 100%;
+    max-height: 76px;
+  }
+
+  /* Action Rows on Mobile */
+  .admin-action-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    padding: 8px;
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    margin-bottom: 8px;
+    align-items: center;
+  }
+
+  .admin-action-row .act-label {
+    grid-column: 1 / -1;
+    font-size: 16px;
+  }
+
+  .admin-action-row .act-url {
+    grid-column: 1 / -1;
+    font-size: 16px;
+  }
+
+  .admin-action-row label {
+    grid-column: 1 / 2;
+    font-size: 0.74rem;
+    padding-left: 2px;
+  }
+
+  .admin-action-row .admin-icon-btn {
+    grid-column: 2 / 3;
+    justify-self: flex-end;
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Bullet Rows on Mobile */
+  .admin-bullet-row {
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .admin-bullet-row input {
+    font-size: 16px;
+    padding: 9px 10px;
+    min-height: 40px;
+  }
+
+  .admin-bullet-row .admin-icon-btn {
+    width: 36px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  /* Gallery Cards on Mobile */
+  .admin-gallery-card {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .admin-gallery-card-thumb-wrap {
+    width: 100%;
+    height: 120px;
+    border-radius: 6px;
+  }
+
+  .admin-gallery-card-inputs {
+    width: 100%;
+  }
+
+  .admin-gallery-card-inputs-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .admin-gallery-card-inputs input {
+    font-size: 16px;
+    min-height: 38px;
+  }
+
+  .admin-gallery-card-actions {
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .admin-gallery-card-actions .admin-icon-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Media Dropzone & Preview on Mobile */
+  .admin-media-box {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .admin-media-dropzone {
+    padding: 18px 12px;
+  }
+
+  .admin-media-preview-card {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .admin-media-info {
+    width: calc(100% - 66px);
+  }
+
+  .admin-media-actions {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 6px;
+    border-top: 1px solid var(--border);
+  }
+
+  .admin-media-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .admin-media-library-select {
+    width: 100%;
+    min-height: 40px;
+    font-size: 16px;
+  }
+
+  .admin-media-toggle-manual-btn {
+    width: 100%;
+    min-height: 36px;
+    justify-content: center;
+  }
+
+  .admin-media-manual-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .admin-media-manual-input {
+    font-size: 16px;
+    min-height: 40px;
+  }
+
+  .admin-media-apply-manual-btn {
+    min-height: 38px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Theme Presets, Colors & Fonts on Mobile */
+  .admin-presets-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 8px;
+  }
+
+  .admin-preset-card {
+    padding: 10px 11px;
+  }
+
+  .admin-preset-info h4 {
+    font-size: 0.82rem;
+  }
+
+  .admin-preset-info p {
+    font-size: 0.70rem;
+    margin-bottom: 8px;
+  }
+
+  .admin-color-picker-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .admin-color-input-wrapper {
+    min-height: 44px;
+    padding: 6px 10px;
+  }
+
+  .admin-color-picker-native {
+    width: 32px;
+    height: 32px;
+  }
+
+  .admin-color-hex-input {
+    font-size: 16px !important;
+  }
+
+  .admin-typography-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Item Submodal Dialog on Mobile (Full Viewport Bottom Sheet) */
+  .admin-submodal-overlay {
+    padding: 0;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+
+  .admin-submodal-dialog {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+    border: none;
+    transform: translateY(16px);
+    box-shadow: none;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .admin-submodal-overlay.active .admin-submodal-dialog {
+    transform: translateY(0);
+  }
+
+  .admin-submodal-header {
+    padding: 11px 14px;
+    background: var(--surface-strong);
+    min-height: 50px;
+  }
+
+  .admin-submodal-header h3 {
+    font-size: 0.95rem;
+  }
+
+  .admin-submodal-body {
+    padding: 14px 12px 30px;
+    gap: 12px;
+  }
+
+  .admin-submodal-footer {
+    padding: 10px 12px;
+    gap: 8px;
+    background: var(--surface-strong);
+    display: flex;
+  }
+
+  .admin-submodal-footer .admin-btn {
+    flex: 1;
+    min-height: 42px;
+    justify-content: center;
+    font-size: 0.84rem;
+  }
+
+  /* Admin PIN Card on Mobile */
+  .admin-pin-card {
+    max-width: calc(100vw - 28px);
+    padding: 24px 18px;
+    border-radius: 12px;
+  }
+
+  .admin-pin-card h3 {
+    font-size: 1.10rem;
+  }
+
+  .admin-pin-card p {
+    font-size: 0.80rem;
+    margin-bottom: 16px;
+  }
+
+  .admin-pin-form input {
+    font-size: 18px;
+    min-height: 46px;
+    letter-spacing: 0.12em;
+  }
+
+  .admin-pin-actions button {
+    min-height: 44px;
+  }
+
+  /* Admin Toast on Mobile */
+  .admin-toast {
+    bottom: 14px;
+    left: 14px;
+    right: 14px;
+    max-width: none;
+    width: auto;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.82rem;
+    padding: 10px 14px;
+  }
+}
+
+/* Small / Narrow Mobile Phones (<= 400px) */
+@media (max-width: 400px) {
+  .admin-header h2 {
+    font-size: 0.86rem;
+  }
+
+  .admin-header-actions .admin-btn span {
+    display: none;
+  }
+
+  .admin-header-actions .admin-btn {
+    padding: 0 8px;
+    min-height: 32px;
+  }
+
+  .admin-close-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .admin-nav-item {
+    font-size: 0.74rem;
+    padding: 6px 9px;
+  }
+
+  .admin-presets-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
