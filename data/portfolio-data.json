@@ -4,7 +4,6 @@
     "title": "Reliable electronics from schematic to field.",
     "description": "Hardware Design Engineer designing electronic systems, PCBs, and power stages for oil and gas tools, EV charging, motor control, and embedded sensing platforms.",
     "email": "ahmedaboeita2233@gmail.com",
-    "avatar": "profile.jpg",
     "linkedin": "https://www.linkedin.com/in/ahmed-aboeita-747948204/",
     "github": "https://github.com/AhmedAbo-Eita",
     "status": "Available for hardware design roles",
@@ -769,29 +768,5 @@
       "images": [],
       "actions": []
     }
-  ],
-  "theme": {
-    "preset": "copper",
-    "dark": {
-      "accent": "#FF7E4A",
-      "accent2": "#5BC0BE",
-      "bg": "#0B0E14",
-      "bgElevated": "#12151F",
-      "surface": "#181B28",
-      "text": "#EAE6DD"
-    },
-    "light": {
-      "accent": "#D65A28",
-      "accent2": "#2A7D7B",
-      "bg": "#FCFAF7",
-      "bgElevated": "#FFFFFF",
-      "surface": "#FFFFFF",
-      "text": "#1A1C1E"
-    },
-    "fonts": {
-      "heading": "Sora",
-      "body": "Inter",
-      "mono": "JetBrains Mono"
-    }
-  }
+  ]
 }
