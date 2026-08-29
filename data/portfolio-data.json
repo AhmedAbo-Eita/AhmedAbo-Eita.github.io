@@ -11,7 +11,7 @@
       "8-layer PCB",
       "Signal Integrity",
       "Power Conversion",
-      "Field Testing"
+      "Testing & Troubleshooting"
     ],
     "quickStats": [
       {
@@ -26,7 +26,8 @@
         "label": "Degree",
         "value": "B.Sc. Electrical Power & Machines"
       }
-    ]
+    ],
+    "avatar": "profile.jpg"
   },
   "experiences": [
     {
