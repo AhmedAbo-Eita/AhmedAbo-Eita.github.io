@@ -93,6 +93,13 @@ const DEFAULT_THEME = {
     heading: "Sora",
     body: "Inter",
     mono: "JetBrains Mono"
+  },
+  pointer: {
+    enabled: true,
+    mode: "glow",
+    color: "",
+    radius: 160,
+    intensity: 12
   }
 };
 
@@ -317,11 +324,43 @@ function drawTrace(trace) {
 
 function drawMouseField() {
   if (!ctx || !mouse.active) return;
-  const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 160);
-  gradient.addColorStop(0, `rgba(${accentRgb}, 0.12)`);
-  gradient.addColorStop(1, `rgba(${accentRgb}, 0)`);
-  ctx.fillStyle = gradient;
-  ctx.fillRect(mouse.x - 160, mouse.y - 160, 320, 320);
+  const currentThemeObj = (portfolioData && portfolioData.theme) || DEFAULT_THEME;
+  const pointerCfg = (currentThemeObj && currentThemeObj.pointer) || DEFAULT_THEME.pointer || { enabled: true, mode: "glow", color: "", radius: 160, intensity: 12 };
+
+  if (pointerCfg.enabled === false || pointerCfg.mode === "none") return;
+
+  const pRadius = Math.max(20, pointerCfg.radius || 160);
+  const pIntVal = typeof pointerCfg.intensity === "number" ? pointerCfg.intensity : 12;
+  const pAlpha = pIntVal / 100;
+  const pColorRgb = pointerCfg.color ? hexToRgb(pointerCfg.color) : accentRgb;
+
+  if (pointerCfg.mode === "ring") {
+    ctx.strokeStyle = `rgba(${pColorRgb}, ${Math.min(1, pAlpha * 2.5)})`;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(mouse.x, mouse.y, pRadius * 0.45, 0, Math.PI * 2);
+    ctx.stroke();
+
+    const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, pRadius);
+    gradient.addColorStop(0, `rgba(${pColorRgb}, ${pAlpha * 0.6})`);
+    gradient.addColorStop(1, `rgba(${pColorRgb}, 0)`);
+    ctx.fillStyle = gradient;
+    ctx.fillRect(mouse.x - pRadius, mouse.y - pRadius, pRadius * 2, pRadius * 2);
+  } else if (pointerCfg.mode === "spotlight") {
+    const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, pRadius * 1.4);
+    gradient.addColorStop(0, `rgba(${pColorRgb}, ${Math.min(1, pAlpha * 2)})`);
+    gradient.addColorStop(0.45, `rgba(${pColorRgb}, ${pAlpha * 0.5})`);
+    gradient.addColorStop(1, `rgba(${pColorRgb}, 0)`);
+    ctx.fillStyle = gradient;
+    ctx.fillRect(mouse.x - pRadius * 1.4, mouse.y - pRadius * 1.4, pRadius * 2.8, pRadius * 2.8);
+  } else {
+    // Default Ambient Glow
+    const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, pRadius);
+    gradient.addColorStop(0, `rgba(${pColorRgb}, ${pAlpha})`);
+    gradient.addColorStop(1, `rgba(${pColorRgb}, 0)`);
+    ctx.fillStyle = gradient;
+    ctx.fillRect(mouse.x - pRadius, mouse.y - pRadius, pRadius * 2, pRadius * 2);
+  }
 }
 
 function animateCanvas() {
@@ -443,6 +482,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 // DEFAULT PORTFOLIO DATA STORE (Instant Offline Fallback & Source of Truth)
 // ==========================================================================
 const DEFAULT_PORTFOLIO_DATA = {
+  theme: DEFAULT_THEME,
   hero: {
     eyebrow: "Hardware | Embedded | Power Electronics",
     title: "Reliable electronics from schematic to field.",
@@ -1807,6 +1847,18 @@ if (adminPinForm) {
   });
 }
 
+const adminPinResetBtn = document.getElementById("adminPinResetBtn");
+if (adminPinResetBtn) {
+  adminPinResetBtn.addEventListener("click", () => {
+    if (confirm("Reset admin password back to default '1234' and unlock access?")) {
+      localStorage.removeItem("portfolio_admin_pin_hash");
+      resetPinFails();
+      if (adminPinInput) adminPinInput.value = "1234";
+      showToast("Password reset to default '1234'. Click Unlock Studio to enter!");
+    }
+  });
+}
+
 if (adminPinCancelBtn) adminPinCancelBtn.addEventListener("click", closeAdminPinModal);
 if (adminTriggerBtn) adminTriggerBtn.addEventListener("click", openAdminPinModal);
 
@@ -1824,7 +1876,11 @@ window.addEventListener("keydown", (e) => {
 
 function openAdminStudio() {
   if (!adminStudioOverlay) return;
-  renderAdminAllTabs();
+  try {
+    renderAdminAllTabs();
+  } catch (err) {
+    console.error("Error rendering admin tabs:", err);
+  }
   adminStudioOverlay.classList.add("active");
   adminStudioOverlay.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
@@ -2470,11 +2526,12 @@ function renderAdminThemeTab() {
   const container = document.getElementById("adminThemeWrapper");
   if (!container) return;
 
-  const currentTheme = portfolioData.theme || DEFAULT_PORTFOLIO_DATA.theme;
+  const currentTheme = (portfolioData && portfolioData.theme) || (DEFAULT_PORTFOLIO_DATA && DEFAULT_PORTFOLIO_DATA.theme) || DEFAULT_THEME;
   const currentPreset = currentTheme.preset || "copper";
-  const dark = currentTheme.dark || DEFAULT_PORTFOLIO_DATA.theme.dark;
-  const light = currentTheme.light || DEFAULT_PORTFOLIO_DATA.theme.light;
-  const fonts = currentTheme.fonts || DEFAULT_PORTFOLIO_DATA.theme.fonts;
+  const dark = currentTheme.dark || DEFAULT_THEME.dark;
+  const light = currentTheme.light || DEFAULT_THEME.light;
+  const fonts = currentTheme.fonts || DEFAULT_THEME.fonts;
+  const pointer = currentTheme.pointer || DEFAULT_THEME.pointer || { enabled: true, mode: "glow", color: "", radius: 160, intensity: 12 };
 
   container.innerHTML = `
     <!-- Curated Presets -->
@@ -2620,6 +2677,63 @@ function renderAdminThemeTab() {
       </div>
     </div>
 
+    <!-- Pointer & Cursor Ambient Shadow / Glow Section -->
+    <div class="admin-theme-section">
+      <div class="admin-theme-section-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z"></path><path d="m13 13 6 6"></path></svg>
+        <span>Pointer & Cursor Ambient Shadow / Glow</span>
+      </div>
+      <p class="admin-theme-section-desc">Customize the ambient light shadow and glow radius that follows your cursor/pointer across the screen.</p>
+      <div class="admin-pointer-grid">
+        <div class="admin-pointer-card">
+          <label for="pointerModeSelect">Shadow Effect Mode</label>
+          <select id="pointerModeSelect" class="admin-font-select">
+            <option value="glow" ${(pointer.mode || "glow") === "glow" ? "selected" : ""}>Radial Ambient Glow (Default)</option>
+            <option value="spotlight" ${pointer.mode === "spotlight" ? "selected" : ""}>Focused Spotlight Beam</option>
+            <option value="ring" ${pointer.mode === "ring" ? "selected" : ""}>Halo Pulse Ring</option>
+            <option value="none" ${pointer.mode === "none" || pointer.enabled === false ? "selected" : ""}>Disabled (No Shadow)</option>
+          </select>
+        </div>
+
+        <div class="admin-pointer-card">
+          <label for="colorPointerColor">
+            <span>Shadow Color</span>
+            <button type="button" class="admin-btn admin-btn-sm admin-btn-ghost" id="btnSyncPointerColor" style="font-size:0.68rem;padding:2px 6px;min-height:22px;">Sync Accent</button>
+          </label>
+          <div class="admin-color-input-wrapper">
+            <input type="color" class="admin-color-picker-native" id="pickerPointerColor" value="${pointer.color || dark.accent || "#FF7E4A"}">
+            <input type="text" class="admin-color-hex-input" id="colorPointerColor" value="${pointer.color || ""}" placeholder="AUTO (ACCENT)" maxlength="7">
+          </div>
+        </div>
+
+        <div class="admin-pointer-card">
+          <label for="rangePointerRadius">
+            <span>Shadow Size / Radius</span>
+            <span class="admin-range-value" id="valPointerRadius">${pointer.radius || 160}px</span>
+          </label>
+          <div class="admin-range-wrapper">
+            <input type="range" class="admin-range-slider" id="rangePointerRadius" min="40" max="320" step="10" value="${pointer.radius || 160}">
+          </div>
+        </div>
+
+        <div class="admin-pointer-card">
+          <label for="rangePointerIntensity">
+            <span>Shadow Intensity / Opacity</span>
+            <span class="admin-range-value" id="valPointerIntensity">${pointer.intensity !== undefined ? pointer.intensity : 12}%</span>
+          </label>
+          <div class="admin-range-wrapper">
+            <input type="range" class="admin-range-slider" id="rangePointerIntensity" min="0" max="50" step="1" value="${pointer.intensity !== undefined ? pointer.intensity : 12}">
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Interactive Pointer Shadow Preview -->
+      <div class="admin-pointer-preview-box" id="adminPointerPreviewBox" style="margin-top:10px;">
+        <span>Move pointer here to preview interactive shadow</span>
+        <div class="admin-pointer-preview-glow" id="adminPointerPreviewGlow"></div>
+      </div>
+    </div>
+
     <!-- Actions Row -->
     <div class="admin-form-group full-width admin-form-actions-row" style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
       <button type="button" class="admin-btn admin-btn-primary" id="adminSaveThemeBtn">
@@ -2644,9 +2758,11 @@ function renderAdminThemeTab() {
 
     input.addEventListener("input", (e) => {
       let val = e.target.value.trim();
-      if (!val.startsWith("#")) val = "#" + val;
+      if (!val.startsWith("#") && val.length > 0) val = "#" + val;
       if (/^#[0-9A-F]{6}$/i.test(val)) {
         picker.value = val;
+        triggerLiveThemePreview();
+      } else if (val === "") {
         triggerLiveThemePreview();
       }
     });
@@ -2661,6 +2777,75 @@ function renderAdminThemeTab() {
   syncColorPair("pickerLightAccent2", "colorLightAccent2");
   syncColorPair("pickerLightBg", "colorLightBg");
   syncColorPair("pickerLightSurface", "colorLightSurface");
+
+  syncColorPair("pickerPointerColor", "colorPointerColor");
+
+  // Pointer Shadow Controls Listeners
+  const pointerModeSelect = document.getElementById("pointerModeSelect");
+  const rangePointerRadius = document.getElementById("rangePointerRadius");
+  const valPointerRadius = document.getElementById("valPointerRadius");
+  const rangePointerIntensity = document.getElementById("rangePointerIntensity");
+  const valPointerIntensity = document.getElementById("valPointerIntensity");
+  const btnSyncPointerColor = document.getElementById("btnSyncPointerColor");
+
+  if (pointerModeSelect) pointerModeSelect.addEventListener("change", () => triggerLiveThemePreview());
+
+  if (rangePointerRadius && valPointerRadius) {
+    rangePointerRadius.addEventListener("input", (e) => {
+      valPointerRadius.textContent = `${e.target.value}px`;
+      triggerLiveThemePreview();
+    });
+  }
+
+  if (rangePointerIntensity && valPointerIntensity) {
+    rangePointerIntensity.addEventListener("input", (e) => {
+      valPointerIntensity.textContent = `${e.target.value}%`;
+      triggerLiveThemePreview();
+    });
+  }
+
+  if (btnSyncPointerColor) {
+    btnSyncPointerColor.addEventListener("click", () => {
+      const darkAccent = document.getElementById("colorDarkAccent").value || "#FF7E4A";
+      const colorInput = document.getElementById("colorPointerColor");
+      const pickerInput = document.getElementById("pickerPointerColor");
+      if (colorInput) colorInput.value = "";
+      if (pickerInput) pickerInput.value = darkAccent;
+      triggerLiveThemePreview();
+      showToast("Pointer shadow color synced to accent!");
+    });
+  }
+
+  // Interactive Pointer Shadow Preview Box
+  const previewBox = document.getElementById("adminPointerPreviewBox");
+  const previewGlow = document.getElementById("adminPointerPreviewGlow");
+  if (previewBox && previewGlow) {
+    previewBox.addEventListener("mousemove", (e) => {
+      const rect = previewBox.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const rad = rangePointerRadius ? parseInt(rangePointerRadius.value, 10) : 160;
+      const intensity = rangePointerIntensity ? parseInt(rangePointerIntensity.value, 10) / 100 : 0.12;
+      const customCol = document.getElementById("colorPointerColor")?.value.trim();
+      const darkAccent = document.getElementById("colorDarkAccent")?.value || "#FF7E4A";
+      const col = customCol && /^#[0-9A-F]{6}$/i.test(customCol) ? customCol : darkAccent;
+      const mode = pointerModeSelect ? pointerModeSelect.value : "glow";
+
+      if (mode === "none" || intensity === 0) {
+        previewGlow.style.opacity = "0";
+      } else {
+        previewGlow.style.opacity = "1";
+        previewGlow.style.left = `${x}px`;
+        previewGlow.style.top = `${y}px`;
+        previewGlow.style.width = `${rad * 1.5}px`;
+        previewGlow.style.height = `${rad * 1.5}px`;
+        previewGlow.style.background = `radial-gradient(circle, ${col} ${Math.min(100, intensity * 250)}%, transparent 70%)`;
+      }
+    });
+    previewBox.addEventListener("mouseleave", () => {
+      previewGlow.style.opacity = "0";
+    });
+  }
 
   // Preset Selection Click
   document.querySelectorAll("#adminPresetsGrid .admin-preset-card").forEach((btn) => {
@@ -2688,6 +2873,10 @@ function renderAdminThemeTab() {
         document.getElementById("pickerLightSurface").value = preset.light.surface;
         document.getElementById("colorLightSurface").value = preset.light.surface;
 
+        if (document.getElementById("pickerPointerColor")) {
+          document.getElementById("pickerPointerColor").value = preset.dark.accent;
+        }
+
         triggerLiveThemePreview(preset.id);
       }
     });
@@ -2705,6 +2894,11 @@ function renderAdminThemeTab() {
   function triggerLiveThemePreview(presetId = null) {
     const activePresetBtn = document.querySelector("#adminPresetsGrid .admin-preset-card.active");
     const activePreset = presetId || (activePresetBtn ? activePresetBtn.getAttribute("data-preset-id") : "custom");
+
+    const pMode = pointerModeSelect ? pointerModeSelect.value : "glow";
+    const pColor = document.getElementById("colorPointerColor") ? document.getElementById("colorPointerColor").value.trim() : "";
+    const pRadius = rangePointerRadius ? parseInt(rangePointerRadius.value, 10) : 160;
+    const pIntensity = rangePointerIntensity ? parseInt(rangePointerIntensity.value, 10) : 12;
 
     const liveTheme = {
       preset: activePreset,
@@ -2728,9 +2922,17 @@ function renderAdminThemeTab() {
         heading: document.getElementById("fontHeadingSelect").value,
         body: document.getElementById("fontBodySelect").value,
         mono: document.getElementById("fontMonoSelect").value
+      },
+      pointer: {
+        enabled: pMode !== "none",
+        mode: pMode,
+        color: pColor,
+        radius: pRadius,
+        intensity: pIntensity
       }
     };
 
+    if (portfolioData) portfolioData.theme = liveTheme;
     applyCustomTheme(liveTheme);
   }
 
@@ -2740,6 +2942,11 @@ function renderAdminThemeTab() {
     saveBtn.addEventListener("click", () => {
       const activePresetBtn = document.querySelector("#adminPresetsGrid .admin-preset-card.active");
       const activePreset = activePresetBtn ? activePresetBtn.getAttribute("data-preset-id") : "custom";
+
+      const pMode = pointerModeSelect ? pointerModeSelect.value : "glow";
+      const pColor = document.getElementById("colorPointerColor") ? document.getElementById("colorPointerColor").value.trim() : "";
+      const pRadius = rangePointerRadius ? parseInt(rangePointerRadius.value, 10) : 160;
+      const pIntensity = rangePointerIntensity ? parseInt(rangePointerIntensity.value, 10) : 12;
 
       portfolioData.theme = {
         preset: activePreset,
@@ -2763,13 +2970,20 @@ function renderAdminThemeTab() {
           heading: document.getElementById("fontHeadingSelect").value,
           body: document.getElementById("fontBodySelect").value,
           mono: document.getElementById("fontMonoSelect").value
+        },
+        pointer: {
+          enabled: pMode !== "none",
+          mode: pMode,
+          color: pColor,
+          radius: pRadius,
+          intensity: pIntensity
         }
       };
 
       savePortfolioDataLocally();
       applyCustomTheme();
       renderAll();
-      showToast("Theme & Typography saved successfully! ✦");
+      showToast("Theme, Typography & Pointer Shadow saved! ✦");
     });
   }
 
@@ -2778,7 +2992,7 @@ function renderAdminThemeTab() {
   if (resetBtn) {
     resetBtn.addEventListener("click", () => {
       if (confirm("Reset theme, colors and typography back to Precision Copper default?")) {
-        portfolioData.theme = JSON.parse(JSON.stringify(DEFAULT_PORTFOLIO_DATA.theme));
+        portfolioData.theme = JSON.parse(JSON.stringify(DEFAULT_THEME));
         savePortfolioDataLocally();
         applyCustomTheme();
         renderAll();

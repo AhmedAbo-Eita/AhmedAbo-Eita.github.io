@@ -559,10 +559,15 @@
       <h3>Portfolio Admin Access</h3>
       <p>Enter your password to edit portfolio content and publish changes.</p>
       <form id="adminPinForm" class="admin-pin-form">
-        <input type="password" id="adminPinInput" placeholder="Enter Password" autocomplete="current-password" autofocus maxlength="64" required>
+        <input type="password" id="adminPinInput" placeholder="Enter Password (Default: 1234)" autocomplete="current-password" autofocus maxlength="64" required>
         <div class="admin-pin-actions">
           <button type="button" class="admin-btn admin-btn-ghost" id="adminPinCancelBtn">Cancel</button>
           <button type="submit" class="admin-btn admin-btn-primary">Unlock Studio</button>
+        </div>
+        <div style="margin-top: 14px; display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 0.72rem; color: var(--muted);">
+          <span>Default: <code>1234</code></span>
+          <span>•</span>
+          <button type="button" id="adminPinResetBtn" style="background:none; border:none; color:var(--accent); cursor:pointer; font-size:0.72rem; text-decoration:underline; padding:0;">Reset Password</button>
         </div>
       </form>
     </div>
