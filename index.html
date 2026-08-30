@@ -58,7 +58,7 @@
       <div class="hero-grid">
         <div class="hero-copy">
           <p class="eyebrow">Hardware | Embedded | Power Electronics</p>
-          <h1>Reliable electronics from schematic to field.</h1>
+          <h1>Reliable electronics from schematic to industry.</h1>
           <p class="hero-desc">
             Hardware Design Engineer designing electronic systems, PCBs, and power stages for oil and gas tools,
             EV charging, motor control, and embedded sensing platforms.
@@ -216,6 +216,37 @@
             <div class="project-hover-overlay" aria-hidden="true">
               <div class="project-hover-content">
                 <img src="Project/BLDC_MC_V1.0/bldc_top.png" alt="BLDC Motor Driver PCB Front 3D View" class="hover-3d-img" loading="lazy">
+                <button type="button" class="project-hover-btn" tabindex="-1">
+                  <span>Explore Project</span>
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-project-id="mixed-signal-board" tabindex="0" role="button"
+            aria-label="View Mixed Signal Acquisition & Generation Board technical specs and 3D render">
+            <div class="project-card-inner">
+              <div class="project-card-header">
+                <p class="project-tag">KiCad 8.0+ | STM32F103 | Feb 2026</p>
+                <span class="project-card-badge badge-open-source">Open Source ✦</span>
+              </div>
+              <h3>Mixed Signal Board</h3>
+              <p>A high-precision, 4-layer Mixed-Signal PCB designed for high-fidelity analog acquisition and precision waveform generation, developed as part of the FEDEVEL Academy course.</p>
+              <ul>
+                <li>4-layer controlled impedance stackup with dedicated AGND/DGND star grounding</li>
+                <li>14-Bit ADC (250 kSPS) with 3rd-order 25 kHz Butterworth anti-aliasing filter</li>
+                <li>16-Bit dual-channel DAC with precision 2.5V reference & reconstruction buffer</li>
+              </ul>
+            </div>
+
+            <!-- Interactive Hover Overlay (Blur + 3D PCB Front View + Explore Button) -->
+            <div class="project-hover-overlay" aria-hidden="true">
+              <div class="project-hover-content">
+                <img src="Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png" alt="Mixed Signal Board PCB Front 3D View" class="hover-3d-img" loading="lazy">
                 <button type="button" class="project-hover-btn" tabindex="-1">
                   <span>Explore Project</span>
                   <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -436,8 +467,8 @@
             </div>
           </article>
 
-          <article class="course-card reveal" data-course-id="mixed-signal-hardware-design" tabindex="0" role="button"
-            aria-label="View Mixed-Signal Hardware Design certificate popup">
+          <article class="course-card reveal has-project-preview" data-course-id="mixed-signal-hardware-design" tabindex="0" role="button"
+            aria-label="View Mixed-Signal Hardware Design certificate and PCB project">
             <div class="course-card-inner">
               <div class="course-top">
                 <div class="course-icon course-icon-dark">
@@ -458,15 +489,30 @@
               </ul>
             </div>
 
-            <!-- Hover Overlay (Blur + Glowing View Certificate Button) -->
-            <div class="course-hover-overlay" aria-hidden="true">
-              <button type="button" class="course-hover-btn" tabindex="-1">
-                <span>View Certificate</span>
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <line x1="7" y1="17" x2="17" y2="7"></line>
-                  <polyline points="7 7 17 7 17 17"></polyline>
-                </svg>
-              </button>
+            <!-- Interactive Stretched Hover Overlay with 3D PCB Visual & Dual Buttons -->
+            <div class="course-hover-overlay course-hover-overlay-dual" aria-hidden="true">
+              <div class="course-hover-content">
+                <img src="Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png" alt="Mixed-Signal Hardware Design PCB Front 3D View" class="hover-3d-img" loading="lazy">
+                <div class="course-hover-actions">
+                  <button type="button" class="course-hover-btn course-hover-btn-cert" data-action="view-cert" data-course-id="mixed-signal-hardware-design" onclick="event.stopPropagation(); openProjectModal('mixed-signal-hardware-design');" tabindex="-1">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                      <line x1="16" y1="13" x2="8" y2="13"></line>
+                      <line x1="16" y1="17" x2="8" y2="17"></line>
+                      <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <span>View Certificate</span>
+                  </button>
+                  <button type="button" class="course-hover-btn course-hover-btn-project" data-action="explore-project" data-project-id="mixed-signal-board" onclick="event.stopPropagation(); openProjectModal('mixed-signal-board');" tabindex="-1">
+                    <span>Explore Project</span>
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
           </article>
 

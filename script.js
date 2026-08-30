@@ -485,7 +485,7 @@ const DEFAULT_PORTFOLIO_DATA = {
   theme: DEFAULT_THEME,
   hero: {
     eyebrow: "Hardware | Embedded | Power Electronics",
-    title: "Reliable electronics from schematic to field.",
+    title: "Reliable electronics from schematic to industry.",
     description:
       "Hardware Design Engineer designing electronic systems, PCBs, and power stages for oil and gas tools, EV charging, motor control, and embedded sensing platforms.",
     email: "ahmedaboeita2233@gmail.com",
@@ -608,6 +608,95 @@ const DEFAULT_PORTFOLIO_DATA = {
       actions: [
         { label: "View on GitHub ↗", url: "https://github.com/AhmedAbo-Eita/BLDC_Motor_Driver", isPrimary: true },
         { label: "Hardware Readme ↗", url: "https://github.com/AhmedAbo-Eita/BLDC_Motor_Driver/blob/main/Hardware/BLDC_MC_V1.0/Readme.md", isPrimary: false }
+      ]
+    },
+    {
+      id: "mixed-signal-board",
+      isOpenSource: true,
+      typeBadgeText: "Open Source ✦",
+      typeBadgeClass: "badge-open-source",
+      title: "Mixed Signal Acquisition & Generation Board",
+      cardTitle: "Mixed Signal Board",
+      tag: "KiCad 8.0+ | STM32F103 | 4-Layer Mixed-Signal PCB",
+      cardExcerpt:
+        "A high-precision, 4-layer Mixed-Signal PCB designed for high-fidelity analog acquisition and precision waveform generation, developed as part of the FEDEVEL Academy course.",
+      cardBullets: [
+        "4-layer controlled impedance stackup with dedicated AGND/DGND star grounding",
+        "14-Bit ADC (250 kSPS) with 3rd-order 25 kHz Butterworth anti-aliasing filter",
+        "16-Bit dual-channel DAC with precision 2.5V reference & reconstruction buffer"
+      ],
+      hoverImage: "Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png",
+      description:
+        "A professional-grade 4-layer Mixed-Signal PCB developed as part of the FEDEVEL Academy Advanced PCB Design Course. Demonstrates industry best practices for mixed-signal design, high-resolution data acquisition, precision signal generation, low-noise dual-domain power delivery, and high-frequency noise mitigation. Interfaces an STM32 ARM Cortex-M3 microcontroller with isolated analog front-ends, high-speed SPI buses, and precision filtering networks.",
+      specs: [
+        { param: "Microcontroller (MCU)", value: "STM32F103C8T6 (ARM Cortex-M3, 72 MHz)", note: "64KB Flash, 20KB SRAM, High-Speed SPI & USB" },
+        { param: "Host & Debug Interface", value: "Reversible USB-C & SWD Header", note: "USBLC6-2SC6 low-capacitance TVS diode array ESD protection" },
+        { param: "Digital Power Supply (+3.3VD)", value: "TLV62569DBVR Synchronous Buck", note: "High-efficiency step-down converter supplying up to 250mA+" },
+        { param: "Analog Power Supply (+3.3VA)", value: "HT7533-1 Ultra-Low Quiescent LDO", note: "Multi-stage LC/RC ripple suppression filter for ultra-quiet rails" },
+        { param: "Analog Acquisition (ADC)", value: "ADC141S626 (14-Bit, up to 250 kSPS)", note: "Differential/single-ended sampling ADC via high-speed SPI" },
+        { param: "Signal Conditioning (AFE)", value: "MCP6001 Low-Noise Rail-to-Rail Op-Amp", note: "High-impedance analog frontend buffer" },
+        { param: "Anti-Aliasing Filter", value: "3rd-Order Butterworth Low-Pass (fc = 25 kHz)", note: "Active filter rejecting high-frequency harmonics and out-of-band noise" },
+        { param: "Analog Input Range", value: "-1.65V to +1.65V (50Ω BNC Input)", note: "Precision DC bias level-shifting to match ADC reference span" },
+        { param: "Waveform Generation (DAC)", value: "DAC7563 Dual 16-Bit Voltage Output DAC", note: "Integrated 2.5V 4ppm/°C internal reference" },
+        { param: "Output Reconstruction & Buffer", value: "Active Low-Pass Filter + MCP6001 Buffer", note: "Delivering clean 0V to +3.3V analog output swing on 50Ω BNC" },
+        { param: "PCB Stackup & Layout", value: "4-Layer Controlled Impedance Stackup", note: "Top Signal / Continuous Ground / Partitioned Power / Bottom Signal" },
+        { param: "Grounding Strategy", value: "AGND & DGND Split with Star Connection", note: "Zero digital noise return current through sensitive analog paths" },
+        { param: "Design & EDA Tools", value: "KiCad 8.0+ & LTspice", note: "Complete schematic capture, simulation, layout, and manufacturing files" }
+      ],
+      features: [
+        {
+          title: "1. Microcontroller & Host Interface",
+          items: [
+            "STM32F103C8T6 ARM Cortex-M3 running at 72 MHz managing high-speed SPI data transfer.",
+            "Reversible USB-C for power delivery and high-speed data communications.",
+            "USBLC6-2SC6 low-capacitance TVS diode array protecting USB data lines against ESD transients.",
+            "Dedicated SWD (Serial Wire Debug) header for JTAG/SWD programming via ST-Link or J-Link."
+          ]
+        },
+        {
+          title: "2. Power Architecture & Low-Noise Regulation",
+          items: [
+            "Digital Domain (+3.3VD): Powered by TLV62569DBVR high-efficiency synchronous step-down buck converter (supplying up to 250mA+).",
+            "Analog Domain (+3.3VA): Linear regulated via HT7533-1 ultra-low quiescent current LDO.",
+            "Multi-stage LC/RC low-pass ripple suppression filter network to guarantee an ultra-quiet rail for ADC, DAC, and op-amps."
+          ]
+        },
+        {
+          title: "3. Analog Front-End & ADC Acquisition",
+          items: [
+            "ADC141S626 14-Bit ADC: 50 kSPS to 250 kSPS differential/single-ended sampling ADC via high-speed SPI.",
+            "Signal Conditioning: Active Analog Front-End (AFE) based on the low-noise MCP6001 rail-to-rail operational amplifier.",
+            "Anti-Aliasing Filter: 3rd-order Butterworth active low-pass filter (fc = 25 kHz) to reject out-of-band noise.",
+            "Input Interface: 50Ω BNC connector designed for an analog span of -1.65V to +1.65V with precision DC bias level-shifting."
+          ]
+        },
+        {
+          title: "4. Precision DAC & Output Reconstruction",
+          items: [
+            "DAC7563: Dual-channel, 16-Bit high-accuracy voltage output DAC with internal 2.5V 4ppm/°C reference.",
+            "Reconstruction Filter & Output Stage: Active low-pass filter and high-drive output buffer utilizing MCP6001 Op-Amp.",
+            "Output Interface: 50Ω BNC connector delivering an output swing of 0V to +3.3V."
+          ]
+        },
+        {
+          title: "5. Mixed-Signal PCB Layout & Grounding Strategy",
+          items: [
+            "4-layer controlled impedance stackup: Layer 1 Top Signal, Layer 2 Ground Plane (AGND/DGND star bridge), Layer 3 Power (+3.3VD, +3.3VA, +5V_USB), Layer 4 Bottom Signal.",
+            "Strict physical partitioning between high-speed digital switching signals and low-amplitude analog paths.",
+            "Manufacturing-ready Gerber files, complete BOM, and schematic exports for JLCPCB/PCBWay fabrication."
+          ]
+        }
+      ],
+      images: [
+        {
+          src: "Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png",
+          caption: "Mixed Signal Board — 3D Top-side Photorealistic Render (STM32, USB-C, BNC, ADC/DAC & Filter Stages)",
+          label: "Top 3D View"
+        }
+      ],
+      actions: [
+        { label: "View on GitHub ↗", url: "https://github.com/AhmedAbo-Eita/Hardware_PCB_Designs/tree/main/Mixed_Signal_Board_FEDEVEL_Course", isPrimary: true },
+        { label: "Hardware Readme ↗", url: "https://github.com/AhmedAbo-Eita/Hardware_PCB_Designs/tree/main/Mixed_Signal_Board_FEDEVEL_Course#readme", isPrimary: false }
       ]
     },
     {
@@ -876,6 +965,9 @@ const DEFAULT_PORTFOLIO_DATA = {
       id: "mixed-signal-hardware-design",
       isCourse: true,
       isOpenSource: true,
+      hasProject: true,
+      projectId: "mixed-signal-board",
+      projectHoverImage: "Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png",
       typeBadgeText: "Verified ✦",
       typeBadgeClass: "badge-open-source",
       title: "Mixed-Signal Hardware Design",
@@ -1091,6 +1183,33 @@ async function initPortfolioData() {
   if (localSaved) {
     try {
       portfolioData = JSON.parse(localSaved);
+      // Auto-merge new projects from defaults if missing, and sync mixed-signal-board actions/images
+      if (DEFAULT_PORTFOLIO_DATA.projects) {
+        DEFAULT_PORTFOLIO_DATA.projects.forEach((dp) => {
+          const existing = portfolioData.projects.find((p) => p.id === dp.id);
+          if (!existing) {
+            portfolioData.projects.push(JSON.parse(JSON.stringify(dp)));
+          } else if (dp.id === "mixed-signal-board") {
+            existing.images = JSON.parse(JSON.stringify(dp.images));
+            existing.actions = JSON.parse(JSON.stringify(dp.actions));
+          }
+        });
+      }
+      // Auto-merge new courses or course project enhancements
+      if (DEFAULT_PORTFOLIO_DATA.courses) {
+        DEFAULT_PORTFOLIO_DATA.courses.forEach((dc) => {
+          const existingCourse = portfolioData.courses.find((c) => c.id === dc.id);
+          if (!existingCourse) {
+            portfolioData.courses.push(JSON.parse(JSON.stringify(dc)));
+          } else {
+            if (dc.hasProject && !existingCourse.hasProject) {
+              existingCourse.hasProject = dc.hasProject;
+              existingCourse.projectId = dc.projectId;
+              existingCourse.projectHoverImage = dc.projectHoverImage;
+            }
+          }
+        });
+      }
       applyCustomTheme();
       renderAll();
       return;
@@ -1323,6 +1442,60 @@ function renderCourses() {
         : "";
 
       const subtitle = [c.instructor, c.dates, c.type].filter(Boolean).join(" | ");
+      const hasProj = Boolean(c.hasProject || c.projectHoverImage || c.projectId);
+
+      if (hasProj) {
+        const hoverImgHtml = c.projectHoverImage
+          ? `<img src="${c.projectHoverImage}" alt="${c.cardTitle || c.title} PCB Front 3D View" class="hover-3d-img" loading="lazy">`
+          : "";
+
+        return `
+        <article class="course-card reveal has-project-preview" data-course-id="${c.id}" tabindex="0" role="button"
+          aria-label="View ${c.cardTitle || c.title} certificate and PCB project">
+          <div class="course-card-inner">
+            <div class="course-top">
+              ${iconHtml}
+              <div class="course-info">
+                <div class="course-header-row">
+                  <h3>${c.cardTitle || c.title}</h3>
+                  ${badgeHtml}
+                </div>
+                <p>${subtitle}</p>
+              </div>
+            </div>
+            <ul class="course-bullets">
+              ${(c.cardBullets || []).map((b) => `<li>${b}</li>`).join("")}
+            </ul>
+          </div>
+
+          <!-- Interactive Stretched Hover Overlay with 3D PCB Visual & Dual Buttons -->
+          <div class="course-hover-overlay course-hover-overlay-dual" aria-hidden="true">
+            <div class="course-hover-content">
+              ${hoverImgHtml}
+              <div class="course-hover-actions">
+                <button type="button" class="course-hover-btn course-hover-btn-cert" data-action="view-cert" data-course-id="${c.id}" onclick="event.stopPropagation(); openProjectModal('${c.id}');" tabindex="-1">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                  <span>View Certificate</span>
+                </button>
+                <button type="button" class="course-hover-btn course-hover-btn-project" data-action="explore-project" data-project-id="${c.projectId || c.id}" onclick="event.stopPropagation(); openProjectModal('${c.projectId || c.id}');" tabindex="-1">
+                  <span>Explore Project</span>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
+      }
 
       return `
       <article class="course-card reveal" data-course-id="${c.id}" tabindex="0" role="button"
@@ -1624,11 +1797,31 @@ function closeProjectModal() {
 function attachCardClickHandlers() {
   document.querySelectorAll(".project-card[data-project-id], .course-card[data-course-id]").forEach((card) => {
     const cardId = card.getAttribute("data-project-id") || card.getAttribute("data-course-id");
-    card.onclick = () => openProjectModal(cardId);
+    card.onclick = (e) => {
+      if (e.target.closest("[data-action]")) return;
+      openProjectModal(cardId);
+    };
     card.onkeydown = (e) => {
       if (e.key === "Enter" || e.key === " ") {
+        if (e.target.closest("[data-action]")) return;
         e.preventDefault();
         openProjectModal(cardId);
+      }
+    };
+  });
+
+  // Dedicated button click handlers for course hover dual actions
+  document.querySelectorAll(".course-hover-btn[data-action]").forEach((btn) => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      const action = btn.getAttribute("data-action");
+      if (action === "view-cert") {
+        const courseId = btn.getAttribute("data-course-id");
+        if (courseId) openProjectModal(courseId);
+      } else if (action === "explore-project") {
+        const projId = btn.getAttribute("data-project-id");
+        if (projId) openProjectModal(projId);
       }
     };
   });
@@ -2130,6 +2323,7 @@ const REPO_MEDIA_LIBRARY = {
     { label: "Udemy", path: "Icons/udemy.png" }
   ],
   projects: [
+    { label: "Mixed Signal Board - Top 3D View", path: "Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png" },
     { label: "BLDC Motor Controller - Top 3D View", path: "Project/BLDC_MC_V1.0/bldc_top.png" },
     { label: "BLDC Motor Controller - Bottom 3D View", path: "Project/BLDC_MC_V1.0/bldc_bottom.png" }
   ],
@@ -3361,6 +3555,14 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
       helpText: "Square logo of academy or certification provider (PNG/SVG)."
     });
 
+    const projectHoverMediaHtml = buildMediaFieldHtml({
+      id: "editCourseProjectHoverImage",
+      label: "Project 3D PCB Render / Hover Visual",
+      value: c.projectHoverImage || "",
+      category: "projects",
+      helpText: "Photorealistic 3D PCB render shown when hovering over certificate card."
+    });
+
     formHtml = `
       <div class="admin-form-grid">
         <div class="admin-form-group full-width">
@@ -3393,6 +3595,31 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
         <div class="admin-form-group full-width">
           <label for="editCourseDesc">Overview & Syllabus Summary</label>
           <textarea id="editCourseDesc" rows="3">${c.description || ""}</textarea>
+        </div>
+      </div>
+
+      <!-- Associated Hardware Project & 3D Preview (Stretch on Hover) -->
+      <div class="admin-builder-section" style="border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border)); background: rgba(255, 126, 74, 0.04); border-radius: 8px; padding: 16px;">
+        <div class="admin-builder-header" style="margin-bottom: 12px;">
+          <h4 style="color: var(--accent); display: flex; align-items: center; gap: 8px;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 9l10-7 10 7-10 7-10-7z"></path><path d="M2 17l10 7 10-7"></path><path d="M2 12l10 7 10-7"></path></svg>
+            Associated Hardware Project & 3D Preview
+          </h4>
+        </div>
+        <div class="admin-form-grid">
+          <div class="admin-form-group full-width">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600;">
+              <input type="checkbox" id="editCourseHasProject" ${c.hasProject ? "checked" : ""}>
+              <span>Enable 3D PCB Preview & Dual Buttons (View Certificate + Explore Project)</span>
+            </label>
+          </div>
+          <div class="admin-form-group full-width">
+            <label for="editCourseProjectId">Associated Project ID (e.g. mixed-signal-board)</label>
+            <input type="text" id="editCourseProjectId" value="${c.projectId || ""}" placeholder="e.g. mixed-signal-board">
+          </div>
+          <div class="admin-form-group full-width">
+            ${projectHoverMediaHtml}
+          </div>
         </div>
       </div>
 
@@ -3817,6 +4044,9 @@ if (adminItemModalSaveBtn) {
       const badgeText = document.getElementById("editCourseBadgeText").value.trim();
       const iconSrc = document.getElementById("editCourseIcon").value.trim();
       const description = document.getElementById("editCourseDesc").value.trim();
+      const hasProject = document.getElementById("editCourseHasProject") ? document.getElementById("editCourseHasProject").checked : false;
+      const projectId = document.getElementById("editCourseProjectId") ? document.getElementById("editCourseProjectId").value.trim() : "";
+      const projectHoverImage = document.getElementById("editCourseProjectHoverImage") ? document.getElementById("editCourseProjectHoverImage").value.trim() : "";
 
       const cardBullets = Array.from(document.querySelectorAll("#editCourseBulletsContainer input"))
         .map((i) => i.value.trim())
@@ -3850,6 +4080,9 @@ if (adminItemModalSaveBtn) {
           id: `course-${Date.now()}`,
           isCourse: true,
           isOpenSource: true,
+          hasProject,
+          projectId,
+          projectHoverImage,
           typeBadgeText: badgeText || "Verified ✦",
           typeBadgeClass: "badge-open-source",
           title,
@@ -3879,6 +4112,9 @@ if (adminItemModalSaveBtn) {
           c.tag = tag;
           c.typeBadgeText = badgeText;
           c.iconSrc = iconSrc;
+          c.hasProject = hasProject;
+          c.projectId = projectId;
+          c.projectHoverImage = projectHoverImage;
           c.cardBullets = cardBullets;
           c.description = description;
           c.images = images;
