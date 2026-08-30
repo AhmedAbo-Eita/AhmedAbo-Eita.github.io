@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Visual Admin Studio & GitHub Cloud CMS (Loaded On-Demand)
  * Encrypted authentication, dynamic content manager & 1-click cloud sync
  */

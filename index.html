@@ -591,13 +591,6 @@
   <footer class="site-footer">
     <p id="footerCopyright" title="Triple-click to access Studio CMS">Ahmed Aboeita | Hardware Design Engineer | Egypt</p>
     <a href="tel:01280254974">+20 128 025 4974</a>
-    <button type="button" class="admin-trigger-btn" id="adminTriggerBtn" aria-label="Open Studio CMS">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-      </svg>
-      <span>Studio Access</span>
-    </button>
   </footer>
 
   <!-- Admin Studio Password Login Modal -->
@@ -612,15 +605,10 @@
       <h3>Portfolio Admin Access</h3>
       <p>Enter your password to edit portfolio content and publish changes.</p>
       <form id="adminPinForm" class="admin-pin-form">
-        <input type="password" id="adminPinInput" placeholder="Enter Password (Default: 1234)" autocomplete="current-password" autofocus maxlength="64" required>
+        <input type="password" id="adminPinInput" placeholder="Enter Password" autocomplete="current-password" autofocus maxlength="64" required>
         <div class="admin-pin-actions">
           <button type="button" class="admin-btn admin-btn-ghost" id="adminPinCancelBtn">Cancel</button>
           <button type="submit" class="admin-btn admin-btn-primary">Unlock Studio</button>
-        </div>
-        <div style="margin-top: 14px; display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 0.72rem; color: var(--muted);">
-          <span>Default: <code>1234</code></span>
-          <span>•</span>
-          <button type="button" id="adminPinResetBtn" style="background:none; border:none; color:var(--accent); cursor:pointer; font-size:0.72rem; text-decoration:underline; padding:0;">Reset Password</button>
         </div>
       </form>
     </div>
