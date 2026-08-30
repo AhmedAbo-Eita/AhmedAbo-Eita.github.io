@@ -182,153 +182,6 @@
       ]
     },
     {
-      "id": "mixed-signal-board",
-      "isOpenSource": true,
-      "typeBadgeText": "Open Source ✦",
-      "typeBadgeClass": "badge-open-source",
-      "title": "Mixed Signal Acquisition & Generation Board",
-      "cardTitle": "Mixed Signal Board",
-      "tag": "KiCad 8.0+ | STM32F103 | 4-Layer Mixed-Signal PCB",
-      "cardExcerpt": "A high-precision, 4-layer Mixed-Signal PCB designed for high-fidelity analog acquisition and precision waveform generation, developed as part of the FEDEVEL Academy course.",
-      "cardBullets": [
-        "4-layer controlled impedance stackup with dedicated AGND/DGND star grounding",
-        "14-Bit ADC (250 kSPS) with 3rd-order 25 kHz Butterworth anti-aliasing filter",
-        "16-Bit dual-channel DAC with precision 2.5V reference & reconstruction buffer"
-      ],
-      "hoverImage": "Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png",
-      "description": "A professional-grade 4-layer Mixed-Signal PCB developed as part of the FEDEVEL Academy Advanced PCB Design Course. Demonstrates industry best practices for mixed-signal design, high-resolution data acquisition, precision signal generation, low-noise dual-domain power delivery, and high-frequency noise mitigation. Interfaces an STM32 ARM Cortex-M3 microcontroller with isolated analog front-ends, high-speed SPI buses, and precision filtering networks.",
-      "specs": [
-        {
-          "param": "Microcontroller (MCU)",
-          "value": "STM32F103C8T6 (ARM Cortex-M3, 72 MHz)",
-          "note": "64KB Flash, 20KB SRAM, High-Speed SPI & USB"
-        },
-        {
-          "param": "Host & Debug Interface",
-          "value": "Reversible USB-C & SWD Header",
-          "note": "USBLC6-2SC6 low-capacitance TVS diode array ESD protection"
-        },
-        {
-          "param": "Digital Power Supply (+3.3VD)",
-          "value": "TLV62569DBVR Synchronous Buck",
-          "note": "High-efficiency step-down converter supplying up to 250mA+"
-        },
-        {
-          "param": "Analog Power Supply (+3.3VA)",
-          "value": "HT7533-1 Ultra-Low Quiescent LDO",
-          "note": "Multi-stage LC/RC ripple suppression filter for ultra-quiet rails"
-        },
-        {
-          "param": "Analog Acquisition (ADC)",
-          "value": "ADC141S626 (14-Bit, up to 250 kSPS)",
-          "note": "Differential/single-ended sampling ADC via high-speed SPI"
-        },
-        {
-          "param": "Signal Conditioning (AFE)",
-          "value": "MCP6001 Low-Noise Rail-to-Rail Op-Amp",
-          "note": "High-impedance analog frontend buffer"
-        },
-        {
-          "param": "Anti-Aliasing Filter",
-          "value": "3rd-Order Butterworth Low-Pass (fc = 25 kHz)",
-          "note": "Active filter rejecting high-frequency harmonics and out-of-band noise"
-        },
-        {
-          "param": "Analog Input Range",
-          "value": "-1.65V to +1.65V (50Ω BNC Input)",
-          "note": "Precision DC bias level-shifting to match ADC reference span"
-        },
-        {
-          "param": "Waveform Generation (DAC)",
-          "value": "DAC7563 Dual 16-Bit Voltage Output DAC",
-          "note": "Integrated 2.5V 4ppm/°C internal reference"
-        },
-        {
-          "param": "Output Reconstruction & Buffer",
-          "value": "Active Low-Pass Filter + MCP6001 Buffer",
-          "note": "Delivering clean 0V to +3.3V analog output swing on 50Ω BNC"
-        },
-        {
-          "param": "PCB Stackup & Layout",
-          "value": "4-Layer Controlled Impedance Stackup",
-          "note": "Top Signal / Continuous Ground / Partitioned Power / Bottom Signal"
-        },
-        {
-          "param": "Grounding Strategy",
-          "value": "AGND & DGND Split with Star Connection",
-          "note": "Zero digital noise return current through sensitive analog paths"
-        },
-        {
-          "param": "Design & EDA Tools",
-          "value": "KiCad 8.0+ & LTspice",
-          "note": "Complete schematic capture, simulation, layout, and manufacturing files"
-        }
-      ],
-      "features": [
-        {
-          "title": "1. Microcontroller & Host Interface",
-          "items": [
-            "STM32F103C8T6 ARM Cortex-M3 running at 72 MHz managing high-speed SPI data transfer.",
-            "Reversible USB-C for power delivery and high-speed data communications.",
-            "USBLC6-2SC6 low-capacitance TVS diode array protecting USB data lines against ESD transients.",
-            "Dedicated SWD (Serial Wire Debug) header for JTAG/SWD programming via ST-Link or J-Link."
-          ]
-        },
-        {
-          "title": "2. Power Architecture & Low-Noise Regulation",
-          "items": [
-            "Digital Domain (+3.3VD): Powered by TLV62569DBVR high-efficiency synchronous step-down buck converter (supplying up to 250mA+).",
-            "Analog Domain (+3.3VA): Linear regulated via HT7533-1 ultra-low quiescent current LDO.",
-            "Multi-stage LC/RC low-pass ripple suppression filter network to guarantee an ultra-quiet rail for ADC, DAC, and op-amps."
-          ]
-        },
-        {
-          "title": "3. Analog Front-End & ADC Acquisition",
-          "items": [
-            "ADC141S626 14-Bit ADC: 50 kSPS to 250 kSPS differential/single-ended sampling ADC via high-speed SPI.",
-            "Signal Conditioning: Active Analog Front-End (AFE) based on the low-noise MCP6001 rail-to-rail operational amplifier.",
-            "Anti-Aliasing Filter: 3rd-order Butterworth active low-pass filter (fc = 25 kHz) to reject out-of-band noise.",
-            "Input Interface: 50Ω BNC connector designed for an analog span of -1.65V to +1.65V with precision DC bias level-shifting."
-          ]
-        },
-        {
-          "title": "4. Precision DAC & Output Reconstruction",
-          "items": [
-            "DAC7563: Dual-channel, 16-Bit high-accuracy voltage output DAC with internal 2.5V 4ppm/°C reference.",
-            "Reconstruction Filter & Output Stage: Active low-pass filter and high-drive output buffer utilizing MCP6001 Op-Amp.",
-            "Output Interface: 50Ω BNC connector delivering an output swing of 0V to +3.3V."
-          ]
-        },
-        {
-          "title": "5. Mixed-Signal PCB Layout & Grounding Strategy",
-          "items": [
-            "4-layer controlled impedance stackup: Layer 1 Top Signal, Layer 2 Ground Plane (AGND/DGND star bridge), Layer 3 Power (+3.3VD, +3.3VA, +5V_USB), Layer 4 Bottom Signal.",
-            "Strict physical partitioning between high-speed digital switching signals and low-amplitude analog paths.",
-            "Manufacturing-ready Gerber files, complete BOM, and schematic exports for JLCPCB/PCBWay fabrication."
-          ]
-        }
-      ],
-      "images": [
-        {
-          "src": "Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png",
-          "caption": "Mixed Signal Board — 3D Top-side Photorealistic Render (STM32, USB-C, BNC, ADC/DAC & Filter Stages)",
-          "label": "Top 3D View"
-        }
-      ],
-      "actions": [
-        {
-          "label": "View on GitHub ↗",
-          "url": "https://github.com/AhmedAbo-Eita/Hardware_PCB_Designs/tree/main/Mixed_Signal_Board_FEDEVEL_Course",
-          "isPrimary": true
-        },
-        {
-          "label": "Hardware Readme ↗",
-          "url": "https://github.com/AhmedAbo-Eita/Hardware_PCB_Designs/tree/main/Mixed_Signal_Board_FEDEVEL_Course#readme",
-          "isPrimary": false
-        }
-      ]
-    },
-    {
       "id": "ecco-lwd",
       "isOpenSource": false,
       "typeBadgeText": "Private ✦",
@@ -513,6 +366,153 @@
       ],
       "images": [],
       "actions": []
+    },
+    {
+      "id": "mixed-signal-board",
+      "isOpenSource": true,
+      "typeBadgeText": "Open Source ✦",
+      "typeBadgeClass": "badge-open-source",
+      "title": "Mixed Signal Acquisition & Generation Board",
+      "cardTitle": "Mixed Signal Board",
+      "tag": "KiCad 8.0+ | STM32F103 | 4-Layer Mixed-Signal PCB",
+      "cardExcerpt": "A high-precision, 4-layer Mixed-Signal PCB designed for high-fidelity analog acquisition and precision waveform generation, developed as part of the FEDEVEL Academy course.",
+      "cardBullets": [
+        "4-layer controlled impedance stackup with dedicated AGND/DGND star grounding",
+        "14-Bit ADC (250 kSPS) with 3rd-order 25 kHz Butterworth anti-aliasing filter",
+        "16-Bit dual-channel DAC with precision 2.5V reference & reconstruction buffer"
+      ],
+      "hoverImage": "Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png",
+      "description": "A professional-grade 4-layer Mixed-Signal PCB developed as part of the FEDEVEL Academy Advanced PCB Design Course. Demonstrates industry best practices for mixed-signal design, high-resolution data acquisition, precision signal generation, low-noise dual-domain power delivery, and high-frequency noise mitigation. Interfaces an STM32 ARM Cortex-M3 microcontroller with isolated analog front-ends, high-speed SPI buses, and precision filtering networks.",
+      "specs": [
+        {
+          "param": "Microcontroller (MCU)",
+          "value": "STM32F103C8T6 (ARM Cortex-M3, 72 MHz)",
+          "note": "64KB Flash, 20KB SRAM, High-Speed SPI & USB"
+        },
+        {
+          "param": "Host & Debug Interface",
+          "value": "Reversible USB-C & SWD Header",
+          "note": "USBLC6-2SC6 low-capacitance TVS diode array ESD protection"
+        },
+        {
+          "param": "Digital Power Supply (+3.3VD)",
+          "value": "TLV62569DBVR Synchronous Buck",
+          "note": "High-efficiency step-down converter supplying up to 250mA+"
+        },
+        {
+          "param": "Analog Power Supply (+3.3VA)",
+          "value": "HT7533-1 Ultra-Low Quiescent LDO",
+          "note": "Multi-stage LC/RC ripple suppression filter for ultra-quiet rails"
+        },
+        {
+          "param": "Analog Acquisition (ADC)",
+          "value": "ADC141S626 (14-Bit, up to 250 kSPS)",
+          "note": "Differential/single-ended sampling ADC via high-speed SPI"
+        },
+        {
+          "param": "Signal Conditioning (AFE)",
+          "value": "MCP6001 Low-Noise Rail-to-Rail Op-Amp",
+          "note": "High-impedance analog frontend buffer"
+        },
+        {
+          "param": "Anti-Aliasing Filter",
+          "value": "3rd-Order Butterworth Low-Pass (fc = 25 kHz)",
+          "note": "Active filter rejecting high-frequency harmonics and out-of-band noise"
+        },
+        {
+          "param": "Analog Input Range",
+          "value": "-1.65V to +1.65V (50Ω BNC Input)",
+          "note": "Precision DC bias level-shifting to match ADC reference span"
+        },
+        {
+          "param": "Waveform Generation (DAC)",
+          "value": "DAC7563 Dual 16-Bit Voltage Output DAC",
+          "note": "Integrated 2.5V 4ppm/°C internal reference"
+        },
+        {
+          "param": "Output Reconstruction & Buffer",
+          "value": "Active Low-Pass Filter + MCP6001 Buffer",
+          "note": "Delivering clean 0V to +3.3V analog output swing on 50Ω BNC"
+        },
+        {
+          "param": "PCB Stackup & Layout",
+          "value": "4-Layer Controlled Impedance Stackup",
+          "note": "Top Signal / Continuous Ground / Partitioned Power / Bottom Signal"
+        },
+        {
+          "param": "Grounding Strategy",
+          "value": "AGND & DGND Split with Star Connection",
+          "note": "Zero digital noise return current through sensitive analog paths"
+        },
+        {
+          "param": "Design & EDA Tools",
+          "value": "KiCad 8.0+ & LTspice",
+          "note": "Complete schematic capture, simulation, layout, and manufacturing files"
+        }
+      ],
+      "features": [
+        {
+          "title": "1. Microcontroller & Host Interface",
+          "items": [
+            "STM32F103C8T6 ARM Cortex-M3 running at 72 MHz managing high-speed SPI data transfer.",
+            "Reversible USB-C for power delivery and high-speed data communications.",
+            "USBLC6-2SC6 low-capacitance TVS diode array protecting USB data lines against ESD transients.",
+            "Dedicated SWD (Serial Wire Debug) header for JTAG/SWD programming via ST-Link or J-Link."
+          ]
+        },
+        {
+          "title": "2. Power Architecture & Low-Noise Regulation",
+          "items": [
+            "Digital Domain (+3.3VD): Powered by TLV62569DBVR high-efficiency synchronous step-down buck converter (supplying up to 250mA+).",
+            "Analog Domain (+3.3VA): Linear regulated via HT7533-1 ultra-low quiescent current LDO.",
+            "Multi-stage LC/RC low-pass ripple suppression filter network to guarantee an ultra-quiet rail for ADC, DAC, and op-amps."
+          ]
+        },
+        {
+          "title": "3. Analog Front-End & ADC Acquisition",
+          "items": [
+            "ADC141S626 14-Bit ADC: 50 kSPS to 250 kSPS differential/single-ended sampling ADC via high-speed SPI.",
+            "Signal Conditioning: Active Analog Front-End (AFE) based on the low-noise MCP6001 rail-to-rail operational amplifier.",
+            "Anti-Aliasing Filter: 3rd-order Butterworth active low-pass filter (fc = 25 kHz) to reject out-of-band noise.",
+            "Input Interface: 50Ω BNC connector designed for an analog span of -1.65V to +1.65V with precision DC bias level-shifting."
+          ]
+        },
+        {
+          "title": "4. Precision DAC & Output Reconstruction",
+          "items": [
+            "DAC7563: Dual-channel, 16-Bit high-accuracy voltage output DAC with internal 2.5V 4ppm/°C reference.",
+            "Reconstruction Filter & Output Stage: Active low-pass filter and high-drive output buffer utilizing MCP6001 Op-Amp.",
+            "Output Interface: 50Ω BNC connector delivering an output swing of 0V to +3.3V."
+          ]
+        },
+        {
+          "title": "5. Mixed-Signal PCB Layout & Grounding Strategy",
+          "items": [
+            "4-layer controlled impedance stackup: Layer 1 Top Signal, Layer 2 Ground Plane (AGND/DGND star bridge), Layer 3 Power (+3.3VD, +3.3VA, +5V_USB), Layer 4 Bottom Signal.",
+            "Strict physical partitioning between high-speed digital switching signals and low-amplitude analog paths.",
+            "Manufacturing-ready Gerber files, complete BOM, and schematic exports for JLCPCB/PCBWay fabrication."
+          ]
+        }
+      ],
+      "images": [
+        {
+          "src": "Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png",
+          "caption": "Mixed Signal Board — 3D Top-side Photorealistic Render (STM32, USB-C, BNC, ADC/DAC & Filter Stages)",
+          "label": "Top 3D View"
+        }
+      ],
+      "actions": [
+        {
+          "label": "View on GitHub ↗",
+          "url": "https://github.com/AhmedAbo-Eita/Hardware_PCB_Designs/tree/main/Mixed_Signal_Board_FEDEVEL_Course",
+          "isPrimary": true
+        },
+        {
+          "label": "Hardware Readme ↗",
+          "url": "https://github.com/AhmedAbo-Eita/Hardware_PCB_Designs/tree/main/Mixed_Signal_Board_FEDEVEL_Course#readme",
+          "isPrimary": false
+        }
+      ]
     }
   ],
   "skills": [
@@ -693,9 +693,6 @@
       "id": "mixed-signal-hardware-design",
       "isCourse": true,
       "isOpenSource": true,
-      "hasProject": true,
-      "projectId": "mixed-signal-board",
-      "projectHoverImage": "Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png",
       "typeBadgeText": "Verified ✦",
       "typeBadgeClass": "badge-open-source",
       "title": "Mixed-Signal Hardware Design",
@@ -773,7 +770,10 @@
           "url": "certificates/Mixed-Signal Hardware Design.pdf",
           "isPrimary": true
         }
-      ]
+      ],
+      "hasProject": true,
+      "projectId": "mixed-signal-board",
+      "projectHoverImage": "Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png"
     },
     {
       "id": "mastering-embedded-systems",
@@ -919,5 +919,36 @@
       "images": [],
       "actions": []
     }
-  ]
+  ],
+  "theme": {
+    "preset": "copper",
+    "dark": {
+      "accent": "#FF7E4A",
+      "accent2": "#5BC0BE",
+      "bg": "#0B0E14",
+      "bgElevated": "#0B0E14",
+      "surface": "#181B28",
+      "text": "#EAE6DD"
+    },
+    "light": {
+      "accent": "#D65A28",
+      "accent2": "#2A7D7B",
+      "bg": "#FCFAF7",
+      "bgElevated": "#FCFAF7",
+      "surface": "#FFFFFF",
+      "text": "#1A1C1E"
+    },
+    "fonts": {
+      "heading": "Sora",
+      "body": "Inter",
+      "mono": "JetBrains Mono"
+    },
+    "pointer": {
+      "enabled": true,
+      "mode": "spotlight",
+      "color": "",
+      "radius": 160,
+      "intensity": 12
+    }
+  }
 }
