@@ -1219,7 +1219,13 @@ async function initPortfolioData() {
   }
 
   try {
-    const res = await fetch("data/portfolio-data.json");
+    const res = await fetch(`data/portfolio-data.json?v=${Date.now()}`, {
+      cache: "no-store",
+      headers: {
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache"
+      }
+    });
     if (res.ok) {
       const data = await res.json();
       portfolioData = data;

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Visual Admin Studio & GitHub Cloud CMS (Loaded On-Demand)
  * Encrypted authentication, dynamic content manager & 1-click cloud sync
  */
@@ -185,7 +185,7 @@ if (adminPinForm) {
         resetPinFails();
         closeAdminPinModal();
         openAdminStudio();
-        showToast("Admin Studio Unlocked ✦");
+        showToast("Admin Studio Unlocked");
       } else {
         const st = registerPinFail();
         if (st.lockUntil) showToast("Too many failures — locked for 2 minutes.", "error");
@@ -609,7 +609,7 @@ function buildMediaFieldHtml({ id, label, value = "", category = "all", helpText
           }
           <div class="admin-media-info">
             <span class="admin-media-name">${hasValue ? (val.startsWith("data:") ? "Uploaded File (Direct Storage)" : val) : "No file selected"}</span>
-            <span class="admin-media-badge">${val.startsWith("data:") ? "✦ In-Memory Optimized" : "✦ Repository Asset"}</span>
+            <span class="admin-media-badge">${val.startsWith("data:") ? "In-Memory Optimized" : "Repository Asset"}</span>
           </div>
           <div class="admin-media-actions">
             <button type="button" class="admin-btn admin-btn-sm admin-btn-ghost admin-media-replace-btn" title="Replace file">
@@ -636,14 +636,14 @@ function buildMediaFieldHtml({ id, label, value = "", category = "all", helpText
             libraryItems.length > 0
               ? `
             <select class="admin-media-library-select" title="Choose an existing asset from the repository library">
-              <option value="">📁 Choose from library...</option>
+              <option value="">Choose from library...</option>
               ${libraryOptionsHtml}
             </select>
           `
               : ""
           }
           <button type="button" class="admin-btn admin-btn-sm admin-btn-ghost admin-media-toggle-manual-btn" style="font-size:0.72rem;padding:4px 8px;">
-            ✏️ Path
+            Path
           </button>
         </div>
 
@@ -717,7 +717,7 @@ function initAllMediaFieldsIn(rootElement) {
       }
 
       if (nameEl) nameEl.textContent = src.startsWith("data:") ? "Uploaded File (Direct Storage)" : src;
-      if (badgeEl) badgeEl.textContent = src.startsWith("data:") ? "✦ In-Memory Optimized" : "✦ Repository Asset";
+      if (badgeEl) badgeEl.textContent = src.startsWith("data:") ? "In-Memory Optimized" : "Repository Asset";
 
       previewCard.style.display = "flex";
       dropzone.style.display = "none";
@@ -734,7 +734,7 @@ function initAllMediaFieldsIn(rootElement) {
       try {
         const { dataUrl, isDoc } = await readAndOptimizeMediaFile(file);
         updateMediaPreview(dataUrl, isDoc);
-        showToast("File uploaded successfully! ✦");
+        showToast("File uploaded successfully!");
       } catch (err) {
         console.error(err);
         showToast("Failed to process file: " + err.message, "error");
@@ -755,7 +755,7 @@ function initAllMediaFieldsIn(rootElement) {
       try {
         const { dataUrl, isDoc } = await readAndOptimizeMediaFile(file);
         updateMediaPreview(dataUrl, isDoc);
-        showToast("File uploaded successfully! ✦");
+        showToast("File uploaded successfully!");
       } catch (err) {
         console.error(err);
         showToast("Failed to process file: " + err.message, "error");
@@ -1335,7 +1335,7 @@ function renderAdminThemeTab() {
       savePortfolioDataLocally();
       applyCustomTheme();
       renderAll();
-      showToast("Theme, Typography & Pointer Shadow saved! ✦");
+      showToast("Theme, Typography & Pointer Shadow saved!");
     });
   }
 
@@ -1988,7 +1988,7 @@ window.addGalleryCardRow = function (containerId, data = { src: "", label: "Prev
       } else {
         thumbWrap.innerHTML = `<img src="${dataUrl}" alt="Visual" class="admin-gallery-card-thumb"><span class="admin-gallery-card-thumb-hover">Upload</span><input type="file" class="gallery-file-input" accept="image/*,.pdf,.svg" style="display:none;">`;
       }
-      showToast("Visual uploaded! ✦");
+      showToast("Visual uploaded!");
     } catch (err) {
       console.error(err);
       showToast("Upload failed: " + err.message, "error");
@@ -2026,7 +2026,7 @@ window.handleBatchMediaUpload = async function (files, containerId, isCertificat
       console.error(e);
     }
   }
-  showToast(`Uploaded ${files.length} visual${files.length > 1 ? "s" : ""}! ✦`);
+  showToast(`Uploaded ${files.length} visual${files.length > 1 ? "s" : ""}!`);
 };
 
 window.addImageRow = function (containerId) {
@@ -2285,7 +2285,7 @@ if (adminItemModalSaveBtn) {
     renderAll();
     renderAdminAllTabs();
     closeEditItemModal();
-    showToast("Changes saved successfully! ✦");
+    showToast("Changes saved successfully!");
   });
 }
 
@@ -2363,7 +2363,7 @@ if (adminPublishBtn) {
       });
 
       if (putRes.ok) {
-        showToast("🚀 Successfully published to GitHub! Live site updates shortly.");
+        showToast("Successfully published to GitHub! Live site updates shortly.");
       } else {
         const errJson = await putRes.json();
         throw new Error(errJson.message || "Failed to commit file to GitHub");
