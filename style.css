@@ -733,6 +733,15 @@ li::before {
   gap: 20px;
 }
 
+/* If the total number of projects is odd, center the last project card */
+@media (min-width: 981px) {
+  .projects-grid > .project-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - 10px);
+  }
+}
+
 /* ===== PROJECT CARD WITH BLUR HOVER & 3D PREVIEW ===== */
 .project-card {
   position: relative;
