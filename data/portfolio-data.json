@@ -192,7 +192,7 @@
       "cardExcerpt": "Logging While Drilling tool using high-frequency ultrasonic sensing to evaluate wellbore conditions in real time. Currently at TRL5 and tested in drilling jobs.",
       "cardBullets": [
         "Ultrasonic sensor firing and receiving board design",
-        "MAG610 magnetometer interface circuit with MCU integration",
+        "Magnetometer interface circuit with MCU integration",
         "Hard iron and soft iron calibration for accurate sensor readings"
       ],
       "hoverImage": "",
@@ -210,7 +210,7 @@
         },
         {
           "param": "Magnetic Telemetry",
-          "value": "MAG610 3-Axis Magnetometer",
+          "value": "3-Axis Magnetometer",
           "note": "Hard iron & soft iron digital calibration algorithms implemented"
         },
         {
