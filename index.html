@@ -12,75 +12,107 @@
         localStorage.removeItem("portfolio_theme");
         localStorage.removeItem("theme");
         var sessionTheme = sessionStorage.getItem("portfolio_theme");
-        var systemPrefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-        var theme = (sessionTheme === "dark" || sessionTheme === "light") ? sessionTheme : (systemPrefersDark ? "dark" : "light");
+        var theme = (sessionTheme === "dark" || sessionTheme === "light") ? sessionTheme : "light";
         document.documentElement.setAttribute("data-theme", theme);
       } catch (e) {
-        document.documentElement.setAttribute("data-theme", "dark");
+        document.documentElement.setAttribute("data-theme", "light");
       }
     })();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <canvas class="circuit-canvas" id="circuitCanvas" aria-hidden="true"></canvas>
+  <div class="scroll-progress-bar" id="scrollProgressBar" aria-hidden="true"></div>
+  <div class="kinetic-cursor" id="kineticCursor" aria-hidden="true">
+    <span class="cursor-ring"></span>
+    <span class="cursor-dot"></span>
+  </div>
 
   <header class="site-header">
-    <a class="brand" href="#hero" aria-label="Ahmed Aboeita home">
-      <img src="favicon.svg" alt="AE" class="brand-mark" width="32" height="32">
-      <span>Ahmed Aboeita</span>
-    </a>
+    <div class="header-inner">
+      <a class="brand" href="#hero" aria-label="Ahmed Aboeita home">
+        <img src="favicon.svg" alt="AE" class="brand-mark" width="32" height="32">
+        <span>Ahmed Aboeita</span>
+      </a>
 
-    <nav class="nav-links" aria-label="Primary navigation">
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#skills">Stack</a>
-      <a href="#education">Education</a>
-      <a href="#courses">Courses</a>
-    </nav>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Stack</a>
+        <a href="#education">Education</a>
+        <a href="#courses">Courses</a>
+      </nav>
 
-    <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle color theme">
-      <span class="toggle-track"><span class="toggle-dot" id="toggleDot"></span></span>
-      <span id="themeLabel">Dark</span>
-    </button>
+      <div class="header-actions">
+        <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle color theme">
+          <span class="toggle-track"><span class="toggle-dot" id="toggleDot"></span></span>
+          <span id="themeLabel">Light</span>
+        </button>
+        <a class="nav-cta brutal-btn" href="mailto:ahmedaboeita2233@gmail.com">
+          <span>Let's Talk</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" type="button" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
   </header>
 
+  <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
+    <nav class="mobile-nav-links" aria-label="Mobile navigation">
+      <a href="#experience"><span>Experience</span><span class="mobile-nav-idx">01</span></a>
+      <a href="#projects"><span>Projects</span><span class="mobile-nav-idx">02</span></a>
+      <a href="#skills"><span>Technical Stack</span><span class="mobile-nav-idx">03</span></a>
+      <a href="#education"><span>Education</span><span class="mobile-nav-idx">04</span></a>
+      <a href="#courses"><span>Courses &amp; Certifications</span><span class="mobile-nav-idx">05</span></a>
+      <a class="mobile-nav-cta brutal-btn" href="mailto:ahmedaboeita2233@gmail.com">
+        <span>Let's Talk</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+      </a>
+    </nav>
+  </div>
+
   <main>
-    <section id="hero" class="hero-section">
-      <div class="hero-orbit" aria-hidden="true"></div>
+    <section id="hero" class="hero-section section-parchment pcb-grid-light">
       <div class="hero-grid">
         <div class="hero-copy">
+          <div class="profile-status">
+            <span class="status-dot"></span>
+            Available for hardware design roles
+          </div>
           <p class="eyebrow">Hardware | Embedded | Power Electronics</p>
-          <h1>Reliable electronics from schematic to industry.</h1>
+          <h1 class="brutal-display">Reliable electronics from schematic to <span class="hero-highlight-word">industry.<svg class="brush-underline" viewBox="0 0 220 18" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M3 12.5C45 5.5 142 3.5 217 9.5" stroke="#D97757" stroke-width="6.5" stroke-linecap="round"/></svg></span></h1>
           <p class="hero-desc">
             Hardware Design Engineer designing electronic systems, PCBs, and power stages for oil and gas tools,
             EV charging, motor control, and embedded sensing platforms.
           </p>
 
           <div class="hero-actions" aria-label="Contact links">
-            <a class="primary-action" href="mailto:ahmedaboeita2233@gmail.com">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <a class="primary-action brutal-btn" href="mailto:ahmedaboeita2233@gmail.com">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                 <polyline points="22,6 12,13 2,6"></polyline>
               </svg>
               <span>Contact me</span>
             </a>
-            <a class="ghost-action" href="https://www.linkedin.com/in/ahmed-aboeita-747948204/" target="_blank"
+            <a class="ghost-action brutal-btn" href="https://www.linkedin.com/in/ahmed-aboeita-747948204/" target="_blank"
               rel="noreferrer">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
               </svg>
               <span>LinkedIn</span>
             </a>
-            <a class="ghost-action" href="https://github.com/AhmedAbo-Eita" target="_blank" rel="noreferrer">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <a class="ghost-action brutal-btn" href="https://github.com/AhmedAbo-Eita" target="_blank" rel="noreferrer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
               </svg>
               <span>GitHub</span>
@@ -95,19 +127,21 @@
           </div>
         </div>
 
-        <aside class="hero-panel" aria-label="Profile summary">
-          <div class="profile-shell">
-            <div class="profile-image">
-              <img id="heroProfileImg" src="profile.jpg" alt="Ahmed Aboeita" width="400" height="400" decoding="async"
+        <aside class="hero-profile-stage" aria-label="Engineer Profile">
+          <div class="hero-profile-card">
+            <svg viewBox="0 0 120 80" class="hero-burst-lines" fill="none" aria-hidden="true">
+              <path d="M18 58 L42 26" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" />
+              <path d="M40 66 L74 44" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" />
+              <path d="M48 76 L86 68" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" />
+            </svg>
+            <div class="hero-portrait-backdrop" aria-hidden="true"></div>
+            <div class="hero-portrait-frame profile-image">
+              <img id="heroProfileImg" src="profile.jpg" alt="Ahmed Aboeita" width="420" height="400" decoding="async"
                 fetchpriority="high">
-            </div>
-            <div class="profile-status">
-              <span class="status-dot"></span>
-              Available for hardware design roles
             </div>
           </div>
 
-          <div class="instrument-card">
+          <div class="hero-stats-card brutal-card">
             <dl class="quick-stats">
               <div>
                 <dt>Current</dt>
@@ -119,7 +153,7 @@
               </div>
               <div>
                 <dt>Degree</dt>
-                <dd>B.Sc. Electrical Power & Machines</dd>
+                <dd>B.Sc. Electrical Power &amp; Machines</dd>
               </div>
             </dl>
           </div>
@@ -127,470 +161,226 @@
       </div>
     </section>
 
-    <section id="experience" class="content-section">
+    <section class="kinetic-marquee" aria-hidden="true">
+      <div class="marquee-track marquee-left">
+        <div class="marquee-group">
+          <span>8-LAYER HIGH-TG180 PCB</span><i class="m-plus">+</i>
+          <span>60V / 30A FOC MOTOR CONTROL</span><i class="m-plus">+</i>
+          <span>MIXED-SIGNAL AFE</span><i class="m-plus">+</i>
+          <span>DOWNHOLE LWD ULTRASONICS</span><i class="m-plus">+</i>
+          <span>EV FAST CHARGING DAB &amp; LLC</span><i class="m-plus">+</i>
+          <span>SIGNAL &amp; POWER INTEGRITY</span><i class="m-plus">+</i>
+        </div>
+        <div class="marquee-group">
+          <span>8-LAYER HIGH-TG180 PCB</span><i class="m-plus">+</i>
+          <span>60V / 30A FOC MOTOR CONTROL</span><i class="m-plus">+</i>
+          <span>MIXED-SIGNAL AFE</span><i class="m-plus">+</i>
+          <span>DOWNHOLE LWD ULTRASONICS</span><i class="m-plus">+</i>
+          <span>EV FAST CHARGING DAB &amp; LLC</span><i class="m-plus">+</i>
+          <span>SIGNAL &amp; POWER INTEGRITY</span><i class="m-plus">+</i>
+        </div>
+      </div>
+      <div class="marquee-track marquee-right">
+        <div class="marquee-group marquee-outline">
+          <span>ALTIUM DESIGNER</span><i class="m-diamond" aria-hidden="true"></i>
+          <span>KICAD 8.0</span><i class="m-diamond" aria-hidden="true"></i>
+          <span>STM32 &amp; TI C2000</span><i class="m-diamond" aria-hidden="true"></i>
+          <span>LTSPICE &amp; ADS</span><i class="m-diamond" aria-hidden="true"></i>
+          <span>MATLAB SIMULINK</span><i class="m-diamond" aria-hidden="true"></i>
+          <span>EMBEDDED C &amp; MODERN C++</span><i class="m-diamond" aria-hidden="true"></i>
+          <span>TRL-5 FIELD VALIDATION</span><i class="m-diamond" aria-hidden="true"></i>
+        </div>
+        <div class="marquee-group marquee-outline">
+          <span>ALTIUM DESIGNER</span><i class="m-diamond" aria-hidden="true"></i>
+          <span>KICAD 8.0</span><i class="m-diamond" aria-hidden="true"></i>
+          <span>STM32 &amp; TI C2000</span><i class="m-diamond" aria-hidden="true"></i>
+          <span>LTSPICE &amp; ADS</span><i class="m-diamond" aria-hidden="true"></i>
+          <span>MATLAB SIMULINK</span><i class="m-diamond" aria-hidden="true"></i>
+          <span>EMBEDDED C &amp; MODERN C++</span><i class="m-diamond" aria-hidden="true"></i>
+          <span>TRL-5 FIELD VALIDATION</span><i class="m-diamond" aria-hidden="true"></i>
+        </div>
+      </div>
+    </section>
+
+    <section id="latest-boards" class="content-section boards-showcase-section section-dark pcb-grid-bg">
       <div class="section-inner">
         <div class="section-heading">
-          <p class="section-kicker">01 / Experience</p>
-          <h2>From prototype circuits to field-ready tools.</h2>
+          <p class="section-kicker"><span class="kicker-num">[00]</span> Latest Work</p>
+          <h2 class="brutal-display">Recent multi-layer PCBs &amp; hardware renders.</h2>
+        </div>
+
+        <div class="boards-showcase-shell reveal">
+          <div class="pcb-orbit-stage pcb-grid-bg" id="heroPcbStage">
+            <div class="stage-orb-terracotta" aria-hidden="true"></div>
+            <div class="stage-orb-copper" aria-hidden="true"></div>
+
+            <!-- Floating Terracotta QFN / IC Chip Prop -->
+            <div class="floating-prop floating-prop-chip animate-float-medium" aria-hidden="true">
+              <svg width="86" height="86" viewBox="0 0 110 110" fill="none">
+                <rect x="24" y="24" width="62" height="62" rx="10" fill="url(#showcaseChipGrad)" stroke="#FAF9F5" stroke-opacity="0.4" stroke-width="2" />
+                <circle cx="38" cy="38" r="4" fill="#FAF9F5" fill-opacity="0.85" />
+                <text x="41" y="61" fill="#FAF9F5" font-size="13" font-family="JetBrains Mono, monospace" font-weight="bold">PCB</text>
+                <rect x="10" y="31" width="14" height="6" rx="2" fill="#E5984B" />
+                <rect x="86" y="31" width="14" height="6" rx="2" fill="#E5984B" />
+                <rect x="31" y="10" width="6" height="14" rx="2" fill="#E5984B" />
+                <rect x="31" y="86" width="6" height="14" rx="2" fill="#E5984B" />
+                <rect x="10" y="45" width="14" height="6" rx="2" fill="#E5984B" />
+                <rect x="86" y="45" width="14" height="6" rx="2" fill="#E5984B" />
+                <rect x="45" y="10" width="6" height="14" rx="2" fill="#E5984B" />
+                <rect x="45" y="86" width="6" height="14" rx="2" fill="#E5984B" />
+                <rect x="10" y="59" width="14" height="6" rx="2" fill="#E5984B" />
+                <rect x="86" y="59" width="14" height="6" rx="2" fill="#E5984B" />
+                <rect x="59" y="10" width="6" height="14" rx="2" fill="#E5984B" />
+                <rect x="59" y="86" width="6" height="14" rx="2" fill="#E5984B" />
+                <rect x="10" y="73" width="14" height="6" rx="2" fill="#E5984B" />
+                <rect x="86" y="73" width="14" height="6" rx="2" fill="#E5984B" />
+                <rect x="73" y="10" width="6" height="14" rx="2" fill="#E5984B" />
+                <rect x="73" y="86" width="6" height="14" rx="2" fill="#E5984B" />
+                <defs>
+                  <linearGradient id="showcaseChipGrad" x1="24" y1="24" x2="86" y2="86">
+                    <stop stop-color="#E87A54" />
+                    <stop offset="1" stop-color="#C96442" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+
+            <!-- Floating Copper 50 Ohm SMD Component Prop -->
+            <div class="floating-prop floating-prop-smd animate-float-reverse" aria-hidden="true">
+              <svg width="86" height="66" viewBox="0 0 104 80" fill="none">
+                <rect x="8" y="16" width="88" height="48" rx="12" fill="url(#showcaseSmdGrad)" stroke="#FAF9F5" stroke-opacity="0.35" stroke-width="2" />
+                <rect x="8" y="16" width="22" height="48" rx="6" fill="#FAF9F5" fill-opacity="0.85" />
+                <rect x="74" y="16" width="22" height="48" rx="6" fill="#FAF9F5" fill-opacity="0.85" />
+                <text x="36" y="45" fill="#141413" font-size="13" font-family="JetBrains Mono, monospace" font-weight="bold">50Ω</text>
+                <defs>
+                  <linearGradient id="showcaseSmdGrad" x1="8" y1="16" x2="96" y2="64">
+                    <stop stop-color="#E5984B" />
+                    <stop offset="1" stop-color="#D97757" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+
+            <img id="heroPcbImg" src="Project/BLDC_MC_V1.0/bldc_top.png" alt="60V / 30A BLDC & PMSM FOC Controller 3D PCB Render" class="hero-pcb-img" decoding="async">
+            <span class="pcb-satellite sat-1" id="heroSat1">8-Layer High-TG180</span>
+            <span class="pcb-satellite sat-2" id="heroSat2">60V / 30A FOC</span>
+            <span class="pcb-satellite sat-3" id="heroSat3">STM32G431 • DRV8353H</span>
+          </div>
+
+          <div class="boards-showcase-sidebar">
+            <div class="pcb-showcase-tabs" role="tablist" aria-label="Featured PCB Showcase">
+              <button type="button" class="pcb-tab active" data-board="bldc-top" role="tab" aria-selected="true">
+                <img class="pcb-tab-thumb" src="Project/BLDC_MC_V1.0/bldc_top.png" alt="" width="64" height="48" loading="lazy">
+                <span class="pcb-tab-text">
+                  <strong>BLDC FOC Controller</strong>
+                  <small>8-Layer • 60V / 30A</small>
+                </span>
+              </button>
+              <button type="button" class="pcb-tab" data-board="mixed-top" role="tab" aria-selected="false">
+                <img class="pcb-tab-thumb" src="Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png" alt="" width="64" height="48" loading="lazy">
+                <span class="pcb-tab-text">
+                  <strong>Mixed-Signal Board</strong>
+                  <small>4-Layer • USB-C &amp; Buck</small>
+                </span>
+              </button>
+            </div>
+
+            <div class="boards-showcase-meta">
+              <strong id="heroPcbTitle">60V / 30A BLDC &amp; PMSM FOC Controller</strong>
+              <span class="hero-pcb-specs-overlay" id="heroPcbSpecsOverlay">100 kHz SVPWM • 2.7 mΩ OptiMOS 5 • 4-Wire Kelvin</span>
+              <button type="button" class="pcb-inspect-btn brutal-btn" id="heroPcbInspectBtn">
+                <span>Inspect Full Project</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="content-section section-parchment pcb-grid-light">
+      <div class="section-inner">
+        <div class="section-heading">
+          <p class="section-kicker"><span class="kicker-num">[01]</span> Experience</p>
+          <h2 class="brutal-display">From prototype circuits to field-ready tools.</h2>
         </div>
 
         <div class="timeline">
-          <article class="timeline-item reveal">
-            <div class="timeline-meta">
-              <span>Oct 2024 - Present</span>
-              <span>Hybrid | Egypt / KL Malaysia</span>
-            </div>
-            <div class="timeline-body">
-              <h3>Hardware Design Engineer</h3>
-              <p class="company">MIT-Technologies</p>
-              <ul>
-                <li>Developing electronic systems, circuits, and PCBs for smart oil and gas tools.</li>
-                <li>Leading testing and troubleshooting to improve reliability and electronic performance.</li>
-                <li>Driving design improvements through field feedback and emerging hardware practices.</li>
-              </ul>
-            </div>
-          </article>
-
-
-          <article class="timeline-item reveal">
-            <div class="timeline-meta">
-              <span>Apr 2024 - Aug 2024</span>
-              <span>Cairo, Egypt</span>
-            </div>
-            <div class="timeline-body">
-              <h3>Hardware Engineer - Internship</h3>
-              <p class="company">EVFLASH</p>
-              <ul>
-                <li>Designed hardware systems for electric vehicle off-board AC chargers.</li>
-                <li>Analyzed system requirements and created PCB schematics.</li>
-                <li>Built PCB layouts following industry manufacturing standards.</li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="timeline-item reveal">
-            <div class="timeline-meta">
-              <span>Jun 2023 - Oct 2023</span>
-              <span>Training Program</span>
-            </div>
-            <div class="timeline-body">
-              <h3>Hardware Design Trainee</h3>
-              <p class="company">Under Dr. Ayman Samy Khalil</p>
-              <ul>
-                <li>Designed a DC-DC buck converter from scratch.</li>
-                <li>Simulated converter behavior using MATLAB Simulink and LTspice.</li>
-                <li>Generated schematics and PCB layouts using Altium Designer.</li>
-              </ul>
-            </div>
-          </article>
+          <!-- Populated dynamically -->
         </div>
       </div>
     </section>
 
-    <section id="projects" class="content-section alt-section">
+    <section id="projects" class="content-section section-white">
       <div class="section-inner">
         <div class="section-heading">
-          <p class="section-kicker">02 / Selected Projects</p>
-          <h2>Hardware systems with power, sensing, and signal integrity at the center.</h2>
+          <p class="section-kicker"><span class="kicker-num">[02]</span> Selected Projects</p>
+          <h2 class="brutal-display">Hardware systems with power, sensing, and signal integrity at the center.</h2>
+        </div>
+
+        <div class="projects-toolbar" role="tablist" aria-label="Filter hardware projects by domain">
+          <button type="button" class="filter-pill active" data-filter="all" role="tab" aria-selected="true">All Systems <span class="filter-count" id="countAll">5</span></button>
+          <button type="button" class="filter-pill" data-filter="power" role="tab" aria-selected="false">Power Electronics &amp; Motor Control</button>
+          <button type="button" class="filter-pill" data-filter="pcb" role="tab" aria-selected="false">Mixed-Signal &amp; Multi-Layer PCB</button>
+          <button type="button" class="filter-pill" data-filter="downhole" role="tab" aria-selected="false">Downhole &amp; Embedded Sensing</button>
         </div>
 
         <div class="projects-grid">
-          <article class="project-card reveal" data-project-id="bldc-motor-driver" tabindex="0" role="button"
-            aria-label="View BLDC Motor Driver project details and 3D renders">
-            <div class="project-card-inner">
-              <div class="project-card-header">
-                <p class="project-tag">PCB | Power Electronics | Jan 2026</p>
-                <span class="project-card-badge badge-open-source">Open Source ✦</span>
-              </div>
-              <h3>BLDC Motor Driver</h3>
-              <p>High-performance 8-layer power PCB for a brushless DC motor driver, engineered for high-current
-                applications and robust thermal behavior.</p>
-              <ul>
-                <li>8-layer stackup with complex signal integrity management</li>
-                <li>High-current routing and dedicated ground planes for EMI reduction</li>
-                <li>Power MOSFETs and driver stages for industrial and robotic systems</li>
-              </ul>
-            </div>
-
-            <!-- Interactive Hover Overlay (Blur + 3D PCB Front View + Explore Button) -->
-            <div class="project-hover-overlay" aria-hidden="true">
-              <div class="project-hover-content">
-                <img src="Project/BLDC_MC_V1.0/bldc_top.png" alt="BLDC Motor Driver PCB Front 3D View" class="hover-3d-img" loading="lazy">
-                <button type="button" class="project-hover-btn" tabindex="-1">
-                  <span>Explore Project</span>
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                    <polyline points="7 7 17 7 17 17"></polyline>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card reveal" data-project-id="mixed-signal-board" tabindex="0" role="button"
-            aria-label="View Mixed Signal Acquisition & Generation Board technical specs and 3D render">
-            <div class="project-card-inner">
-              <div class="project-card-header">
-                <p class="project-tag">KiCad 8.0+ | STM32F103 | Feb 2026</p>
-                <span class="project-card-badge badge-open-source">Open Source ✦</span>
-              </div>
-              <h3>Mixed Signal Board</h3>
-              <p>A high-precision, 4-layer Mixed-Signal PCB designed for high-fidelity analog acquisition and precision waveform generation, developed as part of the FEDEVEL Academy course.</p>
-              <ul>
-                <li>4-layer controlled impedance stackup with dedicated AGND/DGND star grounding</li>
-                <li>14-Bit ADC (250 kSPS) with 3rd-order 25 kHz Butterworth anti-aliasing filter</li>
-                <li>16-Bit dual-channel DAC with precision 2.5V reference & reconstruction buffer</li>
-              </ul>
-            </div>
-
-            <!-- Interactive Hover Overlay (Blur + 3D PCB Front View + Explore Button) -->
-            <div class="project-hover-overlay" aria-hidden="true">
-              <div class="project-hover-content">
-                <img src="Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png" alt="Mixed Signal Board PCB Front 3D View" class="hover-3d-img" loading="lazy">
-                <button type="button" class="project-hover-btn" tabindex="-1">
-                  <span>Explore Project</span>
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                    <polyline points="7 7 17 7 17 17"></polyline>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card reveal" data-project-id="ecco-lwd" tabindex="0" role="button"
-            aria-label="View ECCO LWD Tool technical specs">
-            <div class="project-card-inner">
-              <div class="project-card-header">
-                <p class="project-tag">Oil & Gas | Sensing | Nov 2024</p>
-                <span class="project-card-badge badge-private">Private ✦</span>
-              </div>
-              <h3>ECCO LWD Tool</h3>
-              <p>Logging While Drilling tool using high-frequency ultrasonic sensing to evaluate wellbore conditions in
-                real time. Currently at TRL5 and tested in drilling jobs.</p>
-              <ul>
-                <li>Ultrasonic sensor firing and receiving board design</li>
-                <li>MAG610 magnetometer interface circuit with MCU integration</li>
-                <li>Hard iron and soft iron calibration for accurate sensor readings</li>
-              </ul>
-            </div>
-
-            <!-- Interactive Hover Overlay (Blur + Explore Button) -->
-            <div class="project-hover-overlay" aria-hidden="true">
-              <div class="project-hover-content">
-                <button type="button" class="project-hover-btn" tabindex="-1">
-                  <span>Explore Project</span>
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                    <polyline points="7 7 17 7 17 17"></polyline>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card reveal" data-project-id="elog-system" tabindex="0" role="button"
-            aria-label="View ELOG System technical specs">
-            <div class="project-card-inner">
-              <div class="project-card-header">
-                <p class="project-tag">Embedded | IoT | Oct 2024</p>
-                <span class="project-card-badge badge-private">Private ✦</span>
-              </div>
-              <h3>ELOG System</h3>
-              <p>Digital tracking platform for mechanical drilling tools, designed for ultra-low power operation and
-                long-term field logging.</p>
-              <ul>
-                <li>Ultra-low-power logging system targeting one-year battery life</li>
-                <li>Accelerometer interface for inclination-based runtime detection</li>
-                <li>Embedded sensing chain designed for harsh field conditions</li>
-              </ul>
-            </div>
-
-            <!-- Interactive Hover Overlay (Blur + Explore Button) -->
-            <div class="project-hover-overlay" aria-hidden="true">
-              <div class="project-hover-content">
-                <button type="button" class="project-hover-btn" tabindex="-1">
-                  <span>Explore Project</span>
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                    <polyline points="7 7 17 7 17 17"></polyline>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card reveal" data-project-id="ev-fast-charger" tabindex="0" role="button"
-            aria-label="View Smart EV DC Fast Charger technical specs">
-            <div class="project-card-inner">
-              <div class="project-card-header">
-                <p class="project-tag">EV | Power Electronics | Aug 2023</p>
-                <span class="project-card-badge badge-private">Private ✦</span>
-              </div>
-              <h3>Smart EV DC Fast Charger</h3>
-              <p>Graduation project covering full EV fast charger design, including AC-DC active rectifier and DC-DC
-                converter control strategies.</p>
-              <ul>
-                <li>Simulated Dual Active Bridge and LLC resonant converters</li>
-                <li>Implemented cascaded loop control for LLC converters</li>
-                <li>Designed battery charging control using a DAB converter</li>
-              </ul>
-            </div>
-
-            <!-- Interactive Hover Overlay (Blur + Explore Button) -->
-            <div class="project-hover-overlay" aria-hidden="true">
-              <div class="project-hover-content">
-                <button type="button" class="project-hover-btn" tabindex="-1">
-                  <span>Explore Project</span>
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                    <polyline points="7 7 17 7 17 17"></polyline>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </article>
+          <!-- Populated dynamically -->
         </div>
       </div>
     </section>
 
-    <section id="skills" class="content-section">
+    <section id="skills" class="content-section section-dark pcb-grid-bg">
       <div class="section-inner">
         <div class="section-heading">
-          <p class="section-kicker">03 / Technical Stack</p>
-          <h2>Tools and domains used across the hardware design cycle.</h2>
+          <p class="section-kicker"><span class="kicker-num">[03]</span> Technical Stack</p>
+          <h2 class="brutal-display">Tools and domains used across the hardware design cycle.</h2>
         </div>
 
         <div class="skills-grid">
-          <article class="skill-group reveal">
-            <h3>Design</h3>
-            <div class="skill-tags">
-              <span>PCB Design</span><span>Schematics</span><span>High-Speed Design</span><span>Signal
-                Integrity</span><span>EMI/EMC</span>
-            </div>
-          </article>
-          <article class="skill-group reveal">
-            <h3>EDA Tools</h3>
-            <div class="skill-tags">
-              <span>Altium Designer</span><span>KiCad</span><span>ADS</span><span>LTspice</span>
-            </div>
-          </article>
-          <article class="skill-group reveal">
-            <h3>Simulation</h3>
-            <div class="skill-tags">
-              <span>MATLAB</span><span>Simulink</span><span>LTspice</span><span>MBD</span>
-            </div>
-          </article>
-          <article class="skill-group reveal">
-            <h3>Programming</h3>
-            <div class="skill-tags">
-              <span>C</span><span>Modern C++</span><span>Python</span><span>Embedded C</span><span>Qt</span>
-            </div>
-          </article>
-          <article class="skill-group reveal">
-            <h3>Embedded</h3>
-            <div class="skill-tags">
-              <span>ATmega</span><span>STM32</span><span>TI C2000</span><span>ARM</span><span>RTOS</span>
-            </div>
-          </article>
-          <article class="skill-group reveal">
-            <h3>Power Electronics</h3>
-            <div class="skill-tags">
-              <span>DC-DC Converters</span><span>Gate Drivers</span><span>EV
-                Charging</span><span>DAB</span><span>LLC</span>
-            </div>
-          </article>
+          <!-- Populated dynamically -->
         </div>
       </div>
     </section>
 
-    <section id="education" class="content-section alt-section">
+    <section id="education" class="content-section section-parchment pcb-grid-light">
       <div class="section-inner">
         <div class="section-heading">
-          <p class="section-kicker">04 / Education</p>
-          <h2>Electrical engineering foundation for power electronics.</h2>
+          <p class="section-kicker"><span class="kicker-num">[04]</span> Education</p>
+          <h2 class="brutal-display">Electrical engineering foundation for power electronics.</h2>
         </div>
 
-        <article class="education-card reveal">
-          <div>
-            <h3>B.Sc. Electrical Power & Machines Engineering</h3>
-            <p>Faculty of Engineering - Alexandria University</p>
-            <span>Sep 2019 - Jun 2024</span>
-          </div>
-          <div class="gpa-box">
-            <strong>3.01</strong>
-            <span>CGPA / 4.0</span>
-          </div>
+        <article class="education-card brutal-card reveal">
+          <!-- Populated dynamically -->
         </article>
       </div>
     </section>
 
-    <section id="courses" class="content-section">
+    <section id="courses" class="content-section section-white">
       <div class="section-inner">
         <div class="section-heading">
-          <p class="section-kicker">05 / Courses & Certifications</p>
-          <h2>Focused learning in high-speed design, embedded systems, and power electronics.</h2>
+          <p class="section-kicker"><span class="kicker-num">[05]</span> Courses &amp; Certifications</p>
+          <h2 class="brutal-display">Focused learning in high-speed design, embedded systems, and power electronics.</h2>
         </div>
 
         <div class="courses-list">
-          <article class="course-card reveal" data-course-id="high-speed-digital-design" tabindex="0" role="button"
-            aria-label="View High-Speed Digital Design Masterclass certificate popup">
-            <div class="course-card-inner">
-              <div class="course-top">
-                <div class="course-icon">
-                  <img src="Icons/The Engineering EEcosystem.png" alt="The EEcosystem" loading="lazy">
-                </div>
-                <div class="course-info">
-                  <div class="course-header-row">
-                    <h3>High-Speed Digital Design Masterclass</h3>
-                    <span class="project-card-badge badge-open-source">Verified ✦</span>
-                  </div>
-                  <p>Prof. Dr. Eric Bogatin | Apr 2026 - Present | Online Masterclass</p>
-                </div>
-              </div>
-              <ul class="course-bullets">
-                <li>Identifying and solving noise, crosstalk, and power integrity issues</li>
-                <li>Designing high-speed traces and board layers for impedance control</li>
-                <li>Advanced modeling and measurements for timing and signal health</li>
-              </ul>
-            </div>
-
-            <!-- Hover Overlay (Blur + Glowing View Certificate Button) -->
-            <div class="course-hover-overlay" aria-hidden="true">
-              <button type="button" class="course-hover-btn" tabindex="-1">
-                <span>View Certificate</span>
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <line x1="7" y1="17" x2="17" y2="7"></line>
-                  <polyline points="7 7 17 7 17 17"></polyline>
-                </svg>
-              </button>
-            </div>
-          </article>
-
-          <article class="course-card reveal has-project-preview" data-course-id="mixed-signal-hardware-design" tabindex="0" role="button"
-            aria-label="View Mixed-Signal Hardware Design certificate and PCB project">
-            <div class="course-card-inner">
-              <div class="course-top">
-                <div class="course-icon course-icon-dark">
-                  <img src="Icons/Fedevel.png" alt="FEDEVEL Academy" loading="lazy">
-                </div>
-                <div class="course-info">
-                  <div class="course-header-row">
-                    <h3>Mixed-Signal Hardware Design</h3>
-                    <span class="project-card-badge badge-open-source">Verified ✦</span>
-                  </div>
-                  <p>Philip Salmony | Jan 2026 - Feb 2026 | Online Course</p>
-                </div>
-              </div>
-              <ul class="course-bullets">
-                <li>Full hardware life cycle from concept to manufacturing-ready prototypes</li>
-                <li>4-layer board design integrating USB, MCUs, and switching converters</li>
-                <li>High-precision analog filters, op-amps, and ADC/DAC interfaces</li>
-              </ul>
-            </div>
-
-            <!-- Interactive Stretched Hover Overlay with 3D PCB Visual & Dual Buttons -->
-            <div class="course-hover-overlay course-hover-overlay-dual" aria-hidden="true">
-              <div class="course-hover-content">
-                <img src="Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png" alt="Mixed-Signal Hardware Design PCB Front 3D View" class="hover-3d-img" loading="lazy">
-                <div class="course-hover-actions">
-                  <button type="button" class="course-hover-btn course-hover-btn-cert" data-action="view-cert" data-course-id="mixed-signal-hardware-design" onclick="event.stopPropagation(); openProjectModal('mixed-signal-hardware-design');" tabindex="-1">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                      <polyline points="14 2 14 8 20 8"></polyline>
-                      <line x1="16" y1="13" x2="8" y2="13"></line>
-                      <line x1="16" y1="17" x2="8" y2="17"></line>
-                      <polyline points="10 9 9 9 8 9"></polyline>
-                    </svg>
-                    <span>View Certificate</span>
-                  </button>
-                  <button type="button" class="course-hover-btn course-hover-btn-project" data-action="explore-project" data-project-id="mixed-signal-board" onclick="event.stopPropagation(); openProjectModal('mixed-signal-board');" tabindex="-1">
-                    <span>Explore Project</span>
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <line x1="7" y1="17" x2="17" y2="7"></line>
-                      <polyline points="7 7 17 7 17 17"></polyline>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="course-card reveal" data-course-id="mastering-embedded-systems" tabindex="0" role="button"
-            aria-label="View Mastering Embedded Systems Diploma certificate popup">
-            <div class="course-card-inner">
-              <div class="course-top">
-                <div class="course-icon">
-                  <img src="Icons/Learn_in_depth.png" alt="Learn In Depth" loading="lazy">
-                </div>
-                <div class="course-info">
-                  <div class="course-header-row">
-                    <h3>Mastering Embedded Systems Diploma</h3>
-                    <span class="project-card-badge badge-open-source">Verified ✦</span>
-                  </div>
-                  <p>Jan 2023 - Oct 2024 | Online Diploma</p>
-                </div>
-              </div>
-              <ul class="course-bullets">
-                <li>Git, C, Embedded C, and data structures</li>
-                <li>Microcontroller architecture, ARM, testing, and validation</li>
-                <li>ATmega, STM32, and TI C2000 microcontrollers</li>
-              </ul>
-            </div>
-
-            <!-- Hover Overlay (Blur + Glowing View Certificate Button) -->
-            <div class="course-hover-overlay" aria-hidden="true">
-              <button type="button" class="course-hover-btn" tabindex="-1">
-                <span>View Certificate</span>
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <line x1="7" y1="17" x2="17" y2="7"></line>
-                  <polyline points="7 7 17 7 17 17"></polyline>
-                </svg>
-              </button>
-            </div>
-          </article>
-
-          <article class="course-card reveal" data-course-id="udemy-self-study" tabindex="0" role="button"
-            aria-label="View Self-Study and Specialized Courses syllabus popup">
-            <div class="course-card-inner">
-              <div class="course-top">
-                <div class="course-icon">
-                  <img src="Icons/udemy.png" alt="Udemy" loading="lazy">
-                </div>
-                <div class="course-info">
-                  <div class="course-header-row">
-                    <h3>Self-Study - Udemy Courses</h3>
-                    <span class="project-card-badge badge-private">Self-Study ✦</span>
-                  </div>
-                  <p>Various instructors | Ongoing Online Specialized Tracks</p>
-                </div>
-              </div>
-              <ul class="course-bullets">
-                <li>Ultimate Power Electronics & Electrical Protection Bundle</li>
-                <li>Model Based Development for Automotive & Simulink/Stateflow</li>
-                <li>Qt 6 C++ GUI Development, C++ Programming, and MCU Programming for Power Electronics</li>
-              </ul>
-            </div>
-
-            <!-- Hover Overlay -->
-            <div class="course-hover-overlay" aria-hidden="true">
-              <button type="button" class="course-hover-btn" tabindex="-1">
-                <span>Explore Syllabus</span>
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <line x1="7" y1="17" x2="17" y2="7"></line>
-                  <polyline points="7 7 17 7 17 17"></polyline>
-                </svg>
-              </button>
-            </div>
-          </article>
+          <!-- Populated dynamically -->
         </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p id="footerCopyright" title="Triple-click to access Studio CMS">Ahmed Aboeita | Hardware Design Engineer | Egypt</p>
-    <a href="tel:01280254974">+20 128 025 4974</a>
+    <div class="footer-inner">
+      <p id="footerCopyright" title="Triple-click to access Studio CMS">Ahmed Aboeita | Hardware Design Engineer | Egypt</p>
+      <div class="footer-links">
+        <a href="mailto:ahmedaboeita2233@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/ahmed-aboeita-747948204/" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href="https://github.com/AhmedAbo-Eita" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="tel:01280254974">+20 128 025 4974</a>
+      </div>
+    </div>
   </footer>
 
   <!-- Admin Studio Password Login Modal -->
@@ -818,7 +608,7 @@
                 <div class="admin-form-group full-width">
                   <label for="ghToken">
                     GitHub Personal Access Token (Classic with <code>repo</code> scope or Fine-grained)
-                    <a href="https://github.com/settings/tokens/new?scopes=repo&description=Portfolio+CMS" target="_blank" class="admin-help-link">Generate Token ↗</a>
+                    <a href="https://github.com/settings/tokens/new?scopes=repo&description=Portfolio+CMS" target="_blank" class="admin-help-link">Generate Token</a>
                   </label>
                   <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
                   <small class="admin-help-text">Your token is stored safely ONLY in your local browser storage. It is never sent to any server other than GitHub's official API.</small>
@@ -878,7 +668,7 @@
           <div class="modal-header">
             <div class="modal-meta-top">
               <span class="modal-tag" id="modalProjectTag">PCB | Power Electronics</span>
-              <span class="modal-type-badge" id="modalTypeBadge">Open Source ✦</span>
+              <span class="modal-type-badge" id="modalTypeBadge">Open Source</span>
             </div>
             <h2 class="modal-title" id="modalProjectTitle">Project Title</h2>
           </div>
@@ -920,7 +710,11 @@
             <span class="modal-gallery-count" id="modalGalleryCount">1 / 2</span>
           </div>
 
-          <div class="modal-image-wrapper">
+          <div class="modal-image-wrapper" id="modalImageWrapper">
+            <button type="button" class="modal-zoom-btn" id="modalZoomBtn" aria-label="Toggle 2.2x PCB Zoom" aria-pressed="false">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+              <span>Click image to zoom (2.2×)</span>
+            </button>
             <img id="modalMainImg" src="Project/BLDC_MC_V1.0/bldc_top.png" alt="BLDC Motor Driver 3D Render"
               class="modal-main-img">
             <div class="modal-img-caption" id="modalImgCaption">Top-side 3D render of BLDC MC V1.0</div>

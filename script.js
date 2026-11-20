@@ -4,112 +4,129 @@ let portfolioData = null;
 // ===== THEME & COLOR CACHING & TYPOGRAPHY MANAGER =====
 const THEME_PRESETS = [
   {
+    id: "terracotta",
+    name: "Terracotta Studio",
+    desc: "Neo-brutalist parchment, charcoal & copper — default",
+    dark: { accent: "#D97757", accent2: "#E5984B", bg: "#141413", bgElevated: "#1C1C1A", surface: "#1C1C1A", text: "#FAF9F5" },
+    light: { accent: "#D97757", accent2: "#E5984B", bg: "#FAF9F5", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#141413" }
+  },
+  {
     id: "copper",
     name: "Precision Copper",
-    desc: "Warm copper + desaturated teal — workshop default",
+    desc: "Warm copper + desaturated teal",
     dark: { accent: "#FF7E4A", accent2: "#5BC0BE", bg: "#0B0E14", bgElevated: "#12151F", surface: "#181B28", text: "#EAE6DD" },
     light: { accent: "#D65A28", accent2: "#2A7D7B", bg: "#FCFAF7", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#1A1C1E" }
   },
   {
-    id: "forge",
-    name: "Iron Forge",
-    desc: "Aged brass on cold steel — calipers, chassis, vise",
-    dark: { accent: "#C48A4A", accent2: "#7E96A8", bg: "#0F1418", bgElevated: "#171C22", surface: "#1F242B", text: "#E6E1D8" },
-    light: { accent: "#A65E2A", accent2: "#5B7385", bg: "#F3F0E8", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#1E1C1A" }
+    id: "volt",
+    name: "Obsidian Volt",
+    desc: "Electric volt + plasma cyan on pitch obsidian",
+    dark: { accent: "#C4FF1A", accent2: "#38E8FF", bg: "#050608", bgElevated: "#0A0D12", surface: "#0F131C", text: "#F4F7FA" },
+    light: { accent: "#16A34A", accent2: "#0284C7", bg: "#F4F6F9", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#090C12" }
   },
   {
-    id: "graphite",
-    name: "Graphite Amber",
-    desc: "Desaturated amber signal on graphite — lab instrument",
-    dark: { accent: "#C9A86A", accent2: "#8E9B90", bg: "#131415", bgElevated: "#1A1D1E", surface: "#212426", text: "#E8E6E1" },
-    light: { accent: "#9C7A3A", accent2: "#6B7C6E", bg: "#F7F5F1", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#1E1E1C" }
+    id: "cobalt",
+    name: "Hyper Cobalt",
+    desc: "Electric cobalt + ice violet on deep carbon",
+    dark: { accent: "#3B82F6", accent2: "#22D3EE", bg: "#05070B", bgElevated: "#0B0F17", surface: "#101624", text: "#F1F5F9" },
+    light: { accent: "#2563EB", accent2: "#0891B2", bg: "#F3F6FB", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#0F172A" }
   },
   {
-    id: "oxide",
-    name: "Oxide Field",
-    desc: "Iron oxide ink on sage olive — field manual",
-    dark: { accent: "#B86A3D", accent2: "#7A866B", bg: "#13110F", bgElevated: "#1B1816", surface: "#24211E", text: "#EDE8E0" },
-    light: { accent: "#8F4A24", accent2: "#5E6A52", bg: "#F4F1EB", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#1E1A16" }
+    id: "aurora",
+    name: "Emerald Aurora",
+    desc: "Laser mint + sky cyan on nocturnal slate",
+    dark: { accent: "#10B981", accent2: "#38BDF8", bg: "#050807", bgElevated: "#0A100E", surface: "#0F1916", text: "#ECFDF5" },
+    light: { accent: "#059669", accent2: "#0284C7", bg: "#F2F7F5", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#0B1512" }
   },
   {
-    id: "blueprint",
-    name: "Blueprint Archive",
-    desc: "Muted blueprint blue on linen — technical drawing",
-    dark: { accent: "#6A8EA8", accent2: "#C2B8A3", bg: "#0D1623", bgElevated: "#132034", surface: "#1A2B42", text: "#DDE6F0" },
-    light: { accent: "#4A6B8A", accent2: "#8B7F6E", bg: "#EEF2F6", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#121C26" }
+    id: "infrared",
+    name: "Infrared Silicon",
+    desc: "Crimson laser + amber pulse on matte obsidian",
+    dark: { accent: "#FF4D6D", accent2: "#FFB703", bg: "#080507", bgElevated: "#120A0E", surface: "#1A0F15", text: "#F8F4F6" },
+    light: { accent: "#E11D48", accent2: "#D97706", bg: "#F8F4F6", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#140A0E" }
   },
   {
-    id: "concrete",
-    name: "Concrete Lab",
-    desc: "Stone & concrete with ink — measured, quiet",
-    dark: { accent: "#B8BFC6", accent2: "#8F9AA6", bg: "#0E0F11", bgElevated: "#16171A", surface: "#1E1F24", text: "#EDEEF0" },
-    light: { accent: "#2E3440", accent2: "#6B7A8A", bg: "#F2F2F3", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#0E0F11" }
+    id: "titanium",
+    name: "Monochrome Titanium",
+    desc: "Pure titanium white + silver steel",
+    dark: { accent: "#E2E8F0", accent2: "#94A3B8", bg: "#060709", bgElevated: "#0D0F13", surface: "#14171D", text: "#F8FAFC" },
+    light: { accent: "#111827", accent2: "#475569", bg: "#F4F5F7", bgElevated: "#FFFFFF", surface: "#FFFFFF", text: "#090B0E" }
   }
 ];
 
 const GOOGLE_FONTS_HEADING = [
+  { name: "Space Grotesk", family: "'Space Grotesk', ui-sans-serif, system-ui, sans-serif" },
   { name: "Sora", family: "'Sora', sans-serif" },
+  { name: "Syne", family: "'Syne', sans-serif" },
   { name: "Instrument Sans", family: "'Instrument Sans', sans-serif" },
-  { name: "Newsreader", family: "'Newsreader', serif" },
   { name: "IBM Plex Sans", family: "'IBM Plex Sans', sans-serif" },
-  { name: "Space Grotesk", family: "'Space Grotesk', sans-serif" },
-  { name: "Fragment Mono", family: "'Fragment Mono', monospace" }
+  { name: "Newsreader", family: "'Newsreader', serif" }
 ];
 
 const GOOGLE_FONTS_BODY = [
+  { name: "Space Grotesk", family: "'Space Grotesk', ui-sans-serif, system-ui, sans-serif" },
   { name: "Inter", family: "'Inter', system-ui, -apple-system, sans-serif" },
+  { name: "Plus Jakarta Sans", family: "'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" },
+  { name: "Instrument Sans", family: "'Instrument Sans', sans-serif" },
   { name: "IBM Plex Sans", family: "'IBM Plex Sans', sans-serif" },
-  { name: "Work Sans", family: "'Work Sans', sans-serif" },
-  { name: "Source Sans 3", family: "'Source Sans 3', sans-serif" },
-  { name: "Instrument Sans", family: "'Instrument Sans', sans-serif" }
+  { name: "Work Sans", family: "'Work Sans', sans-serif" }
 ];
 
 const GOOGLE_FONTS_MONO = [
-  { name: "JetBrains Mono", family: "'JetBrains Mono', monospace" },
+  { name: "JetBrains Mono", family: "'JetBrains Mono', ui-monospace, SFMono-Regular, monospace" },
+  { name: "Space Mono", family: "'Space Mono', monospace" },
   { name: "IBM Plex Mono", family: "'IBM Plex Mono', monospace" },
-  { name: "Fragment Mono", family: "'Fragment Mono', monospace" },
-  { name: "Space Mono", family: "'Space Mono', monospace" }
+  { name: "Fragment Mono", family: "'Fragment Mono', monospace" }
 ];
 
 const DEFAULT_THEME = {
-  preset: "copper",
+  version: 4,
+  preset: "terracotta",
   dark: {
-    accent: "#FF7E4A",
-    accent2: "#5BC0BE",
-    bg: "#0B0E14",
-    bgElevated: "#12151F",
-    surface: "#181B28",
-    text: "#EAE6DD"
+    accent: "#D97757",
+    accent2: "#E5984B",
+    bg: "#141413",
+    bgElevated: "#1C1C1A",
+    surface: "#1C1C1A",
+    text: "#FAF9F5"
   },
   light: {
-    accent: "#D65A28",
-    accent2: "#2A7D7B",
-    bg: "#FCFAF7",
+    accent: "#D97757",
+    accent2: "#E5984B",
+    bg: "#FAF9F5",
     bgElevated: "#FFFFFF",
     surface: "#FFFFFF",
-    text: "#1A1C1E"
+    text: "#141413"
   },
   fonts: {
-    heading: "Sora",
-    body: "Inter",
+    heading: "Space Grotesk",
+    body: "Space Grotesk",
     mono: "JetBrains Mono"
   },
   pointer: {
-    enabled: true,
-    mode: "glow",
-    color: "",
-    radius: 160,
-    intensity: 12
+    enabled: false,
+    mode: "none",
+    color: "#D97757",
+    radius: 180,
+    intensity: 10
   }
 };
 
 function hexToRgb(hex) {
-  if (!hex) return "255, 126, 74";
+  if (!hex) return "217, 119, 87";
   let c = hex.replace("#", "").trim();
   if (c.length === 3) c = c.split("").map((x) => x + x).join("");
-  if (c.length !== 6) return "255, 126, 74";
+  if (c.length !== 6) return "217, 119, 87";
   const num = parseInt(c, 16);
   return `${(num >> 16) & 255}, ${(num >> 8) & 255}, ${num & 255}`;
+}
+
+function getContrastInk(hex) {
+  const rgbStr = hexToRgb(hex);
+  const [r, g, b] = rgbStr.split(",").map((n) => parseInt(n.trim(), 10) / 255);
+  const toLinear = (v) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4));
+  const lum = 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
+  return lum > 0.24 ? "#141413" : "#FAF9F5";
 }
 
 function loadGoogleFont(fontName) {
@@ -136,51 +153,46 @@ function getStoredTheme() {
   return null;
 }
 
-let isDarkTheme = (document.documentElement.getAttribute("data-theme") || getStoredTheme() || getSystemTheme()) === "dark";
-let accentRgb = isDarkTheme ? "255, 126, 74" : "214, 90, 40";
-let secondAccentRgb = isDarkTheme ? "91, 192, 190" : "42, 125, 123";
+const prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let isDarkTheme = (document.documentElement.getAttribute("data-theme") || getStoredTheme() || "light") === "dark";
 
 function updateThemeColors() {
   isDarkTheme = document.documentElement.getAttribute("data-theme") === "dark";
-  const currentThemeObj = (portfolioData && portfolioData.theme) || DEFAULT_THEME;
-  const colors = (currentThemeObj && (isDarkTheme ? currentThemeObj.dark : currentThemeObj.light)) || {};
-
-  accentRgb = hexToRgb(colors.accent || (isDarkTheme ? "#FF7E4A" : "#D65A28"));
-  secondAccentRgb = hexToRgb(colors.accent2 || (isDarkTheme ? "#5BC0BE" : "#2A7D7B"));
 }
 
 function applyCustomTheme(themeData) {
   const currentTheme = themeData || (portfolioData && portfolioData.theme) || DEFAULT_THEME;
   if (!currentTheme) return;
 
-  const isDark = (document.documentElement.getAttribute("data-theme") || "dark") === "dark";
+  const isDark = (document.documentElement.getAttribute("data-theme") || "light") === "dark";
   const colors = (isDark ? currentTheme.dark : currentTheme.light) || {};
   const fonts = currentTheme.fonts || {};
   const root = document.documentElement;
 
-  // Colors
   if (colors.accent) {
     root.style.setProperty("--accent", colors.accent);
-    root.style.setProperty("--border-strong", `color-mix(in srgb, ${colors.accent} 35%, transparent)`);
-    root.style.setProperty("--glow", `color-mix(in srgb, ${colors.accent} 20%, transparent)`);
+    root.style.setProperty("--btn-on-accent", getContrastInk(colors.accent));
+    root.style.setProperty("--glow", `color-mix(in srgb, ${colors.accent} 28%, transparent)`);
   }
   if (colors.accent2) {
     root.style.setProperty("--accent-2", colors.accent2);
   }
   if (colors.bg) {
     root.style.setProperty("--bg", colors.bg);
+    root.style.setProperty("--section-parchment", colors.bg);
   }
   if (colors.bgElevated) {
     root.style.setProperty("--bg-elevated", colors.bgElevated);
+    root.style.setProperty("--section-white", colors.bgElevated);
   }
   if (colors.surface) {
+    root.style.setProperty("--surface", colors.surface);
     root.style.setProperty("--surface-strong", colors.surface);
   }
   if (colors.text) {
     root.style.setProperty("--text", colors.text);
   }
 
-  // Fonts
   if (fonts.heading) {
     loadGoogleFont(fonts.heading);
     const headingDef = GOOGLE_FONTS_HEADING.find((f) => f.name === fonts.heading);
@@ -221,14 +233,10 @@ function toggleTheme() {
   applyTheme(newTheme, true);
 }
 
-// Automatically sync when system color scheme changes in OS
 if (window.matchMedia) {
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-  const handleSystemThemeChange = (e) => {
-    try {
-      sessionStorage.removeItem("portfolio_theme");
-    } catch (err) {}
-    applyTheme(e.matches ? "dark" : "light", false);
+  const handleSystemThemeChange = () => {
+    // Keep Parchment Light as default unless user explicitly toggled in this session
   };
   if (mediaQuery.addEventListener) {
     mediaQuery.addEventListener("change", handleSystemThemeChange);
@@ -237,188 +245,21 @@ if (window.matchMedia) {
   }
 }
 
-// Initial theme label and variable sync
-applyTheme(document.documentElement.getAttribute("data-theme") || getStoredTheme() || getSystemTheme(), false);
-
-// ===== CIRCUIT CANVAS (HIGH PERFORMANCE) =====
-const canvas = document.getElementById("circuitCanvas");
-const ctx = canvas ? canvas.getContext("2d", { alpha: true, desynchronized: true }) : null;
-let width = 0;
-let height = 0;
-let traces = [];
-let mouse = { x: 0, y: 0, active: false };
-let isPageVisible = !document.hidden;
-let animFrameId = null;
-
-function resizeCanvas() {
-  if (!canvas || !ctx) return;
-  const ratio = Math.min(window.devicePixelRatio || 1, 2);
-  width = window.innerWidth;
-  height = window.innerHeight;
-  canvas.width = Math.floor(width * ratio);
-  canvas.height = Math.floor(height * ratio);
-  canvas.style.width = "100%";
-  canvas.style.height = "100%";
-  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-  buildTraces();
-}
-
-function buildTraces() {
-  const count = Math.min(42, Math.max(18, Math.floor((width * height) / 48000)));
-  traces = Array.from({ length: count }, () => {
-    const x = Math.random() * width;
-    const y = Math.random() * height;
-    const horizontal = Math.random() > 0.42;
-    const length = 70 + Math.random() * 200;
-    return {
-      x,
-      y,
-      vx: (Math.random() - 0.5) * 0.18,
-      vy: (Math.random() - 0.5) * 0.18,
-      horizontal,
-      length,
-      pulse: Math.random(),
-      speed: 0.004 + Math.random() * 0.008,
-      nodeSize: 2 + Math.random() * 2,
-    };
-  });
-}
-
-function drawTrace(trace) {
-  if (!ctx) return;
-  trace.x += trace.vx;
-  trace.y += trace.vy;
-  trace.pulse = (trace.pulse + trace.speed) % 1;
-
-  if (trace.x < -220) trace.x = width + 40;
-  if (trace.x > width + 220) trace.x = -40;
-  if (trace.y < -220) trace.y = height + 40;
-  if (trace.y > height + 220) trace.y = -40;
-
-  const bend = trace.length * 0.34;
-  const endX = trace.horizontal ? trace.x + trace.length : trace.x + bend;
-  const endY = trace.horizontal ? trace.y + bend : trace.y + trace.length;
-  const midX = trace.horizontal ? trace.x + bend : trace.x;
-  const midY = trace.horizontal ? trace.y : trace.y + bend;
-  const alpha = 0.08 + Math.sin(trace.pulse * Math.PI) * 0.2;
-
-  ctx.strokeStyle = `rgba(${accentRgb}, ${alpha})`;
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(trace.x, trace.y);
-  ctx.lineTo(midX, midY);
-  ctx.lineTo(endX, endY);
-  ctx.stroke();
-
-  const pulseX = trace.x + (endX - trace.x) * trace.pulse;
-  const pulseY = trace.y + (endY - trace.y) * trace.pulse;
-  ctx.fillStyle = `rgba(${secondAccentRgb}, 0.55)`;
-  ctx.beginPath();
-  ctx.arc(pulseX, pulseY, trace.nodeSize, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = `rgba(${accentRgb}, 0.3)`;
-  ctx.fillRect(trace.x - 2, trace.y - 2, 4, 4);
-  ctx.fillRect(endX - 2, endY - 2, 4, 4);
-}
-
-function drawMouseField() {
-  if (!ctx || !mouse.active) return;
-  const currentThemeObj = (portfolioData && portfolioData.theme) || DEFAULT_THEME;
-  const pointerCfg = (currentThemeObj && currentThemeObj.pointer) || DEFAULT_THEME.pointer || { enabled: true, mode: "glow", color: "", radius: 160, intensity: 12 };
-
-  if (pointerCfg.enabled === false || pointerCfg.mode === "none") return;
-
-  const pRadius = Math.max(20, pointerCfg.radius || 160);
-  const pIntVal = typeof pointerCfg.intensity === "number" ? pointerCfg.intensity : 12;
-  const pAlpha = pIntVal / 100;
-  const pColorRgb = pointerCfg.color ? hexToRgb(pointerCfg.color) : accentRgb;
-
-  if (pointerCfg.mode === "ring") {
-    ctx.strokeStyle = `rgba(${pColorRgb}, ${Math.min(1, pAlpha * 2.5)})`;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.arc(mouse.x, mouse.y, pRadius * 0.45, 0, Math.PI * 2);
-    ctx.stroke();
-
-    const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, pRadius);
-    gradient.addColorStop(0, `rgba(${pColorRgb}, ${pAlpha * 0.6})`);
-    gradient.addColorStop(1, `rgba(${pColorRgb}, 0)`);
-    ctx.fillStyle = gradient;
-    ctx.fillRect(mouse.x - pRadius, mouse.y - pRadius, pRadius * 2, pRadius * 2);
-  } else if (pointerCfg.mode === "spotlight") {
-    const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, pRadius * 1.4);
-    gradient.addColorStop(0, `rgba(${pColorRgb}, ${Math.min(1, pAlpha * 2)})`);
-    gradient.addColorStop(0.45, `rgba(${pColorRgb}, ${pAlpha * 0.5})`);
-    gradient.addColorStop(1, `rgba(${pColorRgb}, 0)`);
-    ctx.fillStyle = gradient;
-    ctx.fillRect(mouse.x - pRadius * 1.4, mouse.y - pRadius * 1.4, pRadius * 2.8, pRadius * 2.8);
-  } else {
-    // Default Ambient Glow
-    const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, pRadius);
-    gradient.addColorStop(0, `rgba(${pColorRgb}, ${pAlpha})`);
-    gradient.addColorStop(1, `rgba(${pColorRgb}, 0)`);
-    ctx.fillStyle = gradient;
-    ctx.fillRect(mouse.x - pRadius, mouse.y - pRadius, pRadius * 2, pRadius * 2);
-  }
-}
-
-function animateCanvas() {
-  if (!ctx) return;
-  if (!isPageVisible) {
-    animFrameId = null;
-    return;
-  }
-  ctx.clearRect(0, 0, width, height);
-  drawMouseField();
-  for (let i = 0; i < traces.length; i++) {
-    drawTrace(traces[i]);
-  }
-  animFrameId = requestAnimationFrame(animateCanvas);
-}
-
-document.addEventListener("visibilitychange", () => {
-  isPageVisible = !document.hidden;
-  if (isPageVisible && !animFrameId && ctx) {
-    animFrameId = requestAnimationFrame(animateCanvas);
-  }
-});
-
-let resizeTimeout;
-window.addEventListener(
-  "resize",
-  () => {
-    if (resizeTimeout) cancelAnimationFrame(resizeTimeout);
-    resizeTimeout = requestAnimationFrame(resizeCanvas);
-  },
-  { passive: true }
-);
-
-window.addEventListener(
-  "mousemove",
-  (event) => {
-    mouse.x = event.clientX;
-    mouse.y = event.clientY;
-    mouse.active = true;
-  },
-  { passive: true }
-);
-
-window.addEventListener(
-  "mouseleave",
-  () => {
-    mouse.active = false;
-  },
-  { passive: true }
-);
-
-if (canvas) {
-  resizeCanvas();
-  animFrameId = requestAnimationFrame(animateCanvas);
-}
+applyTheme(document.documentElement.getAttribute("data-theme") || getStoredTheme() || "light", false);
 
 // ===== SCROLL REVEALS & ACTIVE NAV OBSERVERS =====
 let revealObserver = null;
+function revealVisibleFallback() {
+  const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+  document.querySelectorAll(".reveal:not(.visible)").forEach((el) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= vh + 60) {
+      el.classList.add("visible");
+      if (revealObserver) revealObserver.unobserve(el);
+    }
+  });
+}
+
 function initRevealObserver() {
   if (revealObserver) {
     revealObserver.disconnect();
@@ -432,14 +273,18 @@ function initRevealObserver() {
         }
       });
     },
-    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    { threshold: 0.01, rootMargin: "0px 0px 60px 0px" }
   );
 
   document.querySelectorAll(".reveal").forEach((element, index) => {
-    element.style.transitionDelay = `${Math.min((index % 6) * 40, 200)}ms`;
+    element.style.transitionDelay = `${Math.min((index % 6) * 60, 300)}ms`;
     revealObserver.observe(element);
   });
+
+  requestAnimationFrame(revealVisibleFallback);
 }
+
+window.addEventListener("scroll", revealVisibleFallback, { passive: true });
 
 // Active nav indicator
 const navSections = document.querySelectorAll("main section[id]");
@@ -542,7 +387,7 @@ const DEFAULT_PORTFOLIO_DATA = {
     {
       id: "bldc-motor-driver",
       isOpenSource: true,
-      typeBadgeText: "Open Source ✦",
+      typeBadgeText: "Open Source",
       typeBadgeClass: "badge-open-source",
       title: "60V / 30A High-Performance BLDC & PMSM Motor Controller (ESC)",
       cardTitle: "BLDC Motor Driver",
@@ -606,14 +451,14 @@ const DEFAULT_PORTFOLIO_DATA = {
         }
       ],
       actions: [
-        { label: "View on GitHub ↗", url: "https://github.com/AhmedAbo-Eita/BLDC_Motor_Driver", isPrimary: true },
-        { label: "Hardware Readme ↗", url: "https://github.com/AhmedAbo-Eita/BLDC_Motor_Driver/blob/main/Hardware/BLDC_MC_V1.0/Readme.md", isPrimary: false }
+        { label: "View on GitHub", url: "https://github.com/AhmedAbo-Eita/BLDC_Motor_Driver", isPrimary: true },
+        { label: "Hardware Readme", url: "https://github.com/AhmedAbo-Eita/BLDC_Motor_Driver/blob/main/Hardware/BLDC_MC_V1.0/Readme.md", isPrimary: false }
       ]
     },
     {
       id: "mixed-signal-board",
       isOpenSource: true,
-      typeBadgeText: "Open Source ✦",
+      typeBadgeText: "Open Source",
       typeBadgeClass: "badge-open-source",
       title: "Mixed Signal Acquisition & Generation Board",
       cardTitle: "Mixed Signal Board",
@@ -695,14 +540,14 @@ const DEFAULT_PORTFOLIO_DATA = {
         }
       ],
       actions: [
-        { label: "View on GitHub ↗", url: "https://github.com/AhmedAbo-Eita/Hardware_PCB_Designs/tree/main/Mixed_Signal_Board_FEDEVEL_Course", isPrimary: true },
-        { label: "Hardware Readme ↗", url: "https://github.com/AhmedAbo-Eita/Hardware_PCB_Designs/tree/main/Mixed_Signal_Board_FEDEVEL_Course#readme", isPrimary: false }
+        { label: "View on GitHub", url: "https://github.com/AhmedAbo-Eita/Hardware_PCB_Designs/tree/main/Mixed_Signal_Board_FEDEVEL_Course", isPrimary: true },
+        { label: "Hardware Readme", url: "https://github.com/AhmedAbo-Eita/Hardware_PCB_Designs/tree/main/Mixed_Signal_Board_FEDEVEL_Course#readme", isPrimary: false }
       ]
     },
     {
       "id": "ecco-lwd",
       isOpenSource: false,
-      typeBadgeText: "Private ✦",
+      typeBadgeText: "Private",
       typeBadgeClass: "badge-private",
       title: "ECCO LWD Tool - Ultrasonic Logging While Drilling",
       cardTitle: "ECCO LWD Tool",
@@ -754,7 +599,7 @@ const DEFAULT_PORTFOLIO_DATA = {
     {
       "id": "elog-system",
       isOpenSource: false,
-      typeBadgeText: "Private ✦",
+      typeBadgeText: "Private",
       typeBadgeClass: "badge-private",
       title: "ELOG System - Ultra-Low Power Mechanical Tool Tracker",
       cardTitle: "ELOG System",
@@ -798,7 +643,7 @@ const DEFAULT_PORTFOLIO_DATA = {
     {
       "id": "ev-fast-charger",
       isOpenSource: false,
-      typeBadgeText: "Private ✦",
+      typeBadgeText: "Private",
       typeBadgeClass: "badge-private",
       title: "Smart EV DC Fast Charger System",
       cardTitle: "Smart EV DC Fast Charger",
@@ -878,7 +723,7 @@ const DEFAULT_PORTFOLIO_DATA = {
       id: "high-speed-digital-design",
       isCourse: true,
       isOpenSource: true,
-      typeBadgeText: "Verified ✦",
+      typeBadgeText: "Verified",
       typeBadgeClass: "badge-open-source",
       title: "High-Speed Digital Design Masterclass",
       cardTitle: "High-Speed Digital Design Masterclass",
@@ -958,7 +803,7 @@ const DEFAULT_PORTFOLIO_DATA = {
         }
       ],
       actions: [
-        { label: "Download Certificate PDF ↗", url: "certificates/high_speed_digital_design.pdf", isPrimary: true }
+        { label: "Download Certificate PDF", url: "certificates/high_speed_digital_design.pdf", isPrimary: true }
       ]
     },
     {
@@ -968,7 +813,7 @@ const DEFAULT_PORTFOLIO_DATA = {
       hasProject: true,
       projectId: "mixed-signal-board",
       projectHoverImage: "Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png",
-      typeBadgeText: "Verified ✦",
+      typeBadgeText: "Verified",
       typeBadgeClass: "badge-open-source",
       title: "Mixed-Signal Hardware Design",
       cardTitle: "Mixed-Signal Hardware Design",
@@ -1025,21 +870,21 @@ const DEFAULT_PORTFOLIO_DATA = {
         }
       ],
       actions: [
-        { label: "Download Certificate PDF ↗", url: "certificates/Mixed-Signal Hardware Design.pdf", isPrimary: true }
+        { label: "Download Certificate PDF", url: "certificates/Mixed-Signal Hardware Design.pdf", isPrimary: true }
       ]
     },
     {
       id: "mastering-embedded-systems",
       isCourse: true,
       isOpenSource: true,
-      typeBadgeText: "Verified ✦",
+      typeBadgeText: "Verified",
       typeBadgeClass: "badge-open-source",
       title: "Mastering Embedded Systems Diploma",
       cardTitle: "Mastering Embedded Systems Diploma",
       instructor: "Keroles Shenouda",
       dates: "Oct 2023 - Oct 2024",
       type: "Professional Diploma",
-      iconSrc: "Icons/learn-in-depth.png",
+      iconSrc: "Icons/Learn_in_depth.png",
       iconDark: false,
       tag: "Embedded | Learn In Depth | Oct 2024",
       cardBullets: [
@@ -1089,21 +934,21 @@ const DEFAULT_PORTFOLIO_DATA = {
         }
       ],
       actions: [
-        { label: "Download Certificate PDF ↗", url: "certificates/mastering-embedded-systems.pdf", isPrimary: true }
+        { label: "Download Certificate PDF", url: "certificates/mastering-embedded-systems.pdf", isPrimary: true }
       ]
     },
     {
       id: "udemy-self-study",
       isCourse: true,
       isOpenSource: false,
-      typeBadgeText: "Self-Study ✦",
+      typeBadgeText: "Self-Study",
       typeBadgeClass: "badge-private",
       title: "Self-Study & Specialized Courses",
       cardTitle: "Self-Study & Specialized Courses",
       instructor: "Various Instructors",
       dates: "Ongoing",
       type: "Self-Paced Courses",
-      iconSrc: "Icons/Udemy.png",
+      iconSrc: "Icons/udemy.png",
       iconDark: false,
       tag: "Power Electronics | Embedded | Ongoing",
       cardBullets: [
@@ -1147,35 +992,51 @@ const DEFAULT_PORTFOLIO_DATA = {
       actions: []
     }
   ],
-  theme: {
-    preset: "copper",
-    dark: {
-      accent: "#FF7E4A",
-      accent2: "#5BC0BE",
-      bg: "#0B0E14",
-      bgElevated: "#12151F",
-      surface: "#181B28",
-      text: "#EAE6DD"
-    },
-    light: {
-      accent: "#D65A28",
-      accent2: "#2A7D7B",
-      bg: "#FCFAF7",
-      bgElevated: "#FFFFFF",
-      surface: "#FFFFFF",
-      text: "#1A1C1E"
-    },
-    fonts: {
-      heading: "Sora",
-      body: "Inter",
-      mono: "JetBrains Mono"
-    }
-  }
+  theme: DEFAULT_THEME
 };
 
 // Global Active State
 portfolioData = JSON.parse(JSON.stringify(DEFAULT_PORTFOLIO_DATA));
 let projectsLookup = {};
+
+function sanitizePortfolioData(data) {
+  if (!data || typeof data !== "object") return false;
+  let changed = false;
+
+  if (data.theme && data.theme.preset && data.theme.preset !== "custom" && !THEME_PRESETS.some((p) => p.id === data.theme.preset)) {
+    data.theme.preset = "terracotta";
+    changed = true;
+  }
+
+  const stripDecor = (val) =>
+    typeof val === "string" ? val.replace(/[\u2726\u2197]/g, "").replace(/\s{2,}/g, " ").trim() : val;
+
+  [data.projects, data.courses].forEach((list) => {
+    if (!Array.isArray(list)) return;
+    list.forEach((item) => {
+      if (item && typeof item.typeBadgeText === "string") {
+        const cleanBadge = stripDecor(item.typeBadgeText);
+        if (cleanBadge !== item.typeBadgeText) {
+          item.typeBadgeText = cleanBadge;
+          changed = true;
+        }
+      }
+      if (item && Array.isArray(item.actions)) {
+        item.actions.forEach((act) => {
+          if (act && typeof act.label === "string") {
+            const cleanLabel = stripDecor(act.label);
+            if (cleanLabel !== act.label) {
+              act.label = cleanLabel;
+              changed = true;
+            }
+          }
+        });
+      }
+    });
+  });
+
+  return changed;
+}
 
 // Load saved data or fetch from JSON
 async function initPortfolioData() {
@@ -1183,6 +1044,15 @@ async function initPortfolioData() {
   if (localSaved) {
     try {
       portfolioData = JSON.parse(localSaved);
+      let overrideChanged = sanitizePortfolioData(portfolioData);
+      // Upgrade legacy v1/v2/v3 theme overrides to v4 Terracotta Studio while keeping user content edits
+      if (!portfolioData.theme || (portfolioData.theme.version || 0) < 4) {
+        portfolioData.theme = JSON.parse(JSON.stringify(DEFAULT_THEME));
+        overrideChanged = true;
+      }
+      if (overrideChanged) {
+        savePortfolioDataLocally();
+      }
       // Auto-merge new projects from defaults if missing, and sync mixed-signal-board actions/images
       if (DEFAULT_PORTFOLIO_DATA.projects) {
         DEFAULT_PORTFOLIO_DATA.projects.forEach((dp) => {
@@ -1229,6 +1099,10 @@ async function initPortfolioData() {
     if (res.ok) {
       const data = await res.json();
       portfolioData = data;
+      sanitizePortfolioData(portfolioData);
+      if (!portfolioData.theme || (portfolioData.theme.version || 0) < 4) {
+        portfolioData.theme = JSON.parse(JSON.stringify(DEFAULT_THEME));
+      }
     }
   } catch (err) {
     console.info("Using embedded default portfolio data", err);
@@ -1244,6 +1118,61 @@ function savePortfolioDataLocally() {
 // ==========================================================================
 // DYNAMIC DOM RENDER ENGINE
 // ==========================================================================
+let activeProjectFilter = "all";
+
+function getProjectCategories(p) {
+  const explicitMap = {
+    "bldc-motor-driver": ["power", "pcb"],
+    "mixed-signal-board": ["pcb"],
+    "ev-fast-charger": ["power"],
+    "ecco-lwd": ["downhole", "pcb"],
+    "elog-system": ["downhole"]
+  };
+  if (explicitMap[p.id]) return explicitMap[p.id];
+
+  const text = `${p.tag || ""} ${p.cardTitle || ""} ${p.title || ""} ${p.cardExcerpt || ""}`.toLowerCase();
+  const cats = [];
+  if (/(power|bldc|esc|charger|buck|boost|converter|dab|llc|motor|inverter)/.test(text)) cats.push("power");
+  if (/(pcb|kicad|altium|mixed|layer|signal|adc|dac|stackup)/.test(text)) cats.push("pcb");
+  if (/(oil|gas|lwd|downhole|sensing|iot|elog|ultrasonic|logging|magnetometer|drilling)/.test(text)) cats.push("downhole");
+  return cats.length > 0 ? cats : ["pcb"];
+}
+
+function updateProjectFilterCounts() {
+  const countEl = document.getElementById("countAll");
+  if (countEl && portfolioData && portfolioData.projects) {
+    countEl.textContent = String(portfolioData.projects.length);
+  }
+}
+
+function applyProjectFilter(filter) {
+  activeProjectFilter = filter || "all";
+  document.querySelectorAll(".projects-toolbar .filter-pill").forEach((pill) => {
+    const isActive = pill.getAttribute("data-filter") === activeProjectFilter;
+    pill.classList.toggle("active", isActive);
+    pill.setAttribute("aria-selected", isActive ? "true" : "false");
+  });
+
+  document.querySelectorAll("#projects .project-card").forEach((card) => {
+    const cats = (card.getAttribute("data-category") || "").split(/\s+/).filter(Boolean);
+    const matches = activeProjectFilter === "all" || cats.includes(activeProjectFilter);
+    card.classList.toggle("is-filtered-out", !matches);
+    if (matches) card.classList.add("visible");
+    card.setAttribute("aria-hidden", matches ? "false" : "true");
+    card.tabIndex = matches ? 0 : -1;
+  });
+}
+
+function initProjectFilters() {
+  const toolbar = document.querySelector(".projects-toolbar");
+  if (!toolbar) return;
+  toolbar.querySelectorAll(".filter-pill").forEach((pill) => {
+    pill.onclick = () => {
+      applyProjectFilter(pill.getAttribute("data-filter") || "all");
+    };
+  });
+}
+
 function renderAll() {
   buildProjectsLookup();
   renderHero();
@@ -1252,6 +1181,9 @@ function renderAll() {
   renderSkills();
   renderEducation();
   renderCourses();
+  updateProjectFilterCounts();
+  initProjectFilters();
+  applyProjectFilter(activeProjectFilter);
   initRevealObserver();
   attachCardClickHandlers();
 }
@@ -1270,6 +1202,14 @@ function buildProjectsLookup() {
   }
 }
 
+function escapeHtml(str) {
+  return String(str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 function renderHero() {
   const h = portfolioData.hero;
   if (!h) return;
@@ -1278,7 +1218,17 @@ function renderHero() {
   if (eyebrowEl && h.eyebrow) eyebrowEl.textContent = h.eyebrow;
 
   const titleEl = document.querySelector(".hero-copy h1");
-  if (titleEl && h.title) titleEl.textContent = h.title;
+  if (titleEl && h.title) {
+    const words = String(h.title).trim().split(/\s+/);
+    if (words.length >= 2) {
+      const splitIdx = words.length - 1;
+      const head = words.slice(0, splitIdx).map(escapeHtml).join(" ");
+      const tail = words.slice(splitIdx).map(escapeHtml).join(" ");
+      titleEl.innerHTML = `${head} <span class="hero-highlight-word">${tail}<svg class="brush-underline" viewBox="0 0 220 18" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M3 12.5C45 5.5 142 3.5 217 9.5" stroke="#D97757" stroke-width="6.5" stroke-linecap="round"/></svg></span>`;
+    } else {
+      titleEl.textContent = h.title;
+    }
+  }
 
   const descEl = document.querySelector(".hero-copy .hero-desc");
   if (descEl && h.description) descEl.textContent = h.description;
@@ -1294,19 +1244,17 @@ function renderHero() {
 
   const signalStrip = document.querySelector(".signal-strip");
   if (signalStrip && h.signals && h.signals.length > 0) {
-    signalStrip.innerHTML = h.signals.map((s) => `<span>${s}</span>`).join("");
+    signalStrip.innerHTML = h.signals.map((s) => `<span>${escapeHtml(s)}</span>`).join("");
   }
 
   const profileStatus = document.querySelector(".profile-status");
   if (profileStatus && h.status) {
-    profileStatus.innerHTML = `<span class="status-dot"></span>${h.status}`;
+    profileStatus.innerHTML = `<span class="status-dot"></span>${escapeHtml(h.status)}`;
   }
 
   const heroProfileImg = document.getElementById("heroProfileImg") || document.querySelector(".profile-image img");
-  if (heroProfileImg) {
-    if (h.avatar) {
-      heroProfileImg.src = h.avatar;
-    }
+  if (heroProfileImg && h.avatar) {
+    heroProfileImg.src = h.avatar;
   }
 
   const quickStatsEl = document.querySelector(".quick-stats");
@@ -1315,8 +1263,8 @@ function renderHero() {
       .map(
         (st) => `
       <div>
-        <dt>${st.label}</dt>
-        <dd>${st.value}</dd>
+        <dt>${escapeHtml(st.label)}</dt>
+        <dd>${escapeHtml(st.value)}</dd>
       </div>
     `
       )
@@ -1330,13 +1278,15 @@ function renderExperiences() {
 
   container.innerHTML = portfolioData.experiences
     .map(
-      (exp) => `
-    <article class="timeline-item reveal" data-exp-id="${exp.id}">
+      (exp, idx) => `
+    <article class="timeline-item spotlight-card reveal" data-exp-id="${exp.id}">
       <div class="timeline-meta">
-        <span>${exp.dates}</span>
-        <span>${exp.location}</span>
+        <span class="timeline-index">[${idx < 9 ? "0" : ""}${idx + 1}]</span>
+        <span class="timeline-dates">${exp.dates}</span>
+        <span class="timeline-loc">${exp.location}</span>
       </div>
       <div class="timeline-body">
+        <div class="timeline-node" aria-hidden="true"></div>
         <h3>${exp.role}</h3>
         <p class="company">${exp.company}</p>
         <ul>
@@ -1349,23 +1299,141 @@ function renderExperiences() {
     .join("");
 }
 
+function getSystemVisualSvg(projectId) {
+  if (projectId === "ecco-lwd") {
+    return `
+      <svg class="sys-svg sys-sonar" viewBox="0 0 220 72" fill="none" aria-hidden="true">
+        <circle class="sonar-core" cx="38" cy="36" r="5"/>
+        <circle class="sonar-ring r1" cx="38" cy="36" r="14"/>
+        <circle class="sonar-ring r2" cx="38" cy="36" r="26"/>
+        <circle class="sonar-ring r3" cx="38" cy="36" r="38"/>
+        <path class="sonar-echo" d="M84 36 H112 L120 14 L128 56 L136 22 L144 44 L152 36 H210" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    `;
+  }
+  if (projectId === "elog-system") {
+    return `
+      <svg class="sys-svg sys-ulp" viewBox="0 0 220 72" fill="none" aria-hidden="true">
+        <line x1="10" y1="54" x2="210" y2="54" class="ulp-baseline" stroke-width="1" stroke-dasharray="3 4"/>
+        <path class="ulp-pulse" d="M12 54 H58 L64 20 L70 54 H126 L132 16 L138 54 H192 L198 28 L208 54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle class="ulp-dot" cx="64" cy="20" r="3"/>
+        <circle class="ulp-dot" cx="132" cy="16" r="3"/>
+      </svg>
+    `;
+  }
+  if (projectId === "ev-fast-charger") {
+    return `
+      <svg class="sys-svg sys-zvs" viewBox="0 0 220 72" fill="none" aria-hidden="true">
+        <path class="zvs-wave-bg" d="M10 36 Q 35 8, 60 36 T 110 36 T 160 36 T 210 36" stroke-width="1.6" stroke-dasharray="4 4"/>
+        <path class="zvs-wave-fg" d="M10 36 Q 35 64, 60 36 T 110 36 T 160 36 T 210 36" stroke-width="2.1" stroke-linecap="round"/>
+        <rect x="96" y="14" width="28" height="44" rx="5" class="zvs-iso-box" stroke-width="1.2"/>
+      </svg>
+    `;
+  }
+  return `
+    <svg class="sys-svg sys-ulp" viewBox="0 0 220 72" fill="none" aria-hidden="true">
+      <path class="ulp-pulse" d="M12 36 H60 L72 16 L84 56 L96 22 L108 48 L120 36 H208" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `;
+}
+
 function renderProjects() {
   const container = document.querySelector("#projects .projects-grid");
   if (!container || !portfolioData.projects) return;
 
-  container.innerHTML = portfolioData.projects
+  const displayProjects = [...portfolioData.projects].sort((a, b) => {
+    const aHasImg = Boolean(a.hoverImage || (a.images && a.images.length > 0));
+    const bHasImg = Boolean(b.hoverImage || (b.images && b.images.length > 0));
+    return Number(bHasImg) - Number(aHasImg);
+  });
+
+  let visualIdx = 0;
+
+  container.innerHTML = displayProjects
     .map((p) => {
+      const cats = getProjectCategories(p).join(" ");
       const badgeHtml = p.typeBadgeText
         ? `<span class="project-card-badge ${p.typeBadgeClass || (p.isOpenSource ? "badge-open-source" : "badge-private")}">${p.typeBadgeText}</span>`
         : "";
 
-      const hoverImgHtml = p.hoverImage
-        ? `<img src="${p.hoverImage}" alt="${p.cardTitle || p.title}" class="hover-3d-img" loading="lazy">`
-        : "";
+      const primaryImg = p.hoverImage || (p.images && p.images[0] ? p.images[0].src : "");
+      const hasVisual = Boolean(primaryImg);
+      const specChipsHtml = (p.specs || [])
+        .slice(0, 4)
+        .map(
+          (s) =>
+            `<span class="spec-chip"><strong>${s.param}:</strong> ${s.value}</span>`
+        )
+        .join("");
+
+      if (hasVisual) {
+        const reversedClass = visualIdx % 2 === 1 ? " is-reversed" : "";
+        visualIdx++;
+        const layerBtnsHtml =
+          p.images && p.images.length > 1
+            ? `<div class="project-layer-switch" role="group" aria-label="Switch PCB layer render">
+                ${p.images
+                  .map(
+                    (img, i) =>
+                      `<button type="button" class="layer-switch-btn ${i === 0 ? "active" : ""}" data-action="switch-card-img" data-img-src="${img.src}" data-img-alt="${img.caption || p.cardTitle || p.title}">${img.label || `View ${i + 1}`}</button>`
+                  )
+                  .join("")}
+              </div>`
+            : "";
+
+        return `
+        <article class="project-card project-card-featured spotlight-card${reversedClass} reveal" data-project-id="${p.id}" data-category="${cats}" tabindex="0" role="button"
+          aria-label="View ${p.cardTitle || p.title} technical specs and 3D renders">
+          <div class="project-visual-bay">
+            <div class="visual-bay-glow" aria-hidden="true"></div>
+            <img src="${primaryImg}" alt="${p.cardTitle || p.title} 3D PCB Render" class="project-3d-render" loading="lazy">
+            ${layerBtnsHtml}
+          </div>
+
+          <div class="project-card-inner">
+            <div class="project-card-header">
+              <p class="project-tag">${p.tag || ""}</p>
+              ${badgeHtml}
+            </div>
+            <h3>${p.cardTitle || p.title}</h3>
+            <p>${p.cardExcerpt || p.description || ""}</p>
+            ${specChipsHtml ? `<div class="project-spec-chips">${specChipsHtml}</div>` : ""}
+            <ul>
+              ${(p.cardBullets || []).map((b) => `<li>${b}</li>`).join("")}
+            </ul>
+            <div class="project-card-footer">
+              <span class="project-explore-cta">
+                <span>Explore Specs &amp; Renders</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </article>
+      `;
+      }
+
+      const telemetryCellsHtml = (p.specs || [])
+        .slice(0, 4)
+        .map(
+          (s) => `
+          <div class="telemetry-cell">
+            <span class="telemetry-param">${s.param}</span>
+            <strong class="telemetry-val">${s.value}</strong>
+          </div>
+        `
+        )
+        .join("");
 
       return `
-      <article class="project-card reveal" data-project-id="${p.id}" tabindex="0" role="button"
+      <article class="project-card project-card-system spotlight-card reveal" data-project-id="${p.id}" data-category="${cats}" tabindex="0" role="button"
         aria-label="View ${p.cardTitle || p.title} technical specs">
+        <div class="project-system-visual">
+          ${getSystemVisualSvg(p.id)}
+        </div>
+
         <div class="project-card-inner">
           <div class="project-card-header">
             <p class="project-tag">${p.tag || ""}</p>
@@ -1373,27 +1441,46 @@ function renderProjects() {
           </div>
           <h3>${p.cardTitle || p.title}</h3>
           <p>${p.cardExcerpt || p.description || ""}</p>
+          <div class="telemetry-grid">
+            ${telemetryCellsHtml}
+          </div>
           <ul>
             ${(p.cardBullets || []).map((b) => `<li>${b}</li>`).join("")}
           </ul>
-        </div>
-
-        <div class="project-hover-overlay" aria-hidden="true">
-          <div class="project-hover-content">
-            ${hoverImgHtml}
-            <button type="button" class="project-hover-btn" tabindex="-1">
-              <span>Explore Project</span>
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <div class="project-card-footer">
+            <span class="project-explore-cta">
+              <span>Deep Dive</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="7" y1="17" x2="17" y2="7"></line>
                 <polyline points="7 7 17 7 17 17"></polyline>
               </svg>
-            </button>
+            </span>
           </div>
         </div>
       </article>
     `;
     })
     .join("");
+}
+
+function getSkillCategoryIcon(category) {
+  const c = String(category || "").toLowerCase();
+  if (c.includes("eda")) {
+    return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>`;
+  }
+  if (c.includes("sim")) {
+    return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`;
+  }
+  if (c.includes("program")) {
+    return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`;
+  }
+  if (c.includes("embed")) {
+    return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 13h.01M18 11h.01"/></svg>`;
+  }
+  if (c.includes("power")) {
+    return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`;
+  }
+  return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`;
 }
 
 function renderSkills() {
@@ -1403,8 +1490,11 @@ function renderSkills() {
   container.innerHTML = portfolioData.skills
     .map(
       (s) => `
-    <article class="skill-group reveal">
-      <h3>${s.category}</h3>
+    <article class="skill-group spotlight-card reveal">
+      <div class="skill-group-header">
+        <span class="skill-icon-wrap">${getSkillCategoryIcon(s.category)}</span>
+        <h3>${s.category}</h3>
+      </div>
       <div class="skill-tags">
         ${(s.tags || []).map((t) => `<span>${t}</span>`).join("")}
       </div>
@@ -1420,7 +1510,8 @@ function renderEducation() {
   if (!container || !ed) return;
 
   container.innerHTML = `
-    <div>
+    <div class="education-main">
+      <span class="education-badge">B.Sc. Engineering</span>
       <h3>${ed.degree}</h3>
       <p>${ed.institution}</p>
       <span>${ed.dates}</span>
@@ -1448,16 +1539,27 @@ function renderCourses() {
         : "";
 
       const subtitle = [c.instructor, c.dates, c.type].filter(Boolean).join(" | ");
-      const hasProj = Boolean(c.hasProject || c.projectHoverImage || c.projectId);
+      const hasCert = Boolean(c.images && c.images.length > 0);
+      const hasProj = Boolean(c.hasProject || c.projectId);
+      const certBtnLabel = c.images && c.images.length > 1 ? `View Certificates (${c.images.length})` : "View Certificate";
+      const certThumbHtml = hasCert
+        ? `<div class="course-cert-thumb" data-action="view-cert" data-course-id="${c.id}" role="button" tabindex="0" aria-label="View ${escapeHtml(c.cardTitle || c.title)} full certificate">
+            <img src="${c.images[0].src}" alt="${escapeHtml(c.cardTitle || c.title)} Certificate" loading="lazy">
+          </div>`
+        : "";
 
       if (hasProj) {
-        const hoverImgHtml = c.projectHoverImage
-          ? `<img src="${c.projectHoverImage}" alt="${c.cardTitle || c.title} PCB Front 3D View" class="hover-3d-img" loading="lazy">`
+        const previewVisualHtml = hasCert
+          ? certThumbHtml
+          : c.projectHoverImage
+          ? `<div class="course-pcb-mini-stage">
+              <img src="${c.projectHoverImage}" alt="${escapeHtml(c.cardTitle || c.title)} PCB Front 3D View" class="course-pcb-mini-img" loading="lazy">
+            </div>`
           : "";
 
         return `
-        <article class="course-card reveal has-project-preview" data-course-id="${c.id}" tabindex="0" role="button"
-          aria-label="View ${c.cardTitle || c.title} certificate and PCB project">
+        <article class="course-card course-card-with-project spotlight-card reveal" data-course-id="${c.id}" tabindex="0" role="button"
+          aria-label="View ${escapeHtml(c.cardTitle || c.title)} certificate and PCB project">
           <div class="course-card-inner">
             <div class="course-top">
               ${iconHtml}
@@ -1474,29 +1576,26 @@ function renderCourses() {
             </ul>
           </div>
 
-          <!-- Interactive Stretched Hover Overlay with 3D PCB Visual & Dual Buttons -->
-          <div class="course-hover-overlay course-hover-overlay-dual" aria-hidden="true">
-            <div class="course-hover-content">
-              ${hoverImgHtml}
-              <div class="course-hover-actions">
-                <button type="button" class="course-hover-btn course-hover-btn-cert" data-action="view-cert" data-course-id="${c.id}" onclick="event.stopPropagation(); openProjectModal('${c.id}');" tabindex="-1">
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <polyline points="10 9 9 9 8 9"></polyline>
-                  </svg>
-                  <span>View Certificate</span>
-                </button>
-                <button type="button" class="course-hover-btn course-hover-btn-project" data-action="explore-project" data-project-id="${c.projectId || c.id}" onclick="event.stopPropagation(); openProjectModal('${c.projectId || c.id}');" tabindex="-1">
-                  <span>Explore Project</span>
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                    <polyline points="7 7 17 7 17 17"></polyline>
-                  </svg>
-                </button>
-              </div>
+          <div class="course-action-dock course-action-dock-dual">
+            ${previewVisualHtml}
+            <div class="course-dock-buttons">
+              <button type="button" class="course-dock-btn course-dock-btn-cert" data-action="view-cert" data-course-id="${c.id}">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                <span>${certBtnLabel}</span>
+              </button>
+              <button type="button" class="course-dock-btn course-dock-btn-primary" data-action="explore-project" data-project-id="${c.projectId || c.id}">
+                <span>Explore 4-Layer PCB</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </button>
             </div>
           </div>
         </article>
@@ -1504,8 +1603,8 @@ function renderCourses() {
       }
 
       return `
-      <article class="course-card reveal" data-course-id="${c.id}" tabindex="0" role="button"
-        aria-label="View ${c.cardTitle || c.title} certificate popup">
+      <article class="course-card spotlight-card reveal" data-course-id="${c.id}" tabindex="0" role="button"
+        aria-label="View ${escapeHtml(c.cardTitle || c.title)} certificate popup">
         <div class="course-card-inner">
           <div class="course-top">
             ${iconHtml}
@@ -1522,10 +1621,11 @@ function renderCourses() {
           </ul>
         </div>
 
-        <div class="course-hover-overlay" aria-hidden="true">
-          <button type="button" class="course-hover-btn" tabindex="-1">
-            <span>${c.images && c.images.length > 0 ? "View Certificate" : "Explore Syllabus"}</span>
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <div class="course-action-dock">
+          ${certThumbHtml}
+          <button type="button" class="course-dock-btn course-dock-btn-primary" data-action="view-cert" data-course-id="${c.id}">
+            <span>${hasCert ? certBtnLabel : "Explore Syllabus"}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <line x1="7" y1="17" x2="17" y2="7"></line>
               <polyline points="7 7 17 7 17 17"></polyline>
             </svg>
@@ -1561,11 +1661,66 @@ const modalImgCaption = document.getElementById("modalImgCaption");
 const modalThumbnails = document.getElementById("modalThumbnails");
 const modalGalleryCount = document.getElementById("modalGalleryCount");
 
+const modalImageWrapper = document.getElementById("modalImageWrapper");
+const modalZoomBtn = document.getElementById("modalZoomBtn");
+
 let currentProjectImages = [];
 let currentImageIndex = 0;
 
+const ZOOM_IN_ICON_SVG = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>`;
+const ZOOM_OUT_ICON_SVG = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>`;
+
+function resetModalZoom() {
+  if (!modalImageWrapper || !modalMainImg) return;
+  modalImageWrapper.classList.remove("is-zoomed");
+  modalMainImg.style.transformOrigin = "50% 50%";
+  if (modalZoomBtn) {
+    modalZoomBtn.setAttribute("aria-pressed", "false");
+    modalZoomBtn.innerHTML = `${ZOOM_IN_ICON_SVG}<span>Click image to zoom (2.2×)</span>`;
+  }
+}
+
+function toggleModalZoom() {
+  if (!modalImageWrapper || !modalMainImg) return;
+  const zoomed = modalImageWrapper.classList.toggle("is-zoomed");
+  if (!zoomed) {
+    modalMainImg.style.transformOrigin = "50% 50%";
+  }
+  if (modalZoomBtn) {
+    modalZoomBtn.setAttribute("aria-pressed", zoomed ? "true" : "false");
+    modalZoomBtn.innerHTML = zoomed
+      ? `${ZOOM_OUT_ICON_SVG}<span>Reset Zoom (1×)</span>`
+      : `${ZOOM_IN_ICON_SVG}<span>Click image to zoom (2.2×)</span>`;
+  }
+}
+
+function initModalZoom() {
+  if (modalZoomBtn) {
+    modalZoomBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleModalZoom();
+    });
+  }
+  if (modalMainImg) {
+    modalMainImg.addEventListener("click", () => {
+      toggleModalZoom();
+    });
+  }
+  if (modalImageWrapper && modalMainImg) {
+    modalImageWrapper.addEventListener("mousemove", (e) => {
+      if (!modalImageWrapper.classList.contains("is-zoomed")) return;
+      const rect = modalMainImg.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const xPct = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      const yPct = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+      modalMainImg.style.transformOrigin = `${xPct.toFixed(1)}% ${yPct.toFixed(1)}%`;
+    });
+  }
+}
+
 function setModalImage(index) {
   if (!currentProjectImages || currentProjectImages.length === 0 || !modalMainImg) return;
+  resetModalZoom();
   currentImageIndex = (index + currentProjectImages.length) % currentProjectImages.length;
   const currentImg = currentProjectImages[currentImageIndex];
 
@@ -1579,7 +1734,7 @@ function setModalImage(index) {
         currentProjectImages.length > 1
           ? `${currentImageIndex + 1} / ${currentProjectImages.length}`
           : modalDialog && modalDialog.classList.contains("modal-mode-certificate")
-          ? "Verified ✦"
+          ? "Verified"
           : `1 / 1`;
     }
     modalMainImg.style.opacity = "1";
@@ -1597,13 +1752,15 @@ function openProjectModal(projectId) {
   const project = projectsLookup[projectId];
   if (!project || !modalDialog || !modalOverlay) return;
 
+  resetModalZoom();
   const isCertOnly = project.isCourse && project.images && project.images.length > 0;
+  const hasGalleryImages = Boolean(project.images && project.images.length > 0);
 
   if (isCertOnly) {
     modalDialog.className = "project-modal-dialog modal-mode-certificate";
     if (modalGalleryBadge) modalGalleryBadge.textContent = project.title;
-    if (modalGalleryCount) modalGalleryCount.textContent = project.typeBadgeText || "Verified ✦";
-  } else if (project.isOpenSource) {
+    if (modalGalleryCount) modalGalleryCount.textContent = project.typeBadgeText || "Verified";
+  } else if (project.isOpenSource || hasGalleryImages) {
     modalDialog.className = "project-modal-dialog modal-mode-opensource";
     if (modalGalleryBadge) modalGalleryBadge.textContent = "Hardware Visuals";
   } else {
@@ -1753,7 +1910,7 @@ function openProjectModal(projectId) {
         currentProjectImages.length > 1
           ? `1 / ${currentProjectImages.length}`
           : isCertOnly
-          ? project.typeBadgeText || "Verified ✦"
+          ? project.typeBadgeText || "Verified"
           : `1 / 1`;
     }
 
@@ -1793,6 +1950,7 @@ function openProjectModal(projectId) {
 }
 
 function closeProjectModal() {
+  resetModalZoom();
   document.body.classList.remove("modal-open");
   if (modalOverlay) {
     modalOverlay.classList.remove("active");
@@ -1816,20 +1974,54 @@ function attachCardClickHandlers() {
     };
   });
 
-  // Dedicated button click handlers for course hover dual actions
-  document.querySelectorAll(".course-hover-btn[data-action]").forEach((btn) => {
+  // Inline layer switcher for featured PCB cards (with 3D Y-axis board flip)
+  document.querySelectorAll('.layer-switch-btn[data-action="switch-card-img"]').forEach((btn) => {
     btn.onclick = (e) => {
       e.stopPropagation();
       e.preventDefault();
-      const action = btn.getAttribute("data-action");
+      const card = btn.closest(".project-card");
+      if (!card) return;
+      const img = card.querySelector(".project-3d-render");
+      const nextSrc = btn.getAttribute("data-img-src");
+      const nextAlt = btn.getAttribute("data-img-alt");
+      if (img && nextSrc && !img.getAttribute("src").endsWith(nextSrc)) {
+        img.classList.add("is-flipping");
+        setTimeout(() => {
+          img.src = nextSrc;
+          if (nextAlt) img.alt = nextAlt;
+        }, 160);
+        setTimeout(() => {
+          img.classList.remove("is-flipping");
+        }, 380);
+      }
+      card.querySelectorAll('.layer-switch-btn[data-action="switch-card-img"]').forEach((b) => {
+        b.classList.toggle("active", b === btn);
+      });
+    };
+  });
+
+  // Dedicated button & certificate preview click handlers for course dock actions
+  document.querySelectorAll(".course-dock-btn[data-action], .course-hover-btn[data-action], .course-cert-thumb[data-action]").forEach((el) => {
+    const triggerCourseDockAction = (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      const action = el.getAttribute("data-action");
       if (action === "view-cert") {
-        const courseId = btn.getAttribute("data-course-id");
+        const courseId = el.getAttribute("data-course-id");
         if (courseId) openProjectModal(courseId);
       } else if (action === "explore-project") {
-        const projId = btn.getAttribute("data-project-id");
+        const projId = el.getAttribute("data-project-id");
         if (projId) openProjectModal(projId);
       }
     };
+    el.onclick = triggerCourseDockAction;
+    if (el.classList.contains("course-cert-thumb")) {
+      el.onkeydown = (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          triggerCourseDockAction(e);
+        }
+      };
+    }
   });
 }
 
@@ -1960,13 +2152,330 @@ window.addEventListener("keydown", (e) => {
   }
 });
 
-// Initialize on load
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => {
-    initPortfolioData();
-    initAdminTriggers();
+// ==========================================================================
+// SCROLL PROGRESS BAR
+// ==========================================================================
+function initScrollProgress() {
+  const bar = document.getElementById("scrollProgressBar");
+  if (!bar) return;
+
+  const update = () => {
+    const doc = document.documentElement;
+    const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+    const ratio = Math.max(0, Math.min(1, window.scrollY / maxScroll));
+    bar.style.transform = `scaleX(${ratio.toFixed(4)})`;
+  };
+
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update, { passive: true });
+  update();
+}
+
+// ==========================================================================
+// PRECISION PCB RETICLE CURSOR & MAGNETIC BUTTONS
+// ==========================================================================
+function initKineticCursor() {
+  const cursor = document.getElementById("kineticCursor");
+  if (!cursor) return;
+  if (!window.matchMedia || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+  const ring = cursor.querySelector(".cursor-ring");
+  const dot = cursor.querySelector(".cursor-dot");
+  if (!ring || !dot) return;
+
+  const setCustomCursorActive = (active) => {
+    document.documentElement.classList.toggle("has-custom-cursor", active);
+  };
+
+  setCustomCursorActive(true);
+
+  let targetX = -100;
+  let targetY = -100;
+  let ringX = -100;
+  let ringY = -100;
+  let lastRingX = -100;
+  let lastRingY = -100;
+  let visible = false;
+
+  const interactiveSelector =
+    "a, button, .project-card, .course-card, .filter-pill, .pcb-tab, .layer-switch-btn, [role='button'], #footerCopyright";
+  const adminSelector = ".admin-pin-overlay, .admin-studio-overlay, .admin-submodal-overlay";
+
+  const onPointerMove = (e) => {
+    if (e.pointerType && e.pointerType !== "mouse") {
+      setCustomCursorActive(false);
+      visible = false;
+      cursor.classList.remove("is-visible", "is-hovering", "is-pressed", "is-zoom");
+      return;
+    }
+
+    const overAdmin = Boolean(e.target && e.target.closest && e.target.closest(adminSelector));
+    if (overAdmin) {
+      setCustomCursorActive(false);
+      visible = false;
+      cursor.classList.remove("is-visible", "is-hovering", "is-pressed", "is-zoom");
+      return;
+    }
+
+    setCustomCursorActive(true);
+    targetX = e.clientX;
+    targetY = e.clientY;
+    dot.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
+
+    if (!visible || prefersReducedMotion) {
+      ringX = targetX;
+      ringY = targetY;
+      lastRingX = ringX;
+      lastRingY = ringY;
+      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+    }
+
+    if (!visible) {
+      visible = true;
+      cursor.classList.add("is-visible");
+    }
+
+    const overInteractive = Boolean(e.target && e.target.closest && e.target.closest(interactiveSelector));
+    const overZoomImg = Boolean(e.target && e.target.closest && e.target.closest(".modal-main-img"));
+    cursor.classList.toggle("is-hovering", overInteractive);
+    cursor.classList.toggle("is-zoom", overZoomImg);
+  };
+
+  if (window.PointerEvent) {
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener(
+      "pointerdown",
+      (e) => {
+        if (e.pointerType && e.pointerType !== "mouse") return;
+        if (e.target && e.target.closest && e.target.closest(adminSelector)) return;
+        targetX = e.clientX;
+        targetY = e.clientY;
+        dot.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
+        if (!visible) {
+          ringX = targetX;
+          ringY = targetY;
+          lastRingX = ringX;
+          lastRingY = ringY;
+          ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+          visible = true;
+          cursor.classList.add("is-visible");
+        }
+        cursor.classList.add("is-pressed");
+      },
+      { passive: true }
+    );
+    window.addEventListener(
+      "pointerup",
+      () => {
+        cursor.classList.remove("is-pressed");
+      },
+      { passive: true }
+    );
+  } else {
+    window.addEventListener("mousemove", onPointerMove, { passive: true });
+    window.addEventListener("mousedown", () => cursor.classList.add("is-pressed"), { passive: true });
+    window.addEventListener("mouseup", () => cursor.classList.remove("is-pressed"), { passive: true });
+  }
+
+  document.addEventListener("mouseleave", () => {
+    visible = false;
+    cursor.classList.remove("is-visible", "is-pressed");
   });
-} else {
+
+  window.addEventListener("blur", () => {
+    visible = false;
+    cursor.classList.remove("is-visible", "is-pressed");
+  });
+
+  window.addEventListener(
+    "touchstart",
+    () => {
+      setCustomCursorActive(false);
+      visible = false;
+      cursor.classList.remove("is-visible", "is-hovering", "is-pressed", "is-zoom");
+    },
+    { passive: true }
+  );
+
+  if (!prefersReducedMotion) {
+    const tick = () => {
+      if (visible && !document.hidden) {
+        ringX += (targetX - ringX) * 0.24;
+        ringY += (targetY - ringY) * 0.24;
+        if (Math.abs(ringX - lastRingX) > 0.05 || Math.abs(ringY - lastRingY) > 0.05) {
+          lastRingX = ringX;
+          lastRingY = ringY;
+          ring.style.transform = `translate3d(${ringX.toFixed(1)}px, ${ringY.toFixed(1)}px, 0)`;
+        }
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+}
+
+function initMagneticElements() {
+  if (prefersReducedMotion) return;
+  if (!window.matchMedia || !window.matchMedia("(pointer: fine)").matches) return;
+
+  document.querySelectorAll(".magnetic").forEach((el) => {
+    el.addEventListener("mousemove", (e) => {
+      const rect = el.getBoundingClientRect();
+      const dx = (e.clientX - (rect.left + rect.width / 2)) * 0.24;
+      const dy = (e.clientY - (rect.top + rect.height / 2)) * 0.24;
+      el.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0)`;
+    });
+    el.addEventListener("mouseleave", () => {
+      el.style.transform = "";
+    });
+  });
+}
+
+// ==========================================================================
+// CURSOR-TRACKING SPOTLIGHT BORDER CARDS
+// ==========================================================================
+function initSpotlightCards() {
+  document.addEventListener("pointermove", (e) => {
+    const card = e.target && e.target.closest ? e.target.closest(".spotlight-card") : null;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty("--mx", `${(e.clientX - rect.left).toFixed(1)}px`);
+    card.style.setProperty("--my", `${(e.clientY - rect.top).toFixed(1)}px`);
+  }, { passive: true });
+}
+
+// ==========================================================================
+// MOBILE NAVIGATION DRAWER
+// ==========================================================================
+function initMobileMenu() {
+  const btn = document.getElementById("mobileMenuBtn");
+  const drawer = document.getElementById("mobileNavDrawer");
+  if (!btn || !drawer) return;
+
+  function setOpen(open) {
+    btn.classList.toggle("is-open", open);
+    drawer.classList.toggle("open", open);
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    drawer.setAttribute("aria-hidden", open ? "false" : "true");
+  }
+
+  btn.addEventListener("click", () => {
+    setOpen(!drawer.classList.contains("open"));
+  });
+
+  drawer.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setOpen(false));
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && drawer.classList.contains("open")) {
+      setOpen(false);
+    }
+  });
+}
+
+// ==========================================================================
+// HERO INTERACTIVE 3D PCB SHOWCASE & PERSPECTIVE TILT
+// ==========================================================================
+function initHeroPcbShowcase() {
+  const stage = document.getElementById("heroPcbStage");
+  const pcbImg = document.getElementById("heroPcbImg");
+  const specsOverlay = document.getElementById("heroPcbSpecsOverlay");
+  const pcbTitle = document.getElementById("heroPcbTitle");
+  const inspectBtn = document.getElementById("heroPcbInspectBtn");
+  const sat1 = document.getElementById("heroSat1");
+  const sat2 = document.getElementById("heroSat2");
+  const sat3 = document.getElementById("heroSat3");
+  const tabs = document.querySelectorAll(".pcb-showcase-tabs .pcb-tab");
+
+  if (!stage || !pcbImg || tabs.length === 0) return;
+
+  const BOARD_PRESETS = {
+    "bldc-top": {
+      src: "Project/BLDC_MC_V1.0/bldc_top.png",
+      title: "60V / 30A BLDC & PMSM FOC Controller",
+      specs: "100 kHz SVPWM • 2.7 mΩ OptiMOS 5 • 4-Wire Kelvin",
+      sats: ["8-Layer High-TG180", "60V / 30A FOC", "STM32G431 • DRV8353H"],
+      projectId: "bldc-motor-driver"
+    },
+    "mixed-top": {
+      src: "Project/Mixed_Signal_Board_FEDEVEL_Course/Mixed_Signal_Board_FEDEVEL_Course_Front.png",
+      title: "4-Layer Mixed-Signal Acquisition & DAC Board",
+      specs: "14-Bit 250kSPS ADC • 16-Bit Dual DAC • 25 kHz LPF",
+      sats: ["4-Layer Ctrl Z₀", "AGND / DGND Star", "STM32F103 • USB-C"],
+      projectId: "mixed-signal-board"
+    }
+  };
+
+  let activeProjectId = "bldc-motor-driver";
+
+  function selectBoard(boardKey) {
+    const cfg = BOARD_PRESETS[boardKey];
+    if (!cfg) return;
+    activeProjectId = cfg.projectId;
+
+    tabs.forEach((tab) => {
+      const active = tab.getAttribute("data-board") === boardKey;
+      tab.classList.toggle("active", active);
+      tab.setAttribute("aria-selected", active ? "true" : "false");
+    });
+
+    pcbImg.classList.add("is-swapping");
+    setTimeout(() => {
+      pcbImg.src = cfg.src;
+      pcbImg.alt = `${cfg.title} 3D PCB Render`;
+      if (pcbTitle) pcbTitle.textContent = cfg.title;
+      if (specsOverlay) specsOverlay.textContent = cfg.specs;
+      if (sat1 && cfg.sats[0]) sat1.textContent = cfg.sats[0];
+      if (sat2 && cfg.sats[1]) sat2.textContent = cfg.sats[1];
+      if (sat3 && cfg.sats[2]) sat3.textContent = cfg.sats[2];
+      pcbImg.classList.remove("is-swapping");
+    }, 150);
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      selectBoard(tab.getAttribute("data-board"));
+    });
+  });
+
+  if (inspectBtn) {
+    inspectBtn.addEventListener("click", () => {
+      openProjectModal(activeProjectId);
+    });
+  }
+
+  stage.addEventListener("click", () => {
+    openProjectModal(activeProjectId);
+  });
+
+  stage.addEventListener("mousemove", (e) => {
+    const rect = stage.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    const xRel = (e.clientX - rect.left) / rect.width - 0.5;
+    const yRel = (e.clientY - rect.top) / rect.height - 0.5;
+    const rotY = (xRel * 13).toFixed(2);
+    const rotX = (-yRel * 11).toFixed(2);
+    pcbImg.style.transform = `perspective(820px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.04)`;
+  });
+
+  stage.addEventListener("mouseleave", () => {
+    pcbImg.style.transform = "";
+  });
+}
+
+// Initialize on load
+function bootPortfolio() {
   initPortfolioData();
   initAdminTriggers();
+  initScrollProgress();
+  initMobileMenu();
+  initHeroPcbShowcase();
+  initModalZoom();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", bootPortfolio);
+} else {
+  bootPortfolio();
 }

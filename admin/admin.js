@@ -616,7 +616,7 @@ function buildMediaFieldHtml({ id, label, value = "", category = "all", helpText
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
               Upload
             </button>
-            <button type="button" class="admin-icon-btn danger admin-media-remove-btn" title="Remove / Clear">✕</button>
+            <button type="button" class="admin-icon-btn danger admin-media-remove-btn" title="Remove / Clear">&times;</button>
           </div>
         </div>
 
@@ -879,11 +879,13 @@ function renderAdminThemeTab() {
   if (!container) return;
 
   const currentTheme = (portfolioData && portfolioData.theme) || (DEFAULT_PORTFOLIO_DATA && DEFAULT_PORTFOLIO_DATA.theme) || DEFAULT_THEME;
-  const currentPreset = currentTheme.preset || "copper";
+  const currentPreset = (THEME_PRESETS.some((p) => p.id === currentTheme.preset) || currentTheme.preset === "custom")
+    ? currentTheme.preset
+    : "terracotta";
   const dark = currentTheme.dark || DEFAULT_THEME.dark;
   const light = currentTheme.light || DEFAULT_THEME.light;
   const fonts = currentTheme.fonts || DEFAULT_THEME.fonts;
-  const pointer = currentTheme.pointer || DEFAULT_THEME.pointer || { enabled: true, mode: "glow", color: "", radius: 160, intensity: 12 };
+  const pointer = currentTheme.pointer || DEFAULT_THEME.pointer || { enabled: false, mode: "none", color: "#D97757", radius: 180, intensity: 10 };
 
   container.innerHTML = `
     <!-- Curated Presets -->
@@ -923,29 +925,29 @@ function renderAdminThemeTab() {
         <div class="admin-color-item">
           <label for="colorDarkAccent">Primary Accent</label>
           <div class="admin-color-input-wrapper">
-            <input type="color" class="admin-color-picker-native" id="pickerDarkAccent" value="${dark.accent || "#FF7E4A"}">
-            <input type="text" class="admin-color-hex-input" id="colorDarkAccent" value="${dark.accent || "#FF7E4A"}" maxlength="7">
+            <input type="color" class="admin-color-picker-native" id="pickerDarkAccent" value="${dark.accent || "#D97757"}">
+            <input type="text" class="admin-color-hex-input" id="colorDarkAccent" value="${dark.accent || "#D97757"}" maxlength="7">
           </div>
         </div>
         <div class="admin-color-item">
           <label for="colorDarkAccent2">Secondary Accent</label>
           <div class="admin-color-input-wrapper">
-            <input type="color" class="admin-color-picker-native" id="pickerDarkAccent2" value="${dark.accent2 || "#5BC0BE"}">
-            <input type="text" class="admin-color-hex-input" id="colorDarkAccent2" value="${dark.accent2 || "#5BC0BE"}" maxlength="7">
+            <input type="color" class="admin-color-picker-native" id="pickerDarkAccent2" value="${dark.accent2 || "#E5984B"}">
+            <input type="text" class="admin-color-hex-input" id="colorDarkAccent2" value="${dark.accent2 || "#E5984B"}" maxlength="7">
           </div>
         </div>
         <div class="admin-color-item">
           <label for="colorDarkBg">Dark Background</label>
           <div class="admin-color-input-wrapper">
-            <input type="color" class="admin-color-picker-native" id="pickerDarkBg" value="${dark.bg || "#0B0E14"}">
-            <input type="text" class="admin-color-hex-input" id="colorDarkBg" value="${dark.bg || "#0B0E14"}" maxlength="7">
+            <input type="color" class="admin-color-picker-native" id="pickerDarkBg" value="${dark.bg || "#141413"}">
+            <input type="text" class="admin-color-hex-input" id="colorDarkBg" value="${dark.bg || "#141413"}" maxlength="7">
           </div>
         </div>
         <div class="admin-color-item">
           <label for="colorDarkSurface">Surface / Cards</label>
           <div class="admin-color-input-wrapper">
-            <input type="color" class="admin-color-picker-native" id="pickerDarkSurface" value="${dark.surface || "#181B28"}">
-            <input type="text" class="admin-color-hex-input" id="colorDarkSurface" value="${dark.surface || "#181B28"}" maxlength="7">
+            <input type="color" class="admin-color-picker-native" id="pickerDarkSurface" value="${dark.surface || "#1C1C1A"}">
+            <input type="text" class="admin-color-hex-input" id="colorDarkSurface" value="${dark.surface || "#1C1C1A"}" maxlength="7">
           </div>
         </div>
       </div>
@@ -961,22 +963,22 @@ function renderAdminThemeTab() {
         <div class="admin-color-item">
           <label for="colorLightAccent">Primary Accent</label>
           <div class="admin-color-input-wrapper">
-            <input type="color" class="admin-color-picker-native" id="pickerLightAccent" value="${light.accent || "#D65A28"}">
-            <input type="text" class="admin-color-hex-input" id="colorLightAccent" value="${light.accent || "#D65A28"}" maxlength="7">
+            <input type="color" class="admin-color-picker-native" id="pickerLightAccent" value="${light.accent || "#D97757"}">
+            <input type="text" class="admin-color-hex-input" id="colorLightAccent" value="${light.accent || "#D97757"}" maxlength="7">
           </div>
         </div>
         <div class="admin-color-item">
           <label for="colorLightAccent2">Secondary Accent</label>
           <div class="admin-color-input-wrapper">
-            <input type="color" class="admin-color-picker-native" id="pickerLightAccent2" value="${light.accent2 || "#2A7D7B"}">
-            <input type="text" class="admin-color-hex-input" id="colorLightAccent2" value="${light.accent2 || "#2A7D7B"}" maxlength="7">
+            <input type="color" class="admin-color-picker-native" id="pickerLightAccent2" value="${light.accent2 || "#E5984B"}">
+            <input type="text" class="admin-color-hex-input" id="colorLightAccent2" value="${light.accent2 || "#E5984B"}" maxlength="7">
           </div>
         </div>
         <div class="admin-color-item">
           <label for="colorLightBg">Light Background</label>
           <div class="admin-color-input-wrapper">
-            <input type="color" class="admin-color-picker-native" id="pickerLightBg" value="${light.bg || "#FCFAF7"}">
-            <input type="text" class="admin-color-hex-input" id="colorLightBg" value="${light.bg || "#FCFAF7"}" maxlength="7">
+            <input type="color" class="admin-color-picker-native" id="pickerLightBg" value="${light.bg || "#FAF9F5"}">
+            <input type="text" class="admin-color-hex-input" id="colorLightBg" value="${light.bg || "#FAF9F5"}" maxlength="7">
           </div>
         </div>
         <div class="admin-color-item">
@@ -1053,7 +1055,7 @@ function renderAdminThemeTab() {
             <button type="button" class="admin-btn admin-btn-sm admin-btn-ghost" id="btnSyncPointerColor" style="font-size:0.68rem;padding:2px 6px;min-height:22px;">Sync Accent</button>
           </label>
           <div class="admin-color-input-wrapper">
-            <input type="color" class="admin-color-picker-native" id="pickerPointerColor" value="${pointer.color || dark.accent || "#FF7E4A"}">
+            <input type="color" class="admin-color-picker-native" id="pickerPointerColor" value="${pointer.color || dark.accent || "#D97757"}">
             <input type="text" class="admin-color-hex-input" id="colorPointerColor" value="${pointer.color || ""}" placeholder="AUTO (ACCENT)" maxlength="7">
           </div>
         </div>
@@ -1061,20 +1063,20 @@ function renderAdminThemeTab() {
         <div class="admin-pointer-card">
           <label for="rangePointerRadius">
             <span>Shadow Size / Radius</span>
-            <span class="admin-range-value" id="valPointerRadius">${pointer.radius || 160}px</span>
+            <span class="admin-range-value" id="valPointerRadius">${pointer.radius || 180}px</span>
           </label>
           <div class="admin-range-wrapper">
-            <input type="range" class="admin-range-slider" id="rangePointerRadius" min="40" max="320" step="10" value="${pointer.radius || 160}">
+            <input type="range" class="admin-range-slider" id="rangePointerRadius" min="40" max="320" step="10" value="${pointer.radius || 180}">
           </div>
         </div>
 
         <div class="admin-pointer-card">
           <label for="rangePointerIntensity">
             <span>Shadow Intensity / Opacity</span>
-            <span class="admin-range-value" id="valPointerIntensity">${pointer.intensity !== undefined ? pointer.intensity : 12}%</span>
+            <span class="admin-range-value" id="valPointerIntensity">${pointer.intensity !== undefined ? pointer.intensity : 10}%</span>
           </label>
           <div class="admin-range-wrapper">
-            <input type="range" class="admin-range-slider" id="rangePointerIntensity" min="0" max="50" step="1" value="${pointer.intensity !== undefined ? pointer.intensity : 12}">
+            <input type="range" class="admin-range-slider" id="rangePointerIntensity" min="0" max="50" step="1" value="${pointer.intensity !== undefined ? pointer.intensity : 10}">
           </div>
         </div>
       </div>
@@ -1158,7 +1160,7 @@ function renderAdminThemeTab() {
 
   if (btnSyncPointerColor) {
     btnSyncPointerColor.addEventListener("click", () => {
-      const darkAccent = document.getElementById("colorDarkAccent").value || "#FF7E4A";
+      const darkAccent = document.getElementById("colorDarkAccent").value || "#D97757";
       const colorInput = document.getElementById("colorPointerColor");
       const pickerInput = document.getElementById("pickerPointerColor");
       if (colorInput) colorInput.value = "";
@@ -1176,10 +1178,10 @@ function renderAdminThemeTab() {
       const rect = previewBox.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      const rad = rangePointerRadius ? parseInt(rangePointerRadius.value, 10) : 160;
-      const intensity = rangePointerIntensity ? parseInt(rangePointerIntensity.value, 10) / 100 : 0.12;
+      const rad = rangePointerRadius ? parseInt(rangePointerRadius.value, 10) : 180;
+      const intensity = rangePointerIntensity ? parseInt(rangePointerIntensity.value, 10) / 100 : 0.1;
       const customCol = document.getElementById("colorPointerColor")?.value.trim();
-      const darkAccent = document.getElementById("colorDarkAccent")?.value || "#FF7E4A";
+      const darkAccent = document.getElementById("colorDarkAccent")?.value || "#D97757";
       const col = customCol && /^#[0-9A-F]{6}$/i.test(customCol) ? customCol : darkAccent;
       const mode = pointerModeSelect ? pointerModeSelect.value : "glow";
 
@@ -1247,12 +1249,13 @@ function renderAdminThemeTab() {
     const activePresetBtn = document.querySelector("#adminPresetsGrid .admin-preset-card.active");
     const activePreset = presetId || (activePresetBtn ? activePresetBtn.getAttribute("data-preset-id") : "custom");
 
-    const pMode = pointerModeSelect ? pointerModeSelect.value : "glow";
+    const pMode = pointerModeSelect ? pointerModeSelect.value : "none";
     const pColor = document.getElementById("colorPointerColor") ? document.getElementById("colorPointerColor").value.trim() : "";
-    const pRadius = rangePointerRadius ? parseInt(rangePointerRadius.value, 10) : 160;
-    const pIntensity = rangePointerIntensity ? parseInt(rangePointerIntensity.value, 10) : 12;
+    const pRadius = rangePointerRadius ? parseInt(rangePointerRadius.value, 10) : 180;
+    const pIntensity = rangePointerIntensity ? parseInt(rangePointerIntensity.value, 10) : 10;
 
     const liveTheme = {
+      version: 4,
       preset: activePreset,
       dark: {
         accent: document.getElementById("colorDarkAccent").value,
@@ -1260,7 +1263,7 @@ function renderAdminThemeTab() {
         bg: document.getElementById("colorDarkBg").value,
         bgElevated: document.getElementById("colorDarkBg").value,
         surface: document.getElementById("colorDarkSurface").value,
-        text: dark.text || "#EAE6DD"
+        text: dark.text || "#FAF9F5"
       },
       light: {
         accent: document.getElementById("colorLightAccent").value,
@@ -1268,7 +1271,7 @@ function renderAdminThemeTab() {
         bg: document.getElementById("colorLightBg").value,
         bgElevated: document.getElementById("colorLightBg").value,
         surface: document.getElementById("colorLightSurface").value,
-        text: light.text || "#1A1C1E"
+        text: light.text || "#141413"
       },
       fonts: {
         heading: document.getElementById("fontHeadingSelect").value,
@@ -1295,12 +1298,13 @@ function renderAdminThemeTab() {
       const activePresetBtn = document.querySelector("#adminPresetsGrid .admin-preset-card.active");
       const activePreset = activePresetBtn ? activePresetBtn.getAttribute("data-preset-id") : "custom";
 
-      const pMode = pointerModeSelect ? pointerModeSelect.value : "glow";
+      const pMode = pointerModeSelect ? pointerModeSelect.value : "none";
       const pColor = document.getElementById("colorPointerColor") ? document.getElementById("colorPointerColor").value.trim() : "";
-      const pRadius = rangePointerRadius ? parseInt(rangePointerRadius.value, 10) : 160;
-      const pIntensity = rangePointerIntensity ? parseInt(rangePointerIntensity.value, 10) : 12;
+      const pRadius = rangePointerRadius ? parseInt(rangePointerRadius.value, 10) : 180;
+      const pIntensity = rangePointerIntensity ? parseInt(rangePointerIntensity.value, 10) : 10;
 
       portfolioData.theme = {
+        version: 4,
         preset: activePreset,
         dark: {
           accent: document.getElementById("colorDarkAccent").value,
@@ -1308,7 +1312,7 @@ function renderAdminThemeTab() {
           bg: document.getElementById("colorDarkBg").value,
           bgElevated: document.getElementById("colorDarkBg").value,
           surface: document.getElementById("colorDarkSurface").value,
-          text: dark.text || "#EAE6DD"
+          text: dark.text || "#FAF9F5"
         },
         light: {
           accent: document.getElementById("colorLightAccent").value,
@@ -1316,7 +1320,7 @@ function renderAdminThemeTab() {
           bg: document.getElementById("colorLightBg").value,
           bgElevated: document.getElementById("colorLightBg").value,
           surface: document.getElementById("colorLightSurface").value,
-          text: light.text || "#1A1C1E"
+          text: light.text || "#141413"
         },
         fonts: {
           heading: document.getElementById("fontHeadingSelect").value,
@@ -1343,13 +1347,13 @@ function renderAdminThemeTab() {
   const resetBtn = document.getElementById("adminResetThemeBtn");
   if (resetBtn) {
     resetBtn.addEventListener("click", () => {
-      if (confirm("Reset theme, colors and typography back to Precision Copper default?")) {
+      if (confirm("Reset theme, colors and typography back to Terracotta Studio default?")) {
         portfolioData.theme = JSON.parse(JSON.stringify(DEFAULT_THEME));
         savePortfolioDataLocally();
         applyCustomTheme();
         renderAll();
         renderAdminThemeTab();
-        showToast("Theme reset to default Precision Copper.");
+        showToast("Theme reset to default Terracotta Studio.");
       }
     });
   }
@@ -1495,7 +1499,7 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
               (b) => `
             <div class="admin-bullet-row">
               <input type="text" value="${escapeHtml(b)}" placeholder="Achievement or responsibility detail...">
-              <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()" title="Delete">✕</button>
+              <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()" title="Delete">&times;</button>
             </div>
           `
             )
@@ -1508,7 +1512,7 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
       ? {
           id: `proj-${Date.now()}`,
           isOpenSource: true,
-          typeBadgeText: "Open Source ✦",
+          typeBadgeText: "Open Source",
           typeBadgeClass: "badge-open-source",
           title: "",
           cardTitle: "",
@@ -1548,7 +1552,7 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
         </div>
         <div class="admin-form-group">
           <label for="editProjBadgeText">Badge Text</label>
-          <input type="text" id="editProjBadgeText" value="${p.typeBadgeText || (p.isOpenSource ? "Open Source ✦" : "Private ✦")}">
+          <input type="text" id="editProjBadgeText" value="${p.typeBadgeText || (p.isOpenSource ? "Open Source" : "Private")}">
         </div>
         <div class="admin-form-group">
           <label for="editProjBadgeClass">Badge Style</label>
@@ -1582,7 +1586,7 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
               (b) => `
             <div class="admin-bullet-row">
               <input type="text" value="${escapeHtml(b)}" placeholder="Key highlight...">
-              <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">✕</button>
+              <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">&times;</button>
             </div>
           `
             )
@@ -1604,7 +1608,7 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
               <input type="text" class="spec-param" value="${escapeHtml(s.param || "")}" placeholder="Parameter (e.g. Input Voltage)">
               <input type="text" class="spec-val" value="${escapeHtml(s.value || "")}" placeholder="Value (e.g. 24V – 60V)">
               <input type="text" class="spec-note" value="${escapeHtml(s.note || "")}" placeholder="Note (optional)">
-              <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">✕</button>
+              <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">&times;</button>
             </div>
           `
             )
@@ -1641,12 +1645,12 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
             .map(
               (a) => `
             <div class="admin-action-row">
-              <input type="text" class="act-label" value="${escapeHtml(a.label || "")}" placeholder="Label (e.g. View on GitHub ↗)">
+              <input type="text" class="act-label" value="${escapeHtml(a.label || "")}" placeholder="Label (e.g. View on GitHub)">
               <input type="text" class="act-url" value="${escapeHtml(a.url || "")}" placeholder="URL">
               <label style="display:flex;align-items:center;gap:4px;font-size:0.75rem;white-space:nowrap;">
                 <input type="checkbox" class="act-primary" ${a.isPrimary ? "checked" : ""}> Primary
               </label>
-              <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">✕</button>
+              <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">&times;</button>
             </div>
           `
             )
@@ -1671,7 +1675,7 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
               (tag) => `
             <span class="admin-tag-pill">
               <span>${tag}</span>
-              <button type="button" onclick="this.parentElement.remove()">✕</button>
+              <button type="button" onclick="this.parentElement.remove()">&times;</button>
             </span>
           `
             )
@@ -1686,7 +1690,7 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
           id: `course-${Date.now()}`,
           isCourse: true,
           isOpenSource: true,
-          typeBadgeText: "Verified ✦",
+          typeBadgeText: "Verified",
           typeBadgeClass: "badge-open-source",
           title: "",
           cardTitle: "",
@@ -1745,7 +1749,7 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
         </div>
         <div class="admin-form-group">
           <label for="editCourseBadgeText">Badge Text</label>
-          <input type="text" id="editCourseBadgeText" value="${c.typeBadgeText || "Verified ✦"}">
+          <input type="text" id="editCourseBadgeText" value="${c.typeBadgeText || "Verified"}">
         </div>
         <div class="admin-form-group full-width">
           ${iconMediaHtml}
@@ -1793,7 +1797,7 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
               (b) => `
             <div class="admin-bullet-row">
               <input type="text" value="${escapeHtml(b)}" placeholder="Highlight topic...">
-              <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">✕</button>
+              <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">&times;</button>
             </div>
           `
             )
@@ -1830,12 +1834,12 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
             .map(
               (a) => `
             <div class="admin-action-row">
-              <input type="text" class="act-label" value="${escapeHtml(a.label || "")}" placeholder="Label (e.g. Download Certificate PDF ↗)">
+              <input type="text" class="act-label" value="${escapeHtml(a.label || "")}" placeholder="Label (e.g. Download Certificate PDF)">
               <input type="text" class="act-url" value="${escapeHtml(a.url || "")}" placeholder="PDF / Verification Link">
               <label style="display:flex;align-items:center;gap:4px;font-size:0.75rem;white-space:nowrap;">
                 <input type="checkbox" class="act-primary" ${a.isPrimary ? "checked" : ""}> Primary
               </label>
-              <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">✕</button>
+              <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">&times;</button>
             </div>
           `
             )
@@ -1886,7 +1890,7 @@ window.openEditItemModal = function (type, idOrIndex, isNew = false) {
           if (val) {
             const pill = document.createElement("span");
             pill.className = "admin-tag-pill";
-            pill.innerHTML = `<span>${escapeHtml(val)}</span><button type="button" onclick="this.parentElement.remove()">✕</button>`;
+            pill.innerHTML = `<span>${escapeHtml(val)}</span><button type="button" onclick="this.parentElement.remove()">&times;</button>`;
             container.insertBefore(pill, tagInput);
             tagInput.value = "";
           }
@@ -1915,7 +1919,7 @@ window.addBulletRow = function (containerId) {
   row.className = "admin-bullet-row";
   row.innerHTML = `
     <input type="text" placeholder="Detail point...">
-    <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">✕</button>
+    <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">&times;</button>
   `;
   c.appendChild(row);
   row.querySelector("input").focus();
@@ -1930,7 +1934,7 @@ window.addSpecRow = function (containerId) {
     <input type="text" class="spec-param" placeholder="Parameter (e.g. Output Current)">
     <input type="text" class="spec-val" placeholder="Value (e.g. 30A Continuous)">
     <input type="text" class="spec-note" placeholder="Note (optional)">
-    <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">✕</button>
+    <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">&times;</button>
   `;
   c.appendChild(row);
   row.querySelector("input").focus();
@@ -1964,7 +1968,7 @@ window.addGalleryCardRow = function (containerId, data = { src: "", label: "Prev
       <input type="text" class="img-caption" value="${escapeHtml(data.caption || "")}" placeholder="Caption / Description...">
     </div>
     <div class="admin-gallery-card-actions">
-      <button type="button" class="admin-icon-btn danger" onclick="this.closest('.admin-gallery-card').remove()" title="Delete Image">✕</button>
+      <button type="button" class="admin-icon-btn danger" onclick="this.closest('.admin-gallery-card').remove()" title="Delete Image">&times;</button>
     </div>
   `;
 
@@ -2044,7 +2048,7 @@ window.addActionRow = function (containerId) {
     <label style="display:flex;align-items:center;gap:4px;font-size:0.75rem;white-space:nowrap;">
       <input type="checkbox" class="act-primary" checked> Primary
     </label>
-    <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">✕</button>
+    <button type="button" class="admin-icon-btn danger" onclick="this.parentElement.remove()">&times;</button>
   `;
   c.appendChild(row);
   row.querySelector("input").focus();
@@ -2241,7 +2245,7 @@ if (adminItemModalSaveBtn) {
           hasProject,
           projectId,
           projectHoverImage,
-          typeBadgeText: badgeText || "Verified ✦",
+          typeBadgeText: badgeText || "Verified",
           typeBadgeClass: "badge-open-source",
           title,
           cardTitle: title,

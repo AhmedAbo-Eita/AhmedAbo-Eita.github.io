@@ -71,7 +71,7 @@
     {
       "id": "bldc-motor-driver",
       "isOpenSource": true,
-      "typeBadgeText": "Open Source ✦",
+      "typeBadgeText": "Open Source",
       "typeBadgeClass": "badge-open-source",
       "title": "60V / 30A High-Performance BLDC & PMSM Motor Controller (ESC)",
       "cardTitle": "BLDC Motor Driver",
@@ -170,12 +170,12 @@
       ],
       "actions": [
         {
-          "label": "View on GitHub ↗",
+          "label": "View on GitHub",
           "url": "https://github.com/AhmedAbo-Eita/BLDC_Motor_Driver",
           "isPrimary": true
         },
         {
-          "label": "Hardware Readme ↗",
+          "label": "Hardware Readme",
           "url": "https://github.com/AhmedAbo-Eita/BLDC_Motor_Driver/blob/main/Hardware/BLDC_MC_V1.0/Readme.md",
           "isPrimary": false
         }
@@ -184,7 +184,7 @@
     {
       "id": "ecco-lwd",
       "isOpenSource": false,
-      "typeBadgeText": "Private ✦",
+      "typeBadgeText": "Private",
       "typeBadgeClass": "badge-private",
       "title": "ECCO LWD Tool - Ultrasonic Logging While Drilling",
       "cardTitle": "ECCO LWD Tool",
@@ -254,7 +254,7 @@
     {
       "id": "elog-system",
       "isOpenSource": false,
-      "typeBadgeText": "Private ✦",
+      "typeBadgeText": "Private",
       "typeBadgeClass": "badge-private",
       "title": "ELOG System - Ultra-Low Power Mechanical Tool Tracker",
       "cardTitle": "ELOG System",
@@ -312,7 +312,7 @@
     {
       "id": "ev-fast-charger",
       "isOpenSource": false,
-      "typeBadgeText": "Private ✦",
+      "typeBadgeText": "Private",
       "typeBadgeClass": "badge-private",
       "title": "Smart EV DC Fast Charger System",
       "cardTitle": "Smart EV DC Fast Charger",
@@ -370,7 +370,7 @@
     {
       "id": "mixed-signal-board",
       "isOpenSource": true,
-      "typeBadgeText": "Open Source ✦",
+      "typeBadgeText": "Open Source",
       "typeBadgeClass": "badge-open-source",
       "title": "Mixed Signal Acquisition & Generation Board",
       "cardTitle": "Mixed Signal Board",
@@ -503,12 +503,12 @@
       ],
       "actions": [
         {
-          "label": "View on GitHub ↗",
+          "label": "View on GitHub",
           "url": "https://github.com/AhmedAbo-Eita/Hardware_PCB_Designs/tree/main/Mixed_Signal_Board_FEDEVEL_Course",
           "isPrimary": true
         },
         {
-          "label": "Hardware Readme ↗",
+          "label": "Hardware Readme",
           "url": "https://github.com/AhmedAbo-Eita/Hardware_PCB_Designs/tree/main/Mixed_Signal_Board_FEDEVEL_Course#readme",
           "isPrimary": false
         }
@@ -587,7 +587,7 @@
       "id": "high-speed-digital-design",
       "isCourse": true,
       "isOpenSource": true,
-      "typeBadgeText": "Verified ✦",
+      "typeBadgeText": "Verified",
       "typeBadgeClass": "badge-open-source",
       "title": "High-Speed Digital Design Masterclass",
       "cardTitle": "High-Speed Digital Design Masterclass",
@@ -683,7 +683,7 @@
       ],
       "actions": [
         {
-          "label": "Download Certificate PDF ↗",
+          "label": "Download Certificate PDF",
           "url": "certificates/high_speed_digital_design.pdf",
           "isPrimary": true
         }
@@ -693,7 +693,7 @@
       "id": "mixed-signal-hardware-design",
       "isCourse": true,
       "isOpenSource": true,
-      "typeBadgeText": "Verified ✦",
+      "typeBadgeText": "Verified",
       "typeBadgeClass": "badge-open-source",
       "title": "Mixed-Signal Hardware Design",
       "cardTitle": "Mixed-Signal Hardware Design",
@@ -766,7 +766,7 @@
       ],
       "actions": [
         {
-          "label": "Download Certificate PDF ↗",
+          "label": "Download Certificate PDF",
           "url": "certificates/Mixed-Signal Hardware Design.pdf",
           "isPrimary": true
         }
@@ -779,7 +779,7 @@
       "id": "mastering-embedded-systems",
       "isCourse": true,
       "isOpenSource": true,
-      "typeBadgeText": "Verified ✦",
+      "typeBadgeText": "Verified",
       "typeBadgeClass": "badge-open-source",
       "title": "Mastering Embedded Systems Diploma",
       "cardTitle": "Mastering Embedded Systems Diploma",
@@ -852,7 +852,7 @@
       ],
       "actions": [
         {
-          "label": "Download Certificate PDF ↗",
+          "label": "Download Certificate PDF",
           "url": "certificates/mastering-embedded-systems.pdf",
           "isPrimary": true
         }
@@ -862,7 +862,7 @@
       "id": "udemy-self-study",
       "isCourse": true,
       "isOpenSource": false,
-      "typeBadgeText": "Self-Study ✦",
+      "typeBadgeText": "Self-Study",
       "typeBadgeClass": "badge-private",
       "title": "Self-Study & Specialized Courses",
       "cardTitle": "Self-Study & Specialized Courses",
@@ -921,34 +921,35 @@
     }
   ],
   "theme": {
-    "preset": "copper",
+    "version": 4,
+    "preset": "terracotta",
     "dark": {
-      "accent": "#FF7E4A",
-      "accent2": "#5BC0BE",
-      "bg": "#0B0E14",
-      "bgElevated": "#0B0E14",
-      "surface": "#181B28",
-      "text": "#EAE6DD"
+      "accent": "#D97757",
+      "accent2": "#E5984B",
+      "bg": "#141413",
+      "bgElevated": "#1C1C1A",
+      "surface": "#1C1C1A",
+      "text": "#FAF9F5"
     },
     "light": {
-      "accent": "#D65A28",
-      "accent2": "#2A7D7B",
-      "bg": "#FCFAF7",
-      "bgElevated": "#FCFAF7",
+      "accent": "#D97757",
+      "accent2": "#E5984B",
+      "bg": "#FAF9F5",
+      "bgElevated": "#FFFFFF",
       "surface": "#FFFFFF",
-      "text": "#1A1C1E"
+      "text": "#141413"
     },
     "fonts": {
-      "heading": "Sora",
-      "body": "Inter",
+      "heading": "Space Grotesk",
+      "body": "Space Grotesk",
       "mono": "JetBrains Mono"
     },
     "pointer": {
-      "enabled": true,
-      "mode": "spotlight",
-      "color": "",
-      "radius": 160,
-      "intensity": 12
+      "enabled": false,
+      "mode": "none",
+      "color": "#D97757",
+      "radius": 180,
+      "intensity": 10
     }
   }
 }

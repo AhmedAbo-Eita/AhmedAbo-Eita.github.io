@@ -1,35 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <defs>
-    <linearGradient id="copperGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF7E4A"/>
-      <stop offset="100%" stop-color="#D65A28"/>
-    </linearGradient>
-    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#5BC0BE"/>
-      <stop offset="100%" stop-color="#2A7D7B"/>
-    </linearGradient>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="100%" stop-color="#F6F1EA"/>
-    </linearGradient>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <!-- Parchment base with bold neo-brutalist frame -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#FAF9F5" stroke="#141413" stroke-width="3.5" />
 
-  <!-- Clean Rounded Card Base with Warm Border -->
-  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#bgGrad)" stroke="rgba(214, 90, 40, 0.28)" stroke-width="1.5" />
+  <!-- Symmetric PCB corner traces and via pads -->
+  <path d="M11 22 V11 H22" stroke="#D97757" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="11" cy="22" r="3.2" fill="#D97757" stroke="#141413" stroke-width="1.5" />
+  <circle cx="22" cy="11" r="2.5" fill="#D97757" stroke="#141413" stroke-width="1.5" />
 
-  <!-- Hardware Circuit Accent Traces in Copper and Teal -->
-  <path d="M10 18 L10 10 L18 10" fill="none" stroke="url(#copperGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="10" cy="18" r="2.2" fill="#FF7E4A"/>
+  <path d="M53 42 V53 H42" stroke="#E5984B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="53" cy="42" r="3.2" fill="#E5984B" stroke="#141413" stroke-width="1.5" />
+  <circle cx="42" cy="53" r="2.5" fill="#E5984B" stroke="#141413" stroke-width="1.5" />
 
-  <path d="M54 46 L54 54 L46 54" fill="none" stroke="url(#tealGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="54" cy="46" r="2.2" fill="#5BC0BE"/>
-
-  <!-- Bold Hardware Monogram 'AE' -->
-  <text x="32" y="43" 
-        font-family="'Sora', 'JetBrains Mono', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" 
-        font-weight="800" 
-        font-size="28" 
-        fill="#1A1C1E" 
-        text-anchor="middle" 
-        letter-spacing="-0.5">AE</text>
+  <!-- Bold AE Hardware Monogram -->
+  <text x="32" y="42"
+        font-family="'Space Grotesk', 'JetBrains Mono', system-ui, sans-serif"
+        font-weight="800"
+        font-size="27"
+        fill="#141413"
+        text-anchor="middle"
+        letter-spacing="-1">AE</text>
 </svg>
